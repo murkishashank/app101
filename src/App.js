@@ -6,18 +6,19 @@ import {RegistrationForm} from './RegistrationForm';
 import {Users} from './Users';
 
 function App() {
-  const [startsStatus, setStartStatus] = useState("Registration Form");
+  const [startsStatus, setStartStatus] = useState("");
   const [status, setStatus] = useState("Y");
 
-  const handleStatus = () => {
-    if(startsStatus == "Registration Form" & status == "Y"){
-        setStartStatus("");
+  const handleStatus = (page) => {
+    if(startsStatus == "" & status == "Y"){
+        setStartStatus(page);
     }
 }
 
   return (
     <>
-    <Link to={"/registrationForm"} onClick={handleStatus} >{startsStatus}</Link>
+    <Link to={"/registrationform"} onClick={handleStatus('registrationform')} >Resistration From</Link>
+    <Link to={"/users"} onClick={handleStatus("users")} >Users</Link>
     <Routes>
         <Route path='/registrationForm' element={<RegistrationForm />}/>
         <Route path='/users' element={<Users/>}/>
