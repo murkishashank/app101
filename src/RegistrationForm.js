@@ -76,11 +76,12 @@ export const RegistrationForm = () => {
               id="lastName"
               name="lastName"
               defaultValue={data.lastName}
+              onChange={handleOnChange}
             />
           </ul>
           <ul>
             <label htmlFor="age">Age: </label>
-            <input placeholder="Age" id="age" name="age" defaultValue={data.age} />
+            <input placeholder="Age" id="age" name="age" defaultValue={data.age} onChange={handleOnChange} />
           </ul>
           <ul>
             <label htmlFor="phoneNumber">Phone Number: </label>
@@ -89,6 +90,7 @@ export const RegistrationForm = () => {
               id="phoneNumber"
               name="phoneNumber"
               defaultValue={data.mobileNumber}
+              onChange={handleOnChange}
             />
           </ul>
           <button id="submit" onClick={handleSubmit}>
