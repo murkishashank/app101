@@ -1,10 +1,13 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useRef, useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
+import { useNavigate } from "react-router-dom";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
 export const Users = () => {
+  const gridRef = useRef();
+  const navigate = useNavigate();
   const [data, setData] = useState({});
   const [dataLoading, setDataLoading] = useState(true);
 
@@ -23,11 +26,16 @@ export const Users = () => {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         setData(result);
         setDataLoading(false);
       })
       .catch(console.log);
+  }, []);
+
+  const onSelectionChanged = useCallback(() => {
+    const selectedRows = gridRef.current.api.getSelectedRows();
+    console.log(selectedRows)
+    // navigate("/users");
   }, []);
 
   return (
@@ -36,7 +44,12 @@ export const Users = () => {
         <h1>Loading...</h1>
       ) : (
         <div className="ag-theme-alpine" style={{ height: 400 }}>
-          <AgGridReact rowData={data} columnDefs={columnDefs}></AgGridReact>
+          <AgGridReact
+            rowData={data}
+            columnDefs={columnDefs}
+            rowSelection={"single"}
+            onSelectionChanged={onSelectionChanged}
+          ></AgGridReact>
         </div>
       )}
     </>
