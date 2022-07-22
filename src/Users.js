@@ -34,8 +34,8 @@ export const Users = () => {
 
   const onSelectionChanged = useCallback(() => {
     const selectedRows = gridRef.current.api.getSelectedRows();
-    console.log(selectedRows)
-    // navigate("/users");
+    const userID = selectedRows[0]["id"];
+    navigate(`/registrationForm/${userID}`);
   }, []);
 
   return (
@@ -45,6 +45,7 @@ export const Users = () => {
       ) : (
         <div className="ag-theme-alpine" style={{ height: 400 }}>
           <AgGridReact
+            ref={gridRef}
             rowData={data}
             columnDefs={columnDefs}
             rowSelection={"single"}
