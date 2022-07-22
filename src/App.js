@@ -1,9 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
 import { useState } from 'react';
-import { Routes, Route, Link} from "react-router-dom";
-import {RegistrationForm} from './RegistrationForm';
-import {Users} from './Users';
+import { Link, Route, Routes } from "react-router-dom";
+import './App.css';
+import { RegistrationForm } from './RegistrationForm';
+import { Users } from './Users';
+import {LoginForm} from './LoginForm'
 
 function App() {
   const [startsStatus, setStartStatus] = useState("");
@@ -20,6 +20,9 @@ function App() {
     <Link to={"/registrationform/new"} onClick={handleStatus('registrationform')} >Resistration From</Link>
     <Link to={"/users"} onClick={handleStatus("users")} >Users</Link>
     <Routes>
+      <Route></Route>
+      <Route path='/' element={<LoginForm/>}></Route>
+      <Route path= '/registrationform/new' ></Route>
         <Route path='/registrationForm/:userId' element={<RegistrationForm />}/>
         <Route path='/users' element={<Users/>}/>
     </Routes>
