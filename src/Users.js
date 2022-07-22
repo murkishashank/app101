@@ -16,7 +16,7 @@ export const Users = () => {
     { header: "Last Name", field: "lastName" },
     { header: "Mobile Number", field: "mobileNumber" },
     { header: "Age", field: "age" },
-    { header: "Accepted/Rejected", field: "status" },
+    { header: "Accepted/Rejected", field: "statusFlag" },
   ];
 
   useEffect(() => {
@@ -34,8 +34,8 @@ export const Users = () => {
 
   const onSelectionChanged = useCallback(() => {
     const selectedRows = gridRef.current.api.getSelectedRows();
-    const userID = selectedRows[0]["id"];
-    navigate(`/registrationForm/${userID}`);
+    const userId = selectedRows[0]["id"];
+    navigate(`/registrationForm/${userId}`);
   }, []);
 
   return (
