@@ -17,10 +17,10 @@ function App() {
 
   return (
     <>
-    <Link to={"/registrationform"} onClick={handleStatus('registrationform')} >Resistration From</Link>
+    <Link to={"/registrationform/new"} onClick={handleStatus('registrationform')} >Resistration From</Link>
     <Link to={"/users"} onClick={handleStatus("users")} >Users</Link>
     <Routes>
-        <Route path='/registrationForm' element={<RegistrationForm />}/>
+        <Route path='/registrationForm/:userId' element={<RegistrationForm />}/>
         <Route path='/users' element={<Users/>}/>
     </Routes>
     </>
