@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { encrypt, decrypt } from "./encryption";
+import { encrypt, decrypt } from "./Encryption";
 
 export const RegistrationForm = () => {
   const { userId = "new" } = { ...useParams() };
