@@ -21,7 +21,7 @@ export const Users = () => {
 
   useEffect(() => {
     setDataLoading(true);
-    fetch("http://localhost:8080/api/AllUsers", {
+    fetch("http://localhost:8080/api/allUsers", {
       method: "GET",
     })
       .then((response) => response.json())

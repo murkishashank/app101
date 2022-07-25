@@ -12,11 +12,11 @@ async function fetchUserName(userName){
 }
 
 function validateLogin (userDetails){
+    console.log('name', userDetails);
     const {userName, password} = loginDetails;
     if(Object.keys(userDetails).length){
         if(userName === userDetails.userName && password === userDetails.password){
-            alert('Login successful');
-            navigate('/users')
+            navigate("/users");
         }
         else{
             alert("invalid username password");
@@ -37,7 +37,6 @@ function handleOnChange(key, value){
 
     return(
 <div style={{height: 350, width:400, backgroundColor: 'white' , borderRadius: '25px', borderStyle: 'groove', marginLeft: '500px', marginTop:'90px', padding : '20px'}}>
-    <form >
     <center><h3>User Login Form</h3></center>
         <div className="mb-3">
             <label><h6>User Name: </h6></label>
@@ -64,7 +63,6 @@ function handleOnChange(key, value){
 <div style ={{marginTop: '10px'}} className="d-grid"><button  className="btn btn-primary" onClick={()=>{fetchUserName(loginDetails.userName)}}>Login</button></div>
 <div style ={{marginTop: '10px'}} className="d-grid"><button className="btn btn-primary" onClick={()=>{navigate('/registrationform/new')}} >Sign Up</button></div>
 </div>
-</form>
 </div>
     )
 }
