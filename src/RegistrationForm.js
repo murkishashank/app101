@@ -43,12 +43,25 @@ export const RegistrationForm = () => {
 
   const handleSubmit = () => {
     const dataValues = Object.values(data);
+    const isUserNamePresent = fetch(
+      `http://localhost:8080/api/usersByUserName/${data.userName}`
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        }
+      })
+      .then((result) => {
+        if (result?.id) {
+          alert("Username already in use.");
+        }
+      });
     if (dataValues.includes(null) || dataValues.includes("")) {
       alert("All fields are required");
-      navigate("/registrationform/new");
     } else if (data.mobileNumber.length !== 10) {
       alert("Enter valid phone number.");
-      navigate("/registrationform/new");
+    } else if (isUserNamePresent === true) {
+      alert("Username already in use.");
     } else {
       fetch("http://localhost:8080/api/users", {
         method: "POST",
@@ -59,13 +72,10 @@ export const RegistrationForm = () => {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
-          if (Object.keys(result).length > 0) {
-            console.log("result", result);
-          }
-        })
-        .catch(console.log);
-      navigate("/users");
+          result.userName === data.userName
+            ? navigate("/users")
+            : alert("Error while saving the data.");
+        });
     }
   };
 
@@ -73,10 +83,25 @@ export const RegistrationForm = () => {
     <>
       {dataLoading ? (
         <h1> loading...</h1>
-      ) : (<div>
-          <ul>
-            <label htmlFor="userName">User Name: </label>
+      ) : (
+        <div
+          style={{
+            height: 600,
+            width: 400,
+            backgroundColor: "white",
+            borderRadius: "25px",
+            borderStyle: "groove",
+            marginLeft: "500px",
+            marginTop: "32px",
+            padding: "22px",
+          }}
+        >
+          <div className="mb-3">
+            <label htmlFor="userName">
+              <h6>User Name: </h6>
+            </label>
             <input
+              className="form-control"
               placeholder="userName"
               type="text"
               id="userName"
@@ -84,10 +109,13 @@ export const RegistrationForm = () => {
               defaultValue={data.userName}
               onChange={handleOnChange}
             />
-          </ul>
-          <ul>
-            <label htmlFor="password">Password: </label>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password">
+              <h6>Password: </h6>
+            </label>
             <input
+              className="form-control"
               placeholder="password"
               type="password"
               id="password"
@@ -95,10 +123,13 @@ export const RegistrationForm = () => {
               defaultValue={data.password}
               onChange={handleOnChange}
             />
-          </ul>
-          <ul>
-            <label htmlFor="firstName">First Name: </label>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="firstName">
+              <h6>First Name: </h6>
+            </label>
             <input
+              className="form-control"
               placeholder="First name"
               type="text"
               id="firstName"
@@ -106,10 +137,13 @@ export const RegistrationForm = () => {
               defaultValue={data.firstName}
               onChange={handleOnChange}
             />
-          </ul>
-          <ul>
-            <label htmlFor="lastName">Last Name: </label>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="lastName">
+              <h6>Last Name: </h6>
+            </label>
             <input
+              className="form-control"
               placeholder="Last name"
               type="text"
               id="lastName"
@@ -117,10 +151,13 @@ export const RegistrationForm = () => {
               defaultValue={data.lastName}
               onChange={handleOnChange}
             />
-          </ul>
-          <ul>
-            <label htmlFor="age">Age: </label>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="age">
+              <h6>Age: </h6>
+            </label>
             <input
+              className="form-control"
               type="number"
               placeholder="Age"
               id="age"
@@ -128,10 +165,13 @@ export const RegistrationForm = () => {
               defaultValue={data.age}
               onChange={handleOnChange}
             />
-          </ul>
-          <ul>
-            <label htmlFor="phoneNumber">Phone Number: </label>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="phoneNumber">
+              <h6>Phone Number: </h6>
+            </label>
             <input
+              className="form-control"
               type="tel"
               placeholder="phoneNumber"
               id="phoneNumber"
@@ -139,11 +179,17 @@ export const RegistrationForm = () => {
               defaultValue={data.mobileNumber}
               onChange={handleOnChange}
             />
-          </ul>
-          <button id="submit" onClick={handleSubmit}>
-            Submit
-          </button>
-      </div>
+          </div>
+          <div style={{ marginTop: "10px" }} className="d-grid">
+            <button
+              className="btn btn-primary"
+              id="submit"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
       )}
     </>
   );
