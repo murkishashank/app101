@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { encrypt, decrypt } from "./encryption";
 
 export const RegistrationForm = () => {
   const { userId = "" } = { ...useParams() };
@@ -25,19 +26,24 @@ export const RegistrationForm = () => {
       })
       .then((result) => {
         if (result !== null) {
+          result.password = decrypt(result.password);
           setData(result);
         }
         setDataLoading(false);
-      });
+      })
+      .catch(console.log);
   }, [userId]);
 
-  const handleOnChange = () => {
-    data.userName = document.getElementById("userName").value;
-    data.password = document.getElementById("password").value;
-    data.firstName = document.getElementById("firstName").value;
-    data.lastName = document.getElementById("lastName").value;
-    data.age = parseInt(document.getElementById("age").value);
-    data.mobileNumber = document.getElementById("phoneNumber").value;
+  const handleOnChange = (event) => {
+    event.preventDefault();
+    const name = event.target.name;
+    const value = event.target.value;
+    if (event.target.name === "userName") data.userName = value;
+    if (name === "firstName") data.firstName = event.target.value;
+    if (name === "lastName") data.lastName = value;
+    if (name === "password") data.password = value;
+    if (name === "age") data.age = parseInt(value);
+    if (name === "mobileNumber") data.mobileNumber = value;
     data.statusFlag = 0;
   };
 
@@ -45,11 +51,10 @@ export const RegistrationForm = () => {
     const dataValues = Object.values(data);
     if (dataValues.includes(null) || dataValues.includes("")) {
       alert("All fields are required");
-      navigate("/registrationform/new");
     } else if (data.mobileNumber.length !== 10) {
       alert("Enter valid phone number.");
-      navigate("/registrationform/new");
     } else {
+      data.password = encrypt(data.password);
       fetch("http://localhost:8080/api/users", {
         method: "POST",
         headers: {
@@ -59,13 +64,10 @@ export const RegistrationForm = () => {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
           if (Object.keys(result).length > 0) {
-            console.log("result", result);
           }
         })
         .catch(console.log);
-      navigate("/users");
     }
   };
 
@@ -73,7 +75,8 @@ export const RegistrationForm = () => {
     <>
       {dataLoading ? (
         <h1> loading...</h1>
-      ) : (<div>
+      ) : (
+        <div>
           <ul>
             <label htmlFor="userName">User Name: </label>
             <input
@@ -89,7 +92,7 @@ export const RegistrationForm = () => {
             <label htmlFor="password">Password: </label>
             <input
               placeholder="password"
-              type="password"
+              type="text"
               id="password"
               name="password"
               defaultValue={data.password}
@@ -130,12 +133,12 @@ export const RegistrationForm = () => {
             />
           </ul>
           <ul>
-            <label htmlFor="phoneNumber">Phone Number: </label>
+            <label htmlFor="mobileNumber">Phone Number: </label>
             <input
               type="tel"
-              placeholder="phoneNumber"
-              id="phoneNumber"
-              name="phoneNumber"
+              placeholder="mobileNumber"
+              id="mobileNumber"
+              name="mobileNumber"
               defaultValue={data.mobileNumber}
               onChange={handleOnChange}
             />
@@ -143,7 +146,7 @@ export const RegistrationForm = () => {
           <button id="submit" onClick={handleSubmit}>
             Submit
           </button>
-      </div>
+        </div>
       )}
     </>
   );

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate,  } from "react-router-dom";
+import { decrypt } from "./encryption";
+
 export const LoginForm = () =>{
+    const CryptoJS = require("crypto-js");
     const navigate = useNavigate();
     const  [loginDetails, setLoginDetails] =useState({userName: '', password: ''});
 
@@ -12,10 +15,9 @@ async function fetchUserName(userName){
 }
 
 function validateLogin (userDetails){
-    console.log('name', userDetails);
     const {userName, password} = loginDetails;
     if(Object.keys(userDetails).length){
-        if(userName === userDetails.userName && password === userDetails.password){
+        if(userName === userDetails.userName && password === decrypt(userDetails.password)){
             navigate("/users");
         }
         else{
