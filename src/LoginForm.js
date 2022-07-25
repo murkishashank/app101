@@ -16,7 +16,7 @@ function validateLogin (userDetails){
     if(Object.keys(userDetails).length){
         if(userName === userDetails.userName && password === userDetails.password){
             alert('Login successful');
-            navigate('/')
+            navigate('/users')
         }
         else{
             alert("invalid username password");
