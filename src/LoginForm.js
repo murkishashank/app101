@@ -18,7 +18,7 @@ function validateLogin (userDetails){
     const {userName, password} = loginDetails;
     if(Object.keys(userDetails).length){
         if(userName === userDetails.userName && password === decrypt(userDetails.password)){
-            navigate("/users");
+            navigate("/home");
         }
         else{
             alert("invalid username password");
