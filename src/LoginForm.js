@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate,  } from "react-router-dom";
-import { decrypt } from "./encryption";
+import { decrypt } from "./Encryption";
 
 export const LoginForm = () =>{
-    const CryptoJS = require("crypto-js");
     const navigate = useNavigate();
     const  [loginDetails, setLoginDetails] =useState({userName: '', password: ''});
 
@@ -18,7 +17,7 @@ function validateLogin (userDetails){
     const {userName, password} = loginDetails;
     if(Object.keys(userDetails).length){
         if(userName === userDetails.userName && password === decrypt(userDetails.password)){
-            navigate("/users");
+            navigate("/home");
         }
         else{
             alert("invalid username password");

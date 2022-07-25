@@ -37,7 +37,7 @@ export const Users = () => {
     const userId = selectedRows[0]["id"];
     navigate(`/registrationForm/${userId}`);
   }, []);
-
+  
   return (
     <>
       {dataLoading ? (

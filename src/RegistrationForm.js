@@ -1,9 +1,9 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { encrypt, decrypt } from "./encryption";
+import { encrypt, decrypt } from "./Encryption";
 
 export const RegistrationForm = () => {
-  const { userId = "" } = { ...useParams() };
+  const { userId = "new" } = { ...useParams() };
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -25,8 +25,11 @@ export const RegistrationForm = () => {
         return response.json();
       })
       .then((result) => {
+        console.log(result);
         if (result !== null) {
-          result.password = decrypt(result.password);
+          if(result.password) {
+            result.password = decrypt(result.password);
+          }
           setData(result);
         }
         setDataLoading(false);
@@ -89,7 +92,7 @@ export const RegistrationForm = () => {
   return (
     <>
       {dataLoading ? (
-        <h1> loading...</h1>
+        <h1> Form loading...</h1>
       ) : (
         <div
           style={{
