@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { encrypt, decrypt } from "./encryption";
 
 export const RegistrationForm = () => {
   const { userId = "" } = { ...useParams() };
@@ -25,19 +26,24 @@ export const RegistrationForm = () => {
       })
       .then((result) => {
         if (result !== null) {
+          result.password = decrypt(result.password);
           setData(result);
         }
         setDataLoading(false);
-      });
+      })
+      .catch(console.log);
   }, [userId]);
 
-  const handleOnChange = () => {
-    data.userName = document.getElementById("userName").value;
-    data.password = document.getElementById("password").value;
-    data.firstName = document.getElementById("firstName").value;
-    data.lastName = document.getElementById("lastName").value;
-    data.age = parseInt(document.getElementById("age").value);
-    data.mobileNumber = document.getElementById("phoneNumber").value;
+  const handleOnChange = (event) => {
+    event.preventDefault();
+    const name = event.target.name;
+    const value = event.target.value;
+    if (event.target.name === "userName") data.userName = value;
+    if (name === "firstName") data.firstName = event.target.value;
+    if (name === "lastName") data.lastName = value;
+    if (name === "password") data.password = value;
+    if (name === "age") data.age = parseInt(value);
+    if (name === "mobileNumber") data.mobileNumber = value;
     data.statusFlag = 0;
   };
 
@@ -63,6 +69,7 @@ export const RegistrationForm = () => {
     } else if (isUserNamePresent === true) {
       alert("Username already in use.");
     } else {
+      data.password = encrypt(data.password);
       fetch("http://localhost:8080/api/users", {
         method: "POST",
         headers: {
@@ -117,7 +124,7 @@ export const RegistrationForm = () => {
             <input
               className="form-control"
               placeholder="password"
-              type="password"
+              type="text"
               id="password"
               name="password"
               defaultValue={data.password}
@@ -173,9 +180,9 @@ export const RegistrationForm = () => {
             <input
               className="form-control"
               type="tel"
-              placeholder="phoneNumber"
-              id="phoneNumber"
-              name="phoneNumber"
+              placeholder="mobileNumber"
+              id="mobileNumber"
+              name="mobileNumber"
               defaultValue={data.mobileNumber}
               onChange={handleOnChange}
             />
