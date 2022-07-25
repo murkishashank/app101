@@ -3,26 +3,16 @@ import { useNavigate,  } from "react-router-dom";
 export const LoginForm = () =>{
     const navigate = useNavigate();
     const  [loginDetails, setLoginDetails] =useState({userName: '', password: ''});
-    const [userData, setUserData] = useState({});
 
-function getUserName(userName){
-    const data = [];
-     fetch(`http://localhost:8080/api/usersByUserName/${userName}`, {
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((result) => {
-            data.push(result);
-           setUserData(result);
-        })
-        .catch(console.log);
-        return userData;
+async function fetchUserName(userName){
+    const url = `http://localhost:8080/api/usersByUserName/${userName}`;
+    const response = await fetch(url, {method: "GET"})
+    const  data = await response.json();
+    validateLogin(data);
 }
 
-function handleLogin(){
+function validateLogin (userDetails){
     const {userName, password} = loginDetails;
-    const userDetails = getUserName(userName);
-    console.log('name', userDetails);
     if(Object.keys(userDetails).length){
         if(userName === userDetails.userName && password === userDetails.password){
             alert('Login successful');
@@ -35,7 +25,9 @@ function handleLogin(){
     else{
         alert('user does not exist. Please Register Now')
     }
-} 
+}
+
+
 
 function handleOnChange(key, value){
     const loginDetailsClone = {...loginDetails, [key]: value}
@@ -44,31 +36,35 @@ function handleOnChange(key, value){
 
 
     return(
-<div>
-    <label><h3>User Login Form</h3></label>
-    <form id= "loginForm">
-    <ul>
-            <label htmlFor="userName">User Name: </label>
+<div style={{height: 350, width:400, backgroundColor: 'white' , borderRadius: '25px', borderStyle: 'groove', marginLeft: '500px', marginTop:'90px', padding : '20px'}}>
+    <form >
+    <center><h3>User Login Form</h3></center>
+        <div className="mb-3">
+            <label><h6>User Name: </h6></label>
             <input
+              className="form-control"
               placeholder="Enter User Name "
               id="userName"
               name="userName"
               onChange={(event)=>{handleOnChange('userName', event.target.value)}}
             />
-          </ul>
-          <ul>
-            <label htmlFor="lastName">Last Name: </label>
+            </div>
+            <div className="mb-3">
+            <label htmlFor="lastName"> <h6>Password:</h6> </label>
             <input
-            type="password"
+              type="password"
+              className="form-control"
               placeholder="Enter Password"
               id="password"
               name="password"
               onChange={(event)=>{handleOnChange('password', event.target.value)}}
             />
-          </ul>
-    </form>
-<div><button onClick={handleLogin}>Login</button></div>
-<div><button>Sign Up</button></div>
+            </div>
+            <div>
+<div style ={{marginTop: '10px'}} className="d-grid"><button  className="btn btn-primary" onClick={()=>{fetchUserName(loginDetails.userName)}}>Login</button></div>
+<div style ={{marginTop: '10px'}} className="d-grid"><button className="btn btn-primary" onClick={()=>{navigate('/registrationform/new')}} >Sign Up</button></div>
+</div>
+</form>
 </div>
     )
 }

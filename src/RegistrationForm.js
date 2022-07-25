@@ -6,6 +6,8 @@ export const RegistrationForm = () => {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
+    userName: "",
+    password: "",
     firstName: "",
     lastName: "",
     mobileNumber: "",
@@ -59,6 +61,26 @@ export const RegistrationForm = () => {
         <h1> loading...</h1>
       ) : (
         <form id="registrationForm">
+          <ul>
+            <label htmlFor="UserName">User Name: </label>
+            <input
+              placeholder="User name"
+              id="userName"
+              name="userName"
+              defaultValue={data.userName}
+              onChange={handleOnChange}
+            />
+          </ul>
+          <ul>
+            <label htmlFor="password"> Password: </label>
+            <input
+              placeholder="Password"
+              id="password"
+              name="password"
+              defaultValue={data.password}
+              onChange={handleOnChange}
+            />
+          </ul>
           <ul>
             <label htmlFor="firstName">First Name: </label>
             <input
