@@ -1,9 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
 import { useState } from 'react';
-import { Routes, Route, Link, useNavigate} from "react-router-dom";
-import {RegistrationForm} from './RegistrationForm';
-import {Users} from './Users';
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import './App.css';
+import { RegistrationForm } from './RegistrationForm';
+import { Users } from './Users';
+import {LoginForm} from './LoginForm'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
@@ -11,9 +12,10 @@ function App() {
 
   return (
     <>
-    <button onClick={() => navigate(`/registrationform/new`)}>Sign Up</button>
-    <button onClick={() => navigate("/users")}>All Users</button>
+    
     <Routes>
+      <Route path='/' element={<LoginForm/>}></Route>
+      <Route path= '/registrationform/new' element={<RegistrationForm />}></Route>
         <Route path='/registrationForm/:userId' element={<RegistrationForm />}/>
         <Route path='/users' element={<Users/>}/>
     </Routes>

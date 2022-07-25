@@ -24,7 +24,7 @@ export const RegistrationForm = () => {
         return response.json();
       })
       .then((result) => {
-        if (result.status !== 400) {
+        if (result !== null) {
           setData(result);
         }
         setDataLoading(false);
@@ -73,8 +73,7 @@ export const RegistrationForm = () => {
     <>
       {dataLoading ? (
         <h1> loading...</h1>
-      ) : (
-        <form id="registrationForm">
+      ) : (<div>
           <ul>
             <label htmlFor="userName">User Name: </label>
             <input
@@ -144,7 +143,7 @@ export const RegistrationForm = () => {
           <button id="submit" onClick={handleSubmit}>
             Submit
           </button>
-        </form>
+      </div>
       )}
     </>
   );
