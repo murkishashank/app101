@@ -83,7 +83,7 @@ export const RegistrationForm = () => {
         .then((response) => response.json())
         .then((result) => {
           result.userName === data.userName
-            ? navigate("/users")
+            ? navigate("/")
             : alert("Error while saving the data.");
         });
     }
@@ -127,7 +127,7 @@ export const RegistrationForm = () => {
             <input
               className="form-control"
               placeholder="password"
-              type="text"
+              type="password"
               id="password"
               name="password"
               defaultValue={data.password}

@@ -1,0 +1,12 @@
+.leaveCard {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.editbtn {
+    display: flex;
+    position: relative;
+    float: right;
+    align-self: center;
+}

@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export const Leave = (props) => {
   const [leaveData, setLeaveData] = useState({});
+  const [fromDate, setFromDate] = useState();
 
   function handleOnChange(key, value) {
     const leaveDataClone = { ...leaveData, [key]: value };
@@ -19,11 +20,11 @@ export const Leave = (props) => {
   }
 
   function handleOnSubmit() {
-    const { fromDate, toDate, ...rest } = leaveData;
+    const { fromDate, toDate, reason } = leaveData;
     const payload = {
-      ...rest,
       fromDate: convertDateToDbFormat(fromDate),
       toDate: convertDateToDbFormat(toDate),
+      reason: reason,
       userName: props.userData.userName,
       appliedDate: getDateFormat(new Date()),
       approvedDate: null,
@@ -62,6 +63,9 @@ export const Leave = (props) => {
         // selected={}
         dateFormat="dd/MM/yyyy"
         onChange={(date) => {
+          if (key === "fromDate") {
+            setFromDate(date);
+          }
           handleOnChange(key, getDateFormat(date));
         }}
       />
@@ -99,11 +103,7 @@ export const Leave = (props) => {
             <h6>To date: </h6>
           </label>
           <div style={{ width: "300px" }}>
-            {getDatePickerComponent(
-              "toDate",
-              leaveData.toDate,
-              leaveData.fromDate
-            )}
+            {getDatePickerComponent("toDate", leaveData.toDate, fromDate)}
           </div>
         </div>
         <div className="mb-3">
