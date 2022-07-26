@@ -114,6 +114,7 @@ export const Leave = (props) => {
             <textarea
               className="form-control"
               placeholder="Enter reason"
+              value={leaveData.reason}
               onChange={(event) => {
                 handleOnChange("reason", event.target.value);
               }}
