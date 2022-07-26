@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { decrypt } from "./encryption";
+import { decrypt } from "./Encryption";
 
 export const LoginForm = (props) => {
   const navigate = useNavigate();
