@@ -10,7 +10,7 @@ export const NavBar = () => {
       <Container>
         <Navbar.Brand as={Link} to="/home">App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse id="basic-navbar-nav" style={{float: "right"}}>
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/home">Home</Nav.Link>
             <Nav.Link as={Link} to="/leave">Apply for leave</Nav.Link>

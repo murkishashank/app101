@@ -11,6 +11,9 @@ export const Profile = () => {
 
 // requestID
 // userId
-// typeofRequest
+// fromDate
+// toDate
 // reason
+// createTimeStamp
+// changeTimeStamp
 // statusFlag
