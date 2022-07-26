@@ -12,11 +12,11 @@ export const Users = () => {
   const [dataLoading, setDataLoading] = useState(true);
 
   const columnDefs = [
-    { header: "First Name", field: "firstName" },
-    { header: "Last Name", field: "lastName" },
-    { header: "Mobile Number", field: "mobileNumber" },
-    { header: "Age", field: "age" },
-    { header: "Accepted/Rejected", field: "statusFlag" },
+    { headerName: "First Name", field: "firstName" },
+    { headerName: "Last Name", field: "lastName" },
+    { headerName: "Mobile Number", field: "mobileNumber" },
+    { headerName: "Age", field: "age" },
+    { headerName: "Accepted/Rejected", field: "statusFlag" },
   ];
 
   useEffect(() => {
