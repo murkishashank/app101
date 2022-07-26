@@ -15,8 +15,12 @@ async function fetchUserName(userName){
 
 function validateLogin (userDetails){
     const {userName, password} = loginDetails;
+    const designation = userDetails.designation;
     if(Object.keys(userDetails).length){
         if(userName === userDetails.userName && password === decrypt(userDetails.password)){
+            if(designation === "Manager"){
+                return navigate("/admin");
+            }
             navigate("/home");
         }
         else{
