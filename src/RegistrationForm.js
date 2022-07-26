@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { encrypt, decrypt } from "./Encryption";
+import { encrypt, decrypt } from "./encryption";
 
 export const RegistrationForm = () => {
   const { userId = "new" } = { ...useParams() };
@@ -27,7 +27,7 @@ export const RegistrationForm = () => {
       .then((result) => {
         console.log(result);
         if (result !== null) {
-          if(result.password) {
+          if (result.password) {
             result.password = decrypt(result.password);
           }
           setData(result);
