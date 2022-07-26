@@ -10,9 +10,6 @@ import { Profile } from './Profile';
 import { Admin } from './Admin';
 import { Users } from './Users'
 function App() {
-
-  const navigate = useNavigate();
-
   return (
     <>
     
