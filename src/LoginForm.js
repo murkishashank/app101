@@ -1,13 +1,26 @@
-import { useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { decrypt } from "./Encryption";
 
 export const LoginForm = (props) => {
   const navigate = useNavigate();
-  const [loginDetails, setLoginDetails] = useState({
-    userName: "",
-    password: "",
-  });
+  // const [loginDetails, setLoginDetails] = useState({
+  //   userName: "",
+  //   password: "",
+  // });
+
+  function reducer(state, action) {
+    switch (action.key) {
+      case "userName":
+        return { ...state, userName: action.value };
+      case "password":
+        return { ...state, password: action.value };
+      default:
+        return state;
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, { userName: "", password: "" });
 
   async function fetchUserName(userName) {
     const url = `http://localhost:8080/api/usersByUserName/${userName}`;
@@ -16,8 +29,12 @@ export const LoginForm = (props) => {
     validateLogin(data);
   }
 
+  useEffect(() => {
+    console.log("name", state);
+  }, [state]);
   function validateLogin(userDetails) {
-    const { userName, password } = loginDetails;
+    // const { userName, password } = loginDetails;
+    const { userName, password } = state;
     if (Object.keys(userDetails).length) {
       if (
         userName === userDetails.userName &&
@@ -37,10 +54,10 @@ export const LoginForm = (props) => {
     }
   }
 
-  function handleOnChange(key, value) {
-    const loginDetailsClone = { ...loginDetails, [key]: value };
-    setLoginDetails(loginDetailsClone);
-  }
+  // function handleOnChange(key, value) {
+  //   const loginDetailsClone = { ...loginDetails, [key]: value };
+  //   setLoginDetails(loginDetailsClone);
+  // }
 
   return (
     <div
@@ -68,7 +85,8 @@ export const LoginForm = (props) => {
           id="userName"
           name="userName"
           onChange={(event) => {
-            handleOnChange("userName", event.target.value);
+            dispatch({ key: "userName", value: event.target.value });
+            // handleOnChange("userName", event.target.value);
           }}
         />
       </div>
@@ -84,7 +102,8 @@ export const LoginForm = (props) => {
           id="password"
           name="password"
           onChange={(event) => {
-            handleOnChange("password", event.target.value);
+            dispatch({ key: "password", value: event.target.value });
+            // handleOnChange("password", event.target.value);
           }}
         />
       </div>
@@ -93,7 +112,8 @@ export const LoginForm = (props) => {
           <button
             className="btn btn-primary"
             onClick={() => {
-              fetchUserName(loginDetails.userName);
+              fetchUserName(state.userName);
+              // fetchUserName(loginDetails.userName);
             }}
           >
             Login
