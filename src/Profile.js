@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { NavBar } from "./NavBar";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import getUser from "./api/getUserByUserName";
-import postUser from "./api/postUser";
 
 export const Profile = () => {
   const [userData, setUserData] = useState({});
