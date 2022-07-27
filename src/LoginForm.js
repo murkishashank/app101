@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { decrypt } from "./Encryption";
-
+import { useFetch } from "./CustomHooks/useFetch";
 export const LoginForm = (props) => {
   const navigate = useNavigate();
   // const [loginDetails, setLoginDetails] = useState({
@@ -22,16 +22,14 @@ export const LoginForm = (props) => {
 
   const [state, dispatch] = useReducer(reducer, { userName: "", password: "" });
 
-  async function fetchUserName(userName) {
-    const url = `http://localhost:8080/api/usersByUserName/${userName}`;
-    const response = await fetch(url, { method: "GET" });
-    const data = await response.json();
-    validateLogin(data);
+  const [fetchUserData] = useFetch();
+
+  function fetchUserName(userName) {
+    fetchUserData(userName).then((data) => {
+      validateLogin(data);
+    });
   }
 
-  useEffect(() => {
-    console.log("name", state);
-  }, [state]);
   function validateLogin(userDetails) {
     // const { userName, password } = loginDetails;
     const { userName, password } = state;
