@@ -4,7 +4,6 @@ export const BtnCellRenderer = (props) => {
 
   
   const saveLeaveRecord = () => {
-    // console.log(props.data);
     props.clicked(props.data);
 
   }

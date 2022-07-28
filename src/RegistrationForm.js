@@ -25,7 +25,6 @@ export const RegistrationForm = () => {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
         if (result !== null) {
           if (result.password) {
             result.password = decrypt(result.password);
