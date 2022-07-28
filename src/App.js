@@ -9,6 +9,7 @@ import { Leave } from "./Leave";
 import { Profile } from "./Profile";
 import { Admin } from "./Admin";
 import { Users } from "./Users";
+import { EditProfile } from "./components/EditProfile";
 import { LoginUserDetailsProvider } from "./UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "./PreviousApplications";
 function App() {
