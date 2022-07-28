@@ -12,14 +12,14 @@ export const NavBar = () => {
           App
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" style={{float: "right"}}>
+        <Navbar.Collapse id="basic-navbar-nav" style={{ float: "right" }}>
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/home">
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/leave">
+            {/* <Nav.Link as={Link} to="/leave">
               Leave
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link as={Link} to="/profile">
               profile
             </Nav.Link>

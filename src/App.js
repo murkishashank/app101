@@ -10,6 +10,7 @@ import { Profile } from "./Profile";
 import { Admin } from "./Admin";
 import { Users } from "./Users";
 import { EditProfile } from "./components/EditProfile";
+import { LoginUserDetailsProvider } from "./UserContext/LoginUserDetailContext";
 function App() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
