@@ -10,3 +10,7 @@
     float: right;
     align-self: center;
 }
+
+.errorMessage {
+    color: red;
+}

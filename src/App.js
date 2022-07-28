@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { RegistrationForm } from "./RegistrationForm";
 import { LoginForm } from "./LoginForm";
@@ -13,7 +13,6 @@ import { EditProfile } from "./components/EditProfile";
 import { LoginUserDetailsProvider } from "./UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "./PreviousApplications";
 function App() {
-  const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [approvedPeople, setApprovedPeople] = useState([]);
   const [deniedPeople, setDeniedPeople] = useState([]);

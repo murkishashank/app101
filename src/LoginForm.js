@@ -4,10 +4,6 @@ import { decrypt } from "./Encryption";
 import { useFetch } from "./CustomHooks/useFetch";
 export const LoginForm = (props) => {
   const navigate = useNavigate();
-  // const [loginDetails, setLoginDetails] = useState({
-  //   userName: "",
-  //   password: "",
-  // });
 
   function reducer(state, action) {
     switch (action.key) {
@@ -25,37 +21,30 @@ export const LoginForm = (props) => {
   const [fetchUserData] = useFetch();
 
   function fetchUserName(userName) {
+
     fetchUserData(userName).then((data) => {
       validateLogin(data);
     });
   }
 
   function validateLogin(userDetails) {
-    // const { userName, password } = loginDetails;
+    if(userDetails == null) {
+      alert("user does not exist. Please Register Now ")
+    }
     const { userName, password } = state;
     if (Object.keys(userDetails).length) {
       if (
         userName === userDetails.userName &&
-        password === decrypt(userDetails.password)
-      ) {
+        password === decrypt(userDetails.password)) {
         if (props.loginUserDetails) {
           props.loginUserDetails(userDetails);
         }
         navigate("/home");
       } else {
-        if (userDetails.message === "No value present") {
-          alert("user does not exist. Please Register Now");
-        } else {
           alert("invalid username password");
         }
-      }
     }
   }
-
-  // function handleOnChange(key, value) {
-  //   const loginDetailsClone = { ...loginDetails, [key]: value };
-  //   setLoginDetails(loginDetailsClone);
-  // }
 
   return (
     <div

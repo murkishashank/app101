@@ -2,18 +2,22 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "./CommonStyling.css";
-import { Link } from "react-router-dom";
 
 export const LeaveCard = (props) => {
   const leaveData = props.leaveData;
-  var status;
+  let status;
   leaveData.approvedFlag === "Rejected"
     ? (status = "Rejected")
     : leaveData.approvedFlag === ""
       ? (status = "Pending")
       : (status = "Approved");
+
+  const handleOnClick = () => {
+    props.onEdit(props.index)
+  }
+
   return (
-    <Card style={{ width: "50rem", height: "10rem" }}>
+    <Card style={{ width: "50rem", height: "auto" }}>
       <Card.Body>
         <Card.Title>{leaveData.reason}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
@@ -24,7 +28,7 @@ export const LeaveCard = (props) => {
             Edit
           </Button>
         ) : (
-          <Button className="editbtn" as={Link} to="/leave">
+          <Button className="editbtn" onClick={handleOnClick}>
             Edit
           </Button>
         )}
@@ -35,6 +39,7 @@ export const LeaveCard = (props) => {
           To: {leaveData.toDate}
         </Card.Subtitle>
         <Card.Text>Status: {status}</Card.Text>
+        <Card.Text>Remarks: {leaveData.remarks}</Card.Text>
       </Card.Body>
     </Card>
   );
