@@ -29,7 +29,6 @@ export const Home = () => {
     fetch('http://localhost:8080/api/allLeaves/', { method: "GET" })
     .then((response) => response.json())
     .then(result => {
-      console.log("result", result)
       setLeaveData(result);
     })
   }, [])

@@ -27,7 +27,6 @@ export const EditProfile = (props) => {
         })
     }
     const handleOnChange = (key, value) => {
-        console.log("onChange", userData, key, value)
 
         const userDataClone = { ...userData, [key]: value }
         setUserData(userDataClone)
