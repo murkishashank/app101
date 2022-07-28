@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { NavBar } from "./NavBar";
+import { NavBar } from "../components/NavBar";
 
 export const Profile = (props) => {
   const userName = props.userData.userName

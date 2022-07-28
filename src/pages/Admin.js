@@ -9,12 +9,11 @@ import {
 } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { useNavigate } from "react-router-dom";
-import { BtnCellRenderer } from "./BtnCellRenderer.js";
+import { BtnCellRenderer } from "../components/GridButton.js";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { useEffectOnce } from "./useEffectOnce.js";
-import { NavBar } from "./NavBar.js";
-import { Button } from "bootstrap";
+import { useEffectOnce } from "../CustomHooks/useEffectOnce.js";
+import { NavBar } from "../components/NavBar.js";
 import { buildQueries } from "@testing-library/react";
 export const Admin = (props) => {
   const gridRef1 = useRef();
@@ -103,7 +102,7 @@ export const Admin = (props) => {
   });
 
   const handlePreviousBttn = () => {
-    props.prevoiusAppl({approvedPeople, deniedPeople});
+    props.prevoiusAppl({ approvedPeople, deniedPeople });
     navigate("/previousApplications");
   }
 
@@ -115,14 +114,14 @@ export const Admin = (props) => {
         <>
           <NavBar>
           </NavBar>
-          <button onClick={handlePreviousBttn} style={{ background: "white", borderRadius: "10px", marginLeft: "1200px", marginTop: "10px"}}>Previous applications</button>
+          <button onClick={handlePreviousBttn} style={{ background: "white", borderRadius: "10px", marginLeft: "1200px", marginTop: "10px" }}>Previous applications</button>
           <div className="ag-theme-alpine" style={{ height: 300 }}>
             <h3>All applications</h3>
             <AgGridReact
               ref={gridRef1}
               rowData={appliedPeople}
               columnDefs={columnDefs}
-              ></AgGridReact>
+            ></AgGridReact>
           </div>
         </>
       )}

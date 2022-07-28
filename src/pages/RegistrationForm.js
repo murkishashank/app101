@@ -1,6 +1,6 @@
 import { React, useEffect, useState, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { encrypt, decrypt } from "./Encryption";
+import { encrypt, decrypt } from "../utils/Encryption";
 
 export const RegistrationForm = () => {
   const { userId = "new" } = { ...useParams() };
@@ -17,18 +17,18 @@ export const RegistrationForm = () => {
     dataLoading: true,
   }
 
-  const reducer =(state, action) => {
+  const reducer = (state, action) => {
     switch ((action.type)) {
-      case 'ADD': 
-      return {
-        ...state,
-        [action.payload.name]: action.payload.value,
+      case 'ADD':
+        return {
+          ...state,
+          [action.payload.name]: action.payload.value,
 
-      }
-      break;
-      case'NEW':
-      return {
-        ...state,
+        }
+        break;
+      case 'NEW':
+        return {
+          ...state,
           userName: "",
           password: "",
           firstName: "",
@@ -37,9 +37,9 @@ export const RegistrationForm = () => {
           age: null,
           statusFlag: 0,
           dataLoading: false
-      }
-      break;
-        default:
+        }
+        break;
+      default:
         break;
     }
   }
@@ -47,7 +47,7 @@ export const RegistrationForm = () => {
   const [updatedState, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
-    dispatch({type: "NEW"})
+    dispatch({ type: "NEW" })
     fetch(`http://localhost:8080/api/users/${userId}`, { method: "GET" })
       .then((response) => {
         return response.json();
@@ -57,9 +57,9 @@ export const RegistrationForm = () => {
           if (result.password) {
             result.password = decrypt(result.password);
           }
-          dispatch({result,type: "EMPTY"})
+          dispatch({ result, type: "EMPTY" })
         }
-    dispatch({type: "NEW"})
+        dispatch({ type: "NEW" })
       })
       .catch(console.log);
   }, [userId]);
@@ -68,8 +68,8 @@ export const RegistrationForm = () => {
     event.preventDefault();
     const name = event.target.name;
     const value = event.target.value;
-    const payload ={name, value}
-    dispatch({payload, type: "ADD"})
+    const payload = { name, value }
+    dispatch({ payload, type: "ADD" })
     updatedState.statusFlag = 0;
   };
 
