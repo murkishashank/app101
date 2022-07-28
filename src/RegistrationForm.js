@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { encrypt, decrypt } from "./Encryption";
 
@@ -6,7 +6,7 @@ export const RegistrationForm = () => {
   const { userId = "new" } = { ...useParams() };
   const navigate = useNavigate();
 
-  const [data, setData] = useState({
+  const initialState = {
     userName: "",
     password: "",
     firstName: "",
@@ -14,25 +14,52 @@ export const RegistrationForm = () => {
     mobileNumber: "",
     age: null,
     statusFlag: 0,
-  });
+    dataLoading: true,
+  }
 
-  const [dataLoading, setDataLoading] = useState(true);
+  const reducer =(state, action) => {
+    switch ((action.type)) {
+      case 'ADD': 
+      return {
+        ...state,
+        [action.payload.name]: action.payload.value,
+
+      }
+      break;
+      case'NEW':
+      return {
+        ...state,
+          userName: "",
+          password: "",
+          firstName: "",
+          lastName: "",
+          mobileNumber: "",
+          age: null,
+          statusFlag: 0,
+          dataLoading: false
+      }
+      break;
+        default:
+        break;
+    }
+  }
+
+  const [updatedState, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
-    setDataLoading(true);
+    dispatch({type: "NEW"})
     fetch(`http://localhost:8080/api/users/${userId}`, { method: "GET" })
       .then((response) => {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
         if (result !== null) {
           if (result.password) {
             result.password = decrypt(result.password);
           }
-          setData(result);
+          dispatch({result,type: "EMPTY"})
         }
-        setDataLoading(false);
+    dispatch({type: "NEW"})
       })
       .catch(console.log);
   }, [userId]);
@@ -41,19 +68,16 @@ export const RegistrationForm = () => {
     event.preventDefault();
     const name = event.target.name;
     const value = event.target.value;
-    if (event.target.name === "userName") data.userName = value;
-    if (name === "firstName") data.firstName = event.target.value;
-    if (name === "lastName") data.lastName = value;
-    if (name === "password") data.password = value;
-    if (name === "age") data.age = parseInt(value);
-    if (name === "mobileNumber") data.mobileNumber = value;
-    data.statusFlag = 0;
+    const payload ={name, value}
+    dispatch({payload, type: "ADD"})
+    updatedState.statusFlag = 0;
   };
 
   const handleSubmit = () => {
-    const dataValues = Object.values(data);
+    const dataValues = Object.values(updatedState);
+
     const isUserNamePresent = fetch(
-      `http://localhost:8080/api/usersByUserName/${data.userName}`
+      `http://localhost:8080/api/usersByUserName/${updatedState.userName}`
     )
       .then((response) => {
         if (response.status === 200) {
@@ -67,22 +91,22 @@ export const RegistrationForm = () => {
       });
     if (dataValues.includes(null) || dataValues.includes("")) {
       alert("All fields are required");
-    } else if (data.mobileNumber.length !== 10) {
+    } else if (updatedState.mobileNumber.length != 10) {
       alert("Enter valid phone number.");
     } else if (isUserNamePresent === true) {
       alert("Username already in use.");
     } else {
-      data.password = encrypt(data.password);
+      updatedState.password = encrypt(updatedState.password);
       fetch("http://localhost:8080/api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(updatedState),
       })
         .then((response) => response.json())
         .then((result) => {
-          result.userName === data.userName
+          result.userName === updatedState.userName
             ? navigate("/")
             : alert("Error while saving the data.");
         });
@@ -91,7 +115,7 @@ export const RegistrationForm = () => {
 
   return (
     <>
-      {dataLoading ? (
+      {updatedState.dataLoading ? (
         <h1> Form loading...</h1>
       ) : (
         <div
@@ -116,7 +140,7 @@ export const RegistrationForm = () => {
               type="text"
               id="userName"
               name="userName"
-              defaultValue={data.userName}
+              defaultValue={updatedState.userName}
               onChange={handleOnChange}
             />
           </div>
@@ -130,7 +154,7 @@ export const RegistrationForm = () => {
               type="password"
               id="password"
               name="password"
-              defaultValue={data.password}
+              defaultValue={updatedState.password}
               onChange={handleOnChange}
             />
           </div>
@@ -144,7 +168,7 @@ export const RegistrationForm = () => {
               type="text"
               id="firstName"
               name="firstName"
-              defaultValue={data.firstName}
+              defaultValue={updatedState.firstName}
               onChange={handleOnChange}
             />
           </div>
@@ -158,7 +182,7 @@ export const RegistrationForm = () => {
               type="text"
               id="lastName"
               name="lastName"
-              defaultValue={data.lastName}
+              defaultValue={updatedState.lastName}
               onChange={handleOnChange}
             />
           </div>
@@ -172,7 +196,7 @@ export const RegistrationForm = () => {
               placeholder="Age"
               id="age"
               name="age"
-              defaultValue={data.age}
+              defaultValue={updatedState.age}
               onChange={handleOnChange}
             />
           </div>
@@ -186,7 +210,7 @@ export const RegistrationForm = () => {
               placeholder="mobileNumber"
               id="mobileNumber"
               name="mobileNumber"
-              defaultValue={data.mobileNumber}
+              defaultValue={updatedState.mobileNumber}
               onChange={handleOnChange}
             />
           </div>

@@ -10,18 +10,16 @@ import {
 import { AgGridReact } from "ag-grid-react";
 import { useNavigate } from "react-router-dom";
 import { BtnCellRenderer } from "./BtnCellRenderer.js";
-
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useEffectOnce } from "./useEffectOnce.js";
 import { NavBar } from "./NavBar.js";
-import { AdminNavBar } from "./AdminNavbar.js";
-
-export const Admin = () => {
+import { Button } from "bootstrap";
+import { buildQueries } from "@testing-library/react";
+export const Admin = (props) => {
   const gridRef1 = useRef();
-  const gridRef2 = useRef();
-  const gridRef3 = useRef();
   const navigate = useNavigate();
+
   const [appliedPeople, setAppliedPeople] = useState([]);
   const [approvedPeople, setApprovedPeople] = useState([]);
   const [deniedPeople, setDeniedPeople] = useState([]);
@@ -57,7 +55,7 @@ export const Admin = () => {
       resizable: true,
     },
     {
-      headerName: "",
+      headerName: "Actions",
       cellRenderer: BtnCellRenderer,
       cellRendererParams: {
         clicked: function (data) {
@@ -67,7 +65,8 @@ export const Admin = () => {
               "Content-Type": "application/json;charset=utf-8",
             },
             body: JSON.stringify(data),
-          });
+          })
+          window.location.reload(false);
         },
       },
       resizable: true,
@@ -103,6 +102,11 @@ export const Admin = () => {
       .catch(console.log);
   });
 
+  const handlePreviousBttn = () => {
+    props.prevoiusAppl({approvedPeople, deniedPeople});
+    navigate("/previousApplications");
+  }
+
   return (
     <>
       {dataLoading ? (
@@ -111,7 +115,8 @@ export const Admin = () => {
         <>
           <NavBar>
           </NavBar>
-          <div className="ag-theme-alpine" style={{ height: 180 }}>
+          <button onClick={handlePreviousBttn} style={{ background: "white", borderRadius: "10px", marginLeft: "1200px", marginTop: "10px"}}>Previous applications</button>
+          <div className="ag-theme-alpine" style={{ height: 300 }}>
             <h3>All applications</h3>
             <AgGridReact
               ref={gridRef1}
@@ -119,27 +124,6 @@ export const Admin = () => {
               columnDefs={columnDefs}
               ></AgGridReact>
           </div>
-          <div className="ag-theme-alpine" style={{ height: 180 }}>
-            <h3 className="title" style={{ marginTop: 45 }}>
-              Approved leaves
-            </h3>
-            <AgGridReact
-              ref={gridRef2}
-              rowData={approvedPeople}
-              columnDefs={columnDefs}
-              ></AgGridReact>
-          </div>
-          <div className="ag-theme-alpine" style={{ height: 180 }}>
-            <h3 className="title" style={{ marginTop: 45 }}>
-              Denied leaves
-            </h3>
-            <AgGridReact
-              ref={gridRef3}
-              rowData={deniedPeople}
-              columnDefs={columnDefs}
-              ></AgGridReact>
-          </div>
-          
         </>
       )}
     </>
