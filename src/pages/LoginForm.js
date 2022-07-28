@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { decrypt } from "./Encryption";
-import { useFetch } from "./CustomHooks/useFetch";
+import { decrypt } from "../utils/Encryption";
+import { useFetch } from "../CustomHooks/useFetch";
 export const LoginForm = (props) => {
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ export const LoginForm = (props) => {
   }
 
   function validateLogin(userDetails) {
-    if(userDetails == null) {
+    if (userDetails == null) {
       alert("user does not exist. Please Register Now ")
     }
     const { userName, password } = state;
@@ -41,8 +41,8 @@ export const LoginForm = (props) => {
         }
         navigate("/home");
       } else {
-          alert("invalid username password");
-        }
+        alert("invalid username password");
+      }
     }
   }
 
