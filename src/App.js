@@ -10,13 +10,25 @@ import { Profile } from "./Profile";
 import { Admin } from "./Admin";
 import { Users } from "./Users";
 import { LoginUserDetailsProvider } from "./UserContext/LoginUserDetailContext";
+import { PreviousApplications } from "./PreviousApplications";
 function App() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
+  const [approvedPeople, setApprovedPeople] = useState([]);
+  const [deniedPeople, setDeniedPeople] = useState([]);
+  
+  function handlePrevoiusAppl(data){
+    const {approvedPeople, deniedPeople} = data;
+    setApprovedPeople(approvedPeople);
+    setDeniedPeople(deniedPeople);
+  }
 
   function handleLoginUserDetails(userDetails) {
+    localStorage.setItem("designation", userDetails.designation);
     setUserData(userDetails);
   }
+
+
 
   return (
     <>
@@ -38,7 +50,8 @@ function App() {
           <Route path="/leave" element={<Leave userData={userData} />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/users" element={<Users />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin prevoiusAppl= {handlePrevoiusAppl} />} />
+          <Route path="/previousApplications" element={<PreviousApplications approvedpeople={approvedPeople} deniedpeople={deniedPeople}/>} />
         </Routes>
       </LoginUserDetailsProvider>
     </>
