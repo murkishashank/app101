@@ -1,45 +1,53 @@
-import { useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { decrypt } from "./Encryption";
-
+import { useFetch } from "./CustomHooks/useFetch";
 export const LoginForm = (props) => {
   const navigate = useNavigate();
-  const [loginDetails, setLoginDetails] = useState({
-    userName: "",
-    password: "",
-  });
 
-  async function fetchUserName(userName) {
-    const url = `http://localhost:8080/api/usersByUserName/${userName}`;
-    const response = await fetch(url, { method: "GET" });
-    const data = await response.json();
-    validateLogin(data);
-  }
-
-  function validateLogin(userDetails) {
-    const { userName, password } = loginDetails;
-    if (Object.keys(userDetails).length) {
-      if (
-        userName === userDetails.userName &&
-        password === decrypt(userDetails.password)
-      ) {
-        if (props.loginUserDetails) {
-          props.loginUserDetails(userDetails);
-        }
-        navigate("/home");
-      } else {
-        if (userDetails.message === "No value present") {
-          alert("user does not exist. Please Register Now");
-        } else {
-          alert("invalid username password");
-        }
-      }
+  function reducer(state, action) {
+    switch (action.key) {
+      case "userName":
+        return { ...state, userName: action.value };
+      case "password":
+        return { ...state, password: action.value };
+      default:
+        return state;
     }
   }
 
-  function handleOnChange(key, value) {
-    const loginDetailsClone = { ...loginDetails, [key]: value };
-    setLoginDetails(loginDetailsClone);
+  const [state, dispatch] = useReducer(reducer, { userName: "", password: "" });
+
+  const [fetchUserData] = useFetch();
+
+  function fetchUserName(userName) {
+
+    fetchUserData(userName).then((data) => {
+      validateLogin(data);
+    });
+  }
+
+  function validateLogin(userDetails) {
+    if(userDetails == null) {
+      alert("user does not exist. Please Register Now ")
+    }
+    const { userName, password } = state;
+    const designation = userDetails.designation;
+    if (Object.keys(userDetails).length) {
+      if (
+        userName === userDetails.userName &&
+        password === decrypt(userDetails.password)) {
+        if (props.loginUserDetails) {
+          props.loginUserDetails(userDetails);
+        }
+        if (designation === "Manager") {
+          return navigate("/admin");
+        }
+        navigate("/home");
+      } else {
+          alert("invalid username password");
+        }
+    }
   }
 
   return (
@@ -68,7 +76,8 @@ export const LoginForm = (props) => {
           id="userName"
           name="userName"
           onChange={(event) => {
-            handleOnChange("userName", event.target.value);
+            dispatch({ key: "userName", value: event.target.value });
+            // handleOnChange("userName", event.target.value);
           }}
         />
       </div>
@@ -84,7 +93,8 @@ export const LoginForm = (props) => {
           id="password"
           name="password"
           onChange={(event) => {
-            handleOnChange("password", event.target.value);
+            dispatch({ key: "password", value: event.target.value });
+            // handleOnChange("password", event.target.value);
           }}
         />
       </div>
@@ -93,7 +103,8 @@ export const LoginForm = (props) => {
           <button
             className="btn btn-primary"
             onClick={() => {
-              fetchUserName(loginDetails.userName);
+              fetchUserName(state.userName);
+              // fetchUserName(loginDetails.userName);
             }}
           >
             Login
