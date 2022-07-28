@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { postUser } from "../api/postUser"
+import { getUser } from "../api/getUserByUserName"
 import { useNavigate, useParams } from "react-router-dom";
 
 export const EditProfile = (props) => {
 
-    const [userData, setUserData] = useState(props.userData);
+    const [userData, setUserData] = useState({});
     const { userName, firstName, lastName, age, mobileNumber } = userData
     const [editMode, setEditMode] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const user = getUser(props.userData.userName);
+        user.then((data) => {
+            setUserData(data);
+        })
+    }, [])
     const saveUser = () => {
         setEditMode(true)
         const saveUserInfo = postUser(userData)
@@ -27,7 +34,7 @@ export const EditProfile = (props) => {
     }
     return (
         <div>
-            <h1> Edit Profile</h1>
+            <h1> Edit </h1>
             <div style={{
                 height: 450,
                 width: 500,
