@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import { LoginUserDetailContext } from "./UserContext/LoginUserDetailContext";
 
-export const Leave = (props) => {
+export const Leave = () => {
   const [leaveData, setLeaveData] = useState({});
   const [fromDate, setFromDate] = useState();
   const navigate = useNavigate();

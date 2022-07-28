@@ -33,6 +33,7 @@ export const LoginForm = (props) => {
   function validateLogin(userDetails) {
     // const { userName, password } = loginDetails;
     const { userName, password } = state;
+    const designation = userDetails.designation;
     if (Object.keys(userDetails).length) {
       if (
         userName === userDetails.userName &&
@@ -40,6 +41,9 @@ export const LoginForm = (props) => {
       ) {
         if (props.loginUserDetails) {
           props.loginUserDetails(userDetails);
+        }
+        if (designation === "Manager") {
+          return navigate("/admin");
         }
         navigate("/home");
       } else {
