@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import { NavBar } from "./NavBar";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
+import { LoginUserDetailContext } from "./UserContext/LoginUserDetailContext";
 
 export const Leave = (props) => {
   const [leaveData, setLeaveData] = useState({});
   const [fromDate, setFromDate] = useState();
+  const navigate = useNavigate();
+
+  const loginUserData = useContext(LoginUserDetailContext);
 
   function handleOnChange(key, value) {
     const leaveDataClone = { ...leaveData, [key]: value };
@@ -25,7 +30,7 @@ export const Leave = (props) => {
       fromDate: convertDateToDbFormat(fromDate),
       toDate: convertDateToDbFormat(toDate),
       reason: reason,
-      userName: props.userData.userName,
+      userName: loginUserData.userName,
       appliedDate: getDateFormat(new Date()),
       approvedDate: null,
       approvedFlag: "N",
@@ -44,6 +49,7 @@ export const Leave = (props) => {
       .then((result) => {
         if (result.requestId) {
           alert("Details saved successfully.");
+          navigate("/home");
           setLeaveData({});
         } else {
           alert("Error while applying the data.");
@@ -78,11 +84,11 @@ export const Leave = (props) => {
       <div
         style={{
           height: "inherit",
-          width: "inherit",
+          width: "352px",
           backgroundColor: "white",
           borderRadius: "25px",
           borderStyle: "groove",
-          marginLeft: "inherit",
+          marginLeft: "480px",
           marginTop: "48px",
           padding: "20px",
         }}
