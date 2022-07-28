@@ -1,22 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import getUser from "./api/getUserByUserName";
 import { NavBar } from "./NavBar";
 
 export const Profile = (props) => {
   const userName = props.userData.userName
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const user = getUser(props.userData.userName);
-  //   user.then((data) => {
-  //     setUserData(data);
-  //   })
-  // }, [])
-
   return (
     <>
-      <h1>Profile</h1>
       <NavBar></NavBar>
       <div style={{
         marginLeft: "100px",
