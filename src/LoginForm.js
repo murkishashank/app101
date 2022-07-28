@@ -32,16 +32,12 @@ export const LoginForm = (props) => {
       alert("user does not exist. Please Register Now ")
     }
     const { userName, password } = state;
-    const designation = userDetails.designation;
     if (Object.keys(userDetails).length) {
       if (
         userName === userDetails.userName &&
         password === decrypt(userDetails.password)) {
         if (props.loginUserDetails) {
           props.loginUserDetails(userDetails);
-        }
-        if (designation === "Manager") {
-          return navigate("/admin");
         }
         navigate("/home");
       } else {
