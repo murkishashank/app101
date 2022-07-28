@@ -1,6 +1,7 @@
 import { request } from "../utils/requests.ts";
 
-export default function postUser(userData) {
+export const postUser = (userData) => {
+
     const response = request(
         `http://localhost:8080/api/users`
         , {

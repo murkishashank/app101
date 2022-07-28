@@ -9,6 +9,7 @@ import { Leave } from "./Leave";
 import { Profile } from "./Profile";
 import { Admin } from "./Admin";
 import { Users } from "./Users";
+import { EditProfile } from "./components/EditProfile";
 function App() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
@@ -34,9 +35,10 @@ function App() {
         />
         <Route path="/home" element={<Home />} />
         <Route path="/leave" element={<Leave userData={userData} />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile userData={userData} />} />
         <Route path="/users" element={<Users />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/editProfile" element={<EditProfile userData={userData} />} />
       </Routes>
     </>
   );
