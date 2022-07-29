@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { decrypt } from "../utils/Encryption";
 // import { useFetch } from "../CustomHooks/useFetch";
@@ -8,6 +8,7 @@ import { getUser } from "../api/getUserByUserName";
 export const LoginForm = (props) => {
   const navigate = useNavigate();
 
+  const initialState = { userName: "", password: "" };
   const reducer = (state, action) => {
     switch (action.key) {
       case "userName":
@@ -19,8 +20,10 @@ export const LoginForm = (props) => {
     }
   };
 
-  const [state, dispatch] = useReducer(reducer, { userName: "", password: "" });
-
+  const [state, dispatch] = useReducer(reducer, initialState);
+  useEffect(() => {
+    console.log("name", state);
+  }, [state]);
   // const [fetchUserData] = useFetch();
 
   const fetchUserName = (userName) => {
@@ -52,9 +55,9 @@ export const LoginForm = (props) => {
   return (
     <div
       style={{
-        height: 350,
+        height: 450,
         width: 400,
-        backgroundColor: "white",
+        backgroundColor: "#F5F2F2",
         borderRadius: "25px",
         borderStyle: "groove",
         marginLeft: "500px",
@@ -64,7 +67,8 @@ export const LoginForm = (props) => {
     >
       <center>
         <Form.Label>
-          <h3>User Login Form</h3>
+          <img src={"../Tecnics.png"} height="75"></img>
+          <h3>Login Form</h3>
         </Form.Label>
       </center>
       <Form.Group className="mb-3">
@@ -74,7 +78,7 @@ export const LoginForm = (props) => {
         <Form.Control
           type="text"
           className="form-control"
-          placeholder="Enter User Name "
+          placeholder="User Name "
           id="userName"
           name="userName"
           onChange={(event) => {
@@ -90,7 +94,7 @@ export const LoginForm = (props) => {
         <Form.Control
           type="password"
           className="form-control"
-          placeholder="Enter Password"
+          placeholder=" Password"
           id="password"
           name="password"
           onChange={(event) => {
@@ -102,7 +106,7 @@ export const LoginForm = (props) => {
       <Form.Group>
         <Form.Group style={{ marginTop: "10px" }} className="d-grid">
           <Button
-            className="btn btn-primary"
+            className="btn btn-secondary"
             onClick={() => {
               fetchUserName(state.userName);
               // fetchUserName(loginDetails.userName);
@@ -113,7 +117,7 @@ export const LoginForm = (props) => {
         </Form.Group>
         <Form.Group style={{ marginTop: "10px" }} className="d-grid">
           <Button
-            className="btn btn-primary"
+            className="btn btn-secondary"
             onClick={() => {
               navigate("/registrationform/new");
             }}

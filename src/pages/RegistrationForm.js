@@ -215,7 +215,7 @@ export const RegistrationForm = () => {
           </Form.Group>
           <Form.Group style={{ marginTop: "10px" }} className="d-grid">
             <Button
-              className="btn btn-primary"
+              className="btn btn-secondary"
               id="submit"
               onClick={handleSubmit}
             >

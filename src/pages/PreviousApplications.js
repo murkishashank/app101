@@ -38,7 +38,7 @@ export const PreviousApplications = (props) => {
   useEffect(() => {
     setApprovedPeople(props.approvedpeople);
     setDeniedPeople(props.deniedpeople);
-  });
+  }, []);
   return (
     <>
       <NavBar></NavBar>
