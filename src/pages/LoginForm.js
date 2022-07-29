@@ -1,11 +1,11 @@
 import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { decrypt } from "../utils/Encryption";
-// import { useFetch } from "../CustomHooks/useFetch";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { getUser } from "../api/getUserByUserName";
 export const LoginForm = (props) => {
+  localStorage.clear();
   const navigate = useNavigate();
 
   const initialState = { userName: "", password: "" };
@@ -67,7 +67,7 @@ export const LoginForm = (props) => {
     >
       <center>
         <Form.Label>
-          <img src={"../Tecnics.png"} height="75"></img>
+          <img src={"../Tecnics.png"} height="75" alt="logo"></img>
           <h3>Login Form</h3>
         </Form.Label>
       </center>
