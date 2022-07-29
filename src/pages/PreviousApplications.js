@@ -1,15 +1,6 @@
-import {
-  React,
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  useInsertionEffect,
-  useRemount,
-} from "react";
+import { React, useEffect, useState, useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { useNavigate } from "react-router-dom";
-import { BtnCellRenderer } from "../components/GridButton.js";
+// import { BtnCellRenderer } from "../components/GridButton.js";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -17,7 +8,6 @@ import { useEffectOnce } from "../CustomHooks/useEffectOnce.js";
 import { NavBar } from "../components/NavBar.js";
 
 export const PreviousApplications = (props) => {
-
   const gridRef2 = useRef();
   const gridRef3 = useRef();
   const [approvedPeople, setApprovedPeople] = useState([]);
@@ -42,13 +32,13 @@ export const PreviousApplications = (props) => {
     {
       headerName: "Approval Status",
       field: "approvedFlag",
-      resizable: true
+      resizable: true,
     },
   ];
   useEffect(() => {
     setApprovedPeople(props.approvedpeople);
     setDeniedPeople(props.deniedpeople);
-  })
+  });
   return (
     <>
       <NavBar></NavBar>

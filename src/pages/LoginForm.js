@@ -1,11 +1,14 @@
-import { useEffect, useReducer, useState } from "react";
+import { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { decrypt } from "../utils/Encryption";
-import { useFetch } from "../CustomHooks/useFetch";
+// import { useFetch } from "../CustomHooks/useFetch";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { getUser } from "../api/getUserByUserName";
 export const LoginForm = (props) => {
   const navigate = useNavigate();
 
-  function reducer(state, action) {
+  const reducer = (state, action) => {
     switch (action.key) {
       case "userName":
         return { ...state, userName: action.value };
@@ -14,28 +17,28 @@ export const LoginForm = (props) => {
       default:
         return state;
     }
-  }
+  };
 
   const [state, dispatch] = useReducer(reducer, { userName: "", password: "" });
 
-  const [fetchUserData] = useFetch();
+  // const [fetchUserData] = useFetch();
 
-  function fetchUserName(userName) {
-
-    fetchUserData(userName).then((data) => {
+  const fetchUserName = (userName) => {
+    getUser(userName).then((data) => {
       validateLogin(data);
     });
-  }
+  };
 
-  function validateLogin(userDetails) {
+  const validateLogin = (userDetails) => {
     if (userDetails == null) {
-      alert("user does not exist. Please Register Now ")
+      alert("user does not exist. Please Register Now ");
     }
     const { userName, password } = state;
     if (Object.keys(userDetails).length) {
       if (
         userName === userDetails.userName &&
-        password === decrypt(userDetails.password)) {
+        password === decrypt(userDetails.password)
+      ) {
         if (props.loginUserDetails) {
           props.loginUserDetails(userDetails);
         }
@@ -44,7 +47,7 @@ export const LoginForm = (props) => {
         alert("invalid username password");
       }
     }
-  }
+  };
 
   return (
     <div
@@ -60,13 +63,16 @@ export const LoginForm = (props) => {
       }}
     >
       <center>
-        <h3>User Login Form</h3>
+        <Form.Label>
+          <h3>User Login Form</h3>
+        </Form.Label>
       </center>
-      <div className="mb-3">
-        <label>
+      <Form.Group className="mb-3">
+        <Form.Label>
           <h6>User Name: </h6>
-        </label>
-        <input
+        </Form.Label>
+        <Form.Control
+          type="text"
           className="form-control"
           placeholder="Enter User Name "
           id="userName"
@@ -76,13 +82,12 @@ export const LoginForm = (props) => {
             // handleOnChange("userName", event.target.value);
           }}
         />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="lastName">
-          {" "}
-          <h6>Password:</h6>{" "}
-        </label>
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label htmlFor="lastName">
+          <h6>Password:</h6>
+        </Form.Label>
+        <Form.Control
           type="password"
           className="form-control"
           placeholder="Enter Password"
@@ -93,10 +98,10 @@ export const LoginForm = (props) => {
             // handleOnChange("password", event.target.value);
           }}
         />
-      </div>
-      <div>
-        <div style={{ marginTop: "10px" }} className="d-grid">
-          <button
+      </Form.Group>
+      <Form.Group>
+        <Form.Group style={{ marginTop: "10px" }} className="d-grid">
+          <Button
             className="btn btn-primary"
             onClick={() => {
               fetchUserName(state.userName);
@@ -104,19 +109,19 @@ export const LoginForm = (props) => {
             }}
           >
             Login
-          </button>
-        </div>
-        <div style={{ marginTop: "10px" }} className="d-grid">
-          <button
+          </Button>
+        </Form.Group>
+        <Form.Group style={{ marginTop: "10px" }} className="d-grid">
+          <Button
             className="btn btn-primary"
             onClick={() => {
               navigate("/registrationform/new");
             }}
           >
             Sign Up
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Form.Group>
+      </Form.Group>
     </div>
   );
 };
