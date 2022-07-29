@@ -1,8 +1,6 @@
 import { React, useEffect, useState, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { encrypt, decrypt } from "../utils/Encryption";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 
 export const RegistrationForm = () => {
   const { userId = "new" } = { ...useParams() };
@@ -17,16 +15,18 @@ export const RegistrationForm = () => {
     age: null,
     statusFlag: 0,
     dataLoading: true,
-  };
+  }
 
   const reducer = (state, action) => {
-    switch (action.type) {
-      case "ADD":
+    switch ((action.type)) {
+      case 'ADD':
         return {
           ...state,
           [action.payload.name]: action.payload.value,
-        };
-      case "NEW":
+
+        }
+        break;
+      case 'NEW':
         return {
           ...state,
           userName: "",
@@ -36,17 +36,18 @@ export const RegistrationForm = () => {
           mobileNumber: "",
           age: null,
           statusFlag: 0,
-          dataLoading: false,
-        };
+          dataLoading: false
+        }
+        break;
       default:
         break;
     }
-  };
+  }
 
-  const [updatedState, dispatch] = useReducer(reducer, initialState);
+  const [updatedState, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
-    dispatch({ type: "NEW" });
+    dispatch({ type: "NEW" })
     fetch(`http://localhost:8080/api/users/${userId}`, { method: "GET" })
       .then((response) => {
         return response.json();
@@ -56,9 +57,9 @@ export const RegistrationForm = () => {
           if (result.password) {
             result.password = decrypt(result.password);
           }
-          dispatch({ result, type: "EMPTY" });
+          dispatch({ result, type: "EMPTY" })
         }
-        dispatch({ type: "NEW" });
+        dispatch({ type: "NEW" })
       })
       .catch(console.log);
   }, [userId]);
@@ -67,8 +68,8 @@ export const RegistrationForm = () => {
     event.preventDefault();
     const name = event.target.name;
     const value = event.target.value;
-    const payload = { name, value };
-    dispatch({ payload, type: "ADD" });
+    const payload = { name, value }
+    dispatch({ payload, type: "ADD" })
     updatedState.statusFlag = 0;
   };
 
@@ -129,11 +130,11 @@ export const RegistrationForm = () => {
             padding: "22px",
           }}
         >
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="userName">
+          <div className="mb-3">
+            <label htmlFor="userName">
               <h6>User Name: </h6>
-            </Form.Label>
-            <Form.Control
+            </label>
+            <input
               className="form-control"
               placeholder="userName"
               type="text"
@@ -142,12 +143,12 @@ export const RegistrationForm = () => {
               defaultValue={updatedState.userName}
               onChange={handleOnChange}
             />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="password">
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password">
               <h6>Password: </h6>
-            </Form.Label>
-            <Form.Control
+            </label>
+            <input
               className="form-control"
               placeholder="password"
               type="password"
@@ -156,12 +157,12 @@ export const RegistrationForm = () => {
               defaultValue={updatedState.password}
               onChange={handleOnChange}
             />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="firstName">
+          </div>
+          <div className="mb-3">
+            <label htmlFor="firstName">
               <h6>First Name: </h6>
-            </Form.Label>
-            <Form.Control
+            </label>
+            <input
               className="form-control"
               placeholder="First name"
               type="text"
@@ -170,12 +171,12 @@ export const RegistrationForm = () => {
               defaultValue={updatedState.firstName}
               onChange={handleOnChange}
             />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="lastName">
+          </div>
+          <div className="mb-3">
+            <label htmlFor="lastName">
               <h6>Last Name: </h6>
-            </Form.Label>
-            <Form.Control
+            </label>
+            <input
               className="form-control"
               placeholder="Last name"
               type="text"
@@ -184,12 +185,12 @@ export const RegistrationForm = () => {
               defaultValue={updatedState.lastName}
               onChange={handleOnChange}
             />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="age">
+          </div>
+          <div className="mb-3">
+            <label htmlFor="age">
               <h6>Age: </h6>
-            </Form.Label>
-            <Form.Control
+            </label>
+            <input
               className="form-control"
               type="number"
               placeholder="Age"
@@ -198,12 +199,12 @@ export const RegistrationForm = () => {
               defaultValue={updatedState.age}
               onChange={handleOnChange}
             />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="phoneNumber">
+          </div>
+          <div className="mb-3">
+            <label htmlFor="phoneNumber">
               <h6>Phone Number: </h6>
-            </Form.Label>
-            <Form.Control
+            </label>
+            <input
               className="form-control"
               type="tel"
               placeholder="mobileNumber"
@@ -212,16 +213,16 @@ export const RegistrationForm = () => {
               defaultValue={updatedState.mobileNumber}
               onChange={handleOnChange}
             />
-          </Form.Group>
-          <Form.Group style={{ marginTop: "10px" }} className="d-grid">
-            <Button
+          </div>
+          <div style={{ marginTop: "10px" }} className="d-grid">
+            <button
               className="btn btn-primary"
               id="submit"
               onClick={handleSubmit}
             >
               Submit
-            </Button>
-          </Form.Group>
+            </button>
+          </div>
         </div>
       )}
     </>
