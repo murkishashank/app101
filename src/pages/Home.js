@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LeaveCard } from "../components/LeaveCard";
 import { NavBar } from "../components/NavBar";
 import "../css/CommonStyling.css";
@@ -6,33 +6,30 @@ import Button from "react-bootstrap/Button";
 import { LeaveForm } from "../components/LeaveForm";
 
 export const Home = () => {
+  const dataObj = {
+    reason: "",
+    fromDate: "",
+    toDate: "",
+    leaveType: "",
+  };
   const [leaveData, setLeaveData] = useState([]);
   const [leaveDataLoading, setLeaveDataLoading] = useState(true);
   const [index, setIndex] = useState(null);
   const [modalShow, setModalShow] = useState(false);
-  const [formData, setFormData] = useState({
-    reason: "",
-    fromDate: "",
-    toDate: "",
-    leaveType: "",
-  });
-  const [errorObject, setErrorObject] = useState({
-    reason: "",
-    fromDate: "",
-    toDate: "",
-    leaveType: "",
-  });
-  let userName = "Sai123";
+  const [formData, setFormData] = useState(dataObj);
+  const [errorObject, setErrorObject] = useState(dataObj);
+
+  const userId = localStorage.getItem("userID");
 
   useEffect(() => {
     setLeaveDataLoading(true);
-    fetch(`http://localhost:8080/api/userLeave/${userName}`, { method: "GET" })
+    fetch(`http://localhost:8080/api/userLeave/${userId}`, { method: "GET" })
       .then((response) => response.json())
       .then((result) => {
         setLeaveData(result);
         setLeaveDataLoading(false);
       });
-  }, [userName]);
+  }, [userId]);
 
   const handleOnChange = (event) => {
     formData[event.target.name] = event.target.value;
@@ -56,7 +53,12 @@ export const Home = () => {
         payload[key] === null ||
         payload[key] === undefined
       ) {
-        if (key !== "approvedFlag" && key !== "approvedDate") {
+        console.log(key, payload[key]);
+        if (
+          key !== "approvedFlag" &&
+          key !== "approvedDate" &&
+          key !== "remarks"
+        ) {
           errorObjectClone[key] = `${key} is required`;
           setErrorObject(errorObjectClone);
           setModalShow(true);
@@ -72,16 +74,9 @@ export const Home = () => {
   };
 
   const handleSubmit = () => {
-    const { fromDate, toDate, reason, leaveType } = formData;
     const payload = {
-      fromDate: fromDate,
-      toDate: toDate,
-      reason: reason,
-      userName: userName,
+      ...formData,
       appliedDate: convertDateToDbFormat(getDateFormat(new Date())),
-      approvedDate: null,
-      approvedFlag: "",
-      leaveType: leaveType,
     };
     const isValid = validateField(payload);
     if (isValid) {
@@ -135,6 +130,7 @@ export const Home = () => {
           <LeaveForm
             show={modalShow}
             onHide={() => {
+              setErrorObject(dataObj);
               setModalShow(false);
               setIndex(null);
             }}

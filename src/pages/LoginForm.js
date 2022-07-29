@@ -1,11 +1,11 @@
 import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { decrypt } from "../utils/Encryption";
-// import { useFetch } from "../CustomHooks/useFetch";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { getUser } from "../api/getUserByUserName";
 export const LoginForm = (props) => {
+  localStorage.clear();
   const navigate = useNavigate();
 
   const initialState = { userName: "", password: "" };
