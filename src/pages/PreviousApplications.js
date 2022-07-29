@@ -17,7 +17,6 @@ import { useEffectOnce } from "../CustomHooks/useEffectOnce.js";
 import { NavBar } from "../components/NavBar.js";
 
 export const PreviousApplications = (props) => {
-
   const gridRef2 = useRef();
   const gridRef3 = useRef();
   const [approvedPeople, setApprovedPeople] = useState([]);
@@ -42,13 +41,13 @@ export const PreviousApplications = (props) => {
     {
       headerName: "Approval Status",
       field: "approvedFlag",
-      resizable: true
+      resizable: true,
     },
   ];
   useEffect(() => {
     setApprovedPeople(props.approvedpeople);
     setDeniedPeople(props.deniedpeople);
-  })
+  }, []);
   return (
     <>
       <NavBar></NavBar>
