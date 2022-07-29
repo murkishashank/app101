@@ -24,6 +24,7 @@ function App() {
 
   function handleLoginUserDetails(userDetails) {
     localStorage.setItem("designation", userDetails.designation);
+    localStorage.setItem("userID", userDetails.id);
     setUserData(userDetails);
   }
 
