@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
-// import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../css/App.css";
 import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm";
@@ -9,7 +8,6 @@ import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
 import { Admin } from "../pages/Admin";
 import { Users } from "../pages/Users";
-import { EditProfile } from "../components/EditProfile";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/PreviousApplications";
 
@@ -52,7 +50,6 @@ function App() {
           <Route path="/profile" element={<Profile userData={userData} />} />
           <Route path="/users" element={<Users />} />
           <Route path="/admin" element={<Admin prevoiusAppl={handlePrevoiusAppl} />} />
-          <Route path="/editProfile" element={<EditProfile userData={userData} />} />
           <Route path="/previousApplications" element={<PreviousApplications approvedpeople={approvedPeople} deniedpeople={deniedPeople} />} />
         </Routes>
       </LoginUserDetailsProvider>
