@@ -29,8 +29,6 @@ function App() {
     setUserData(userDetails);
   }
 
-
-
   return (
     <>
       <LoginUserDetailsProvider value={userData}>
