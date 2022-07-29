@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import "./CommonStyling.css";
+import "../css/CommonStyling.css";
 
 export const LeaveCard = (props) => {
   const leaveData = props.leaveData;

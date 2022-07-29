@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LeaveCard } from "./LeaveCard";
-import { NavBar } from "./NavBar";
-import "./CommonStyling.css";
+import { LeaveCard } from "../components/LeaveCard";
+import { NavBar } from "../components/NavBar";
+import "../css/CommonStyling.css";
 import Button from "react-bootstrap/Button";
-import { LeaveForm } from "./LeaveForm";
+import { LeaveForm } from "../components/LeaveForm";
 
 export const Home = () => {
   const [leaveData, setLeaveData] = useState([]);
