@@ -8,27 +8,36 @@ import { LoginUserDetailContext } from "../UserContext/LoginUserDetailContext";
 export const NavBar = () => {
   const designation = localStorage.getItem("designation");
   return (
-    <Navbar className="navbar navbar-light">
+    <Navbar
+      className="navbar navbar-light"
+      style={{ backgroundColor: "#e3f2fd" }}
+    >
       <Container>
         <Navbar.Brand as={Link} to="/home">
-          App
+          <div style={{ marginTop: "-7px" }}>
+            <img src={"../Tecnics.png"} height="30"></img>
+          </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" style={{ float: "right" }}>
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/home">
-              Home
+              <b>
+                <h5>Home</h5>
+              </b>
             </Nav.Link>
             {/* <Nav.Link as={Link} to="/leave">
               Leave
             </Nav.Link> */}
             <Nav.Link as={Link} to="/profile">
-              profile
+              <b>
+                <h5>Profile</h5>
+              </b>
             </Nav.Link>
             {designation === "Manager" && (
               <Nav.Link as={Link} to="/admin">
                 <b>
-                  <h5>LeaveManagement</h5>
+                  <h5>Leave Management</h5>
                 </b>
               </Nav.Link>
             )}

@@ -22,7 +22,7 @@ export const Home = () => {
     toDate: "",
     leaveType: "",
   });
-  let userName = "Sai123"
+  let userName = "Sai123";
 
   useEffect(() => {
     setLeaveDataLoading(true);
@@ -129,12 +129,14 @@ export const Home = () => {
         <h1>Loading...</h1>
       ) : (
         <div>
-          <Button onClick={() => setModalShow(true)}>Apply for leave</Button>
+          <Button variant="secondary" onClick={() => setModalShow(true)}>
+            Apply for leave
+          </Button>
           <LeaveForm
             show={modalShow}
             onHide={() => {
               setModalShow(false);
-              setIndex(null)
+              setIndex(null);
             }}
             onChange={handleOnChange}
             onSubmit={handleSubmit}
