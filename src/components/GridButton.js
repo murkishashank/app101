@@ -4,5 +4,9 @@ export const BtnCellRenderer = (props) => {
   const saveLeaveRecord = () => {
     props.clicked(props.data);
   };
-  return <Button onClick={saveLeaveRecord}>Send</Button>;
+  return (
+    <Button variant="secondary" onClick={saveLeaveRecord}>
+      Send
+    </Button>
+  );
 };
