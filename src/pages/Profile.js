@@ -28,7 +28,7 @@ export const Profile = (props) => {
           value={userName}
         />
         <button
-          className="btn btn-secondary"
+          className="btn btn-primary"
           type="edit"
           onClick={() => {
             navigate("/editProfile");
@@ -37,7 +37,7 @@ export const Profile = (props) => {
           Edit Profile
         </button>
         <button
-          className="btn btn-secondary"
+          className="btn btn-primary"
           style={{ marginLeft: "300px" }}
           type="logout"
           onClick={() => {
