@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
-import { LoginUserDetailContext } from "./UserContext/LoginUserDetailContext";
+import { LoginUserDetailContext } from "../UserContext/LoginUserDetailContext";
 export const NavBar = () => {
   const designation = localStorage.getItem("designation");
   return (
