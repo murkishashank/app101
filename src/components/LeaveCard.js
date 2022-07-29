@@ -9,12 +9,12 @@ export const LeaveCard = (props) => {
   leaveData.approvedFlag === "Rejected"
     ? (status = "Rejected")
     : leaveData.approvedFlag === ""
-      ? (status = "Pending")
-      : (status = "Approved");
+    ? (status = "Pending")
+    : (status = "Approved");
 
   const handleOnClick = () => {
-    props.onEdit(props.index)
-  }
+    props.onEdit(props.index);
+  };
 
   return (
     <Card style={{ width: "50rem", height: "auto" }}>
@@ -24,11 +24,15 @@ export const LeaveCard = (props) => {
           {leaveData.AppliedOn}
         </Card.Subtitle>
         {leaveData.approvedFlag !== "" ? (
-          <Button className="editbtn" disabled>
+          <Button variant="secondary" className="editbtn" disabled>
             Edit
           </Button>
         ) : (
-          <Button className="editbtn" onClick={handleOnClick}>
+          <Button
+            variant="secondary"
+            className="editbtn"
+            onClick={handleOnClick}
+          >
             Edit
           </Button>
         )}
