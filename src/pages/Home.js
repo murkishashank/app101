@@ -53,8 +53,12 @@ export const Home = () => {
         payload[key] === null ||
         payload[key] === undefined
       ) {
-        console.log(key, payload[key])
-        if (key !== "approvedFlag" && key !== "approvedDate" && key !== "remarks") {
+        console.log(key, payload[key]);
+        if (
+          key !== "approvedFlag" &&
+          key !== "approvedDate" &&
+          key !== "remarks"
+        ) {
           errorObjectClone[key] = `${key} is required`;
           setErrorObject(errorObjectClone);
           setModalShow(true);
@@ -120,7 +124,9 @@ export const Home = () => {
         <h1>Loading...</h1>
       ) : (
         <div>
-          <Button onClick={() => setModalShow(true)}>Apply for leave</Button>
+          <Button variant="secondary" onClick={() => setModalShow(true)}>
+            Apply for leave
+          </Button>
           <LeaveForm
             show={modalShow}
             onHide={() => {
