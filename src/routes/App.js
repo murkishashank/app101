@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/App.css";
 import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm";
@@ -10,6 +10,7 @@ import { Admin } from "../pages/Admin";
 import { Users } from "../pages/Users";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/PreviousApplications";
+import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -27,8 +28,6 @@ function App() {
     localStorage.setItem("userID", userDetails.id);
     setUserData(userDetails);
   }
-
-
 
   return (
     <>
@@ -49,8 +48,20 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile userData={userData} />} />
           <Route path="/users" element={<Users />} />
-          <Route path="/admin" element={<Admin prevoiusAppl={handlePrevoiusAppl} />} />
-          <Route path="/previousApplications" element={<PreviousApplications approvedpeople={approvedPeople} deniedpeople={deniedPeople} />} />
+          <Route
+            path="/admin"
+            element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
+          />
+          <Route
+            path="/previousApplications"
+            element={
+              <PreviousApplications
+                approvedpeople={approvedPeople}
+                deniedpeople={deniedPeople}
+              />
+            }
+          />
+          <Route path="/workStatus" element={<WorkStatus></WorkStatus>} />
         </Routes>
       </LoginUserDetailsProvider>
     </>
