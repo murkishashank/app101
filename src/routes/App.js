@@ -13,13 +13,11 @@ import { PreviousApplications } from "../pages/PreviousApplications";
 
 function App() {
   const [userData, setUserData] = useState({});
-  const [approvedPeople, setApprovedPeople] = useState([]);
-  const [deniedPeople, setDeniedPeople] = useState([]);
+  const [processedPeople, setProcessedPeople] = useState([]);
 
   function handlePrevoiusAppl(data) {
-    const { approvedPeople, deniedPeople } = data;
-    setApprovedPeople(approvedPeople);
-    setDeniedPeople(deniedPeople);
+    const { processedPeople } = data;
+    setProcessedPeople(processedPeople);
   }
 
   function handleLoginUserDetails(userDetails) {
@@ -47,8 +45,8 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile userData={userData} />} />
           <Route path="/users" element={<Users />} />
-          <Route path="/admin" element={<Admin prevoiusAppl={handlePrevoiusAppl} />} />
-          <Route path="/previousApplications" element={<PreviousApplications approvedpeople={approvedPeople} deniedpeople={deniedPeople} />} />
+          <Route path="/admin" element={<Admin processedPeople={handlePrevoiusAppl} />} />
+          <Route path="/previousApplications" element={<PreviousApplications processedPeople={processedPeople} />} />
         </Routes>
       </LoginUserDetailsProvider>
     </>
