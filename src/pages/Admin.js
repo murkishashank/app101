@@ -1,129 +1,126 @@
-import {
-  React,
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  useInsertionEffect,
-  useRemount
-} from "react";
-import { AgGridReact } from "ag-grid-react";
+import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BtnCellRenderer } from "../components/GridButton.js";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useEffectOnce } from "../CustomHooks/useEffectOnce.js";
 import { NavBar } from "../components/NavBar.js";
-import { buildQueries } from "@testing-library/react";
+import { getAllLeaves } from "../api/getAllLeaves.js";
+import { DataGrid } from "@mui/x-data-grid";
+import { commonColumns } from "./CommonColumns.js";
+import Button from '@mui/material/Button';
+import { saveProcessedLeave } from "../api/saveProcessedLeave"
 export const Admin = (props) => {
-  const gridRef1 = useRef();
   const navigate = useNavigate();
-
   const [appliedPeople, setAppliedPeople] = useState([]);
-  const [approvedPeople, setApprovedPeople] = useState([]);
-  const [deniedPeople, setDeniedPeople] = useState([]);
+  const [processedPeople, setProcessedPeople] = useState([]);
   const [dataLoading, setDataLoading] = useState(false);
-
-  const columnDefs = [
-    { headerName: "User Name", field: "userName", resizable: true },
-    { headerName: "Request Id", field: "requestId", resizable: true },
-    { headerName: "From Date", field: "fromDate", resizable: true },
-    { headerName: "To Date", field: "toDate", resizable: true },
-    { headerName: "Reason", field: "reason", resizable: true },
+  const columns = [
     {
-      headerName: "Applied date",
-      field: "createTimeStamp/createTimeStamp",
-      resizable: true,
-    },
-    {
-      headerName: "Remarks",
-      field: "remarks",
-      editable: true,
-      resizable: true,
-      cellEditorPopup: true,
-      cellEditor: "agTextCellEditor",
-    },
-    {
-      headerName: "Approval Status",
       field: "approvedFlag",
+      headerName: "Approved Status",
+      valueOptions: ["Approve", "Deny"],
       editable: true,
-      cellEditor: "agSelectCellEditor",
-      cellEditorParams: {
-        values: ["", "Approve", "Deny"],
-      },
-      resizable: true,
+      type: "singleSelect",
     },
+    { field: "remarks", headerName: "Remarks", editable: true},
     {
+      field: "",
+      type: "actions",
       headerName: "Actions",
-      cellRenderer: BtnCellRenderer,
-      cellRendererParams: {
-        clicked: function (data) {
-          fetch("http://localhost:8080/api/leave", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json;charset=utf-8",
-            },
-            body: JSON.stringify(data),
-          })
-          window.location.reload(false);
-        },
+      renderCell: (params) => {
+        const onClick = () => {
+          saveLeave(params.row);
+        };
+        return <Button onClick={onClick}>Send</Button>;
       },
-      resizable: true,
-    },
-  ];
-
-
-  const setPeople = (result) => {
+      },
+    ];
+    
+    
+  const saveLeave = (rowData) => {
+    const {userName, ...rest} = rowData;
+    const response = saveProcessedLeave(rest)
+    console.log(response);
+  }
+  
+  const finalColumns = commonColumns.concat(columns);
+  
+  const setPeople = (allLeaves) => {
     setDataLoading(false);
-    result.forEach((leaveRecord) => {
+    allLeaves.forEach((leaveRecord) => {
+      const userName = leaveRecord.userName.userName;
+      leaveRecord.userName = userName;
       if (
         leaveRecord.approvedFlag === null ||
         leaveRecord.approvedFlag === ""
       ) {
         setAppliedPeople((appliedPeople) => [...appliedPeople, leaveRecord]);
-      } else if (leaveRecord.approvedFlag === "Approve") {
-        setApprovedPeople((approvedPeople) => [...approvedPeople, leaveRecord]);
-      } else if (leaveRecord.approvedFlag === "Deny") {
-        setDeniedPeople((deniedPeople) => [...deniedPeople, leaveRecord]);
+      } else {
+        setProcessedPeople((processedPeople) => [
+          ...processedPeople,
+          leaveRecord,
+        ]);
       }
     });
   };
 
+  const getLeaves = () => {
+    const getAllLeavesResponse = getAllLeaves();
+    getAllLeavesResponse.then((allLeaves) => {
+      setPeople(allLeaves);
+    });
+  }
   useEffectOnce(() => {
-    setDataLoading(true);
-    fetch("http://localhost:8080/api/allLeaves/", {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setPeople(result);
-      })
-      .catch(console.log);
+    getLeaves();
   });
 
   const handlePreviousBttn = () => {
-    props.prevoiusAppl({ approvedPeople, deniedPeople });
+    props.processedPeople({ processedPeople });
     navigate("/previousApplications");
-  }
+  };
+
+  const handleCellEdit = (event) => {
+    const {id, field, value} = event;
+    const appliedPeopleClone = appliedPeople.map((application) => {
+      if(application.id === id){
+        return {...application, [field]: value};
+      }
+      return application;
+    })
+    setAppliedPeople(appliedPeopleClone);
+  };
+
 
   return (
     <>
       {dataLoading ? (
         <h1>Loading...</h1>
       ) : (
-        <>
-          <NavBar>
-          </NavBar>
-          <button onClick={handlePreviousBttn} style={{ background: "white", borderRadius: "10px", marginLeft: "1200px", marginTop: "10px" }}>Previous applications</button>
-          <div className="ag-theme-alpine" style={{ height: 300 }}>
-            <h3>All applications</h3>
-            <AgGridReact
-              ref={gridRef1}
-              rowData={appliedPeople}
-              columnDefs={columnDefs}
-            ></AgGridReact>
+        <div style={{ width: "100%", height: "400px" }}>
+          <NavBar></NavBar>
+          <button
+            onClick={handlePreviousBttn}
+            style={{
+              background: "white",
+              borderRadius: "10px",
+              marginLeft: "1200px",
+              marginTop: "10px",
+            }}
+          >
+            Previous applications
+          </button>
+          <div style={{ height: "100%", display: "flex" }}>
+            <DataGrid
+              autoHeight= {true}
+              // pagination= {true}
+              rows={appliedPeople}
+              columns={finalColumns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              loading={!appliedPeople.length}
+              onCellEditCommit={handleCellEdit}
+              // checkboxSelection
+            />
           </div>
-        </>
+        </div>
       )}
     </>
   );
