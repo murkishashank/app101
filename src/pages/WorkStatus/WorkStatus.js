@@ -1,13 +1,26 @@
 import { NavBar } from "../../components/NavBar";
 import { DataGrid } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getDateFormat } from "../../utils/getDateFormat";
-import { workStatusColDefs } from "./colDefs";
-import { workStatusMockData } from "./mockData";
 import { Button } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import { taskStatusOptions, workStatusColDefs } from "./colDefs";
+import { LoginUserDetailContext } from "../../UserContext/LoginUserDetailContext";
+import { getWorkStatusByUserId } from "../../api/getUserByUserName";
+import { PostWorkStatus } from "../../api/postUser";
+import { getSavePayload } from "./validateSave";
 
 export const WorkStatus = () => {
-  const [rowData, setRowData] = useState(workStatusMockData);
+  const [rowData, setRowData] = useState([]);
+  // const [filterData, setFilterData] = useState([]);
+  // const [filter, setFilter] = useState("No filter");
+  const userId = localStorage.getItem("userID");
+
+  useEffect(() => {
+    getWorkStatusByUserId(userId).then((data) => {
+      setRowData(data);
+    });
+  }, []);
 
   const handleCellChange = (event) => {
     const { id, field, value } = event;
@@ -29,8 +42,8 @@ export const WorkStatus = () => {
   };
 
   const handleSave = () => {
-    const editedRows = rowData.filter((row) => row.editStatus);
-    console.log("name", editedRows);
+    const payload = getSavePayload(rowData);
+    PostWorkStatus(payload);
   };
 
   return (

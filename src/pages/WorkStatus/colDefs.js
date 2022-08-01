@@ -1,4 +1,9 @@
-const taskStatusOptions = ["Assigned", "Work in progress", "QA", "Completed"];
+export const taskStatusOptions = [
+  "Assigned",
+  "Work in progress",
+  "QA",
+  "Completed",
+];
 export const workStatusColDefs = [
   { field: "taskName", headerName: "Task Name" },
   { field: "taskDescription", headerName: "Task description" },
@@ -10,6 +15,6 @@ export const workStatusColDefs = [
     editable: true,
   },
   { field: "assignedBy", headerName: "Assigned By" },
-  { field: "assignedTimeStamp", headerName: "Assigned Date" },
+  { field: "assignedTimeStamp", headerName: "Assigned Date", type: "date" },
   { field: "completedTimeStamp", headerName: "Completed Date" },
 ];
