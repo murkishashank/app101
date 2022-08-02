@@ -1,10 +1,9 @@
 export const commonColumns = [
   { field: "userName", headerName: "UserName" },
   { field: "userId", headerName: "User Id" },
-  { field: "id", headerName: "requestId" },
-  { field: "fromDate", headerName: "fromDate" },
-  { field: "toDate", headerName: "toDate" },
-  { field: "appliedDate", headerName: "Applied Date" },
-  { field: "approvedDate", headerName: "Approved Date" },
-  { field: "reason", headerName: "Reason" },
+  { field: "id", headerName: "Request Id" },
+  { field: "fromDate", headerName: "From Date", width: "130"},
+  { field: "toDate", headerName: "To Date", width: "130"},
+  { field: "appliedDate", headerName: "Applied Date", width: "130"},
+  { field: "reason", headerName: "Reason", width: "130"},
 ];

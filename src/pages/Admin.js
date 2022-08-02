@@ -5,8 +5,8 @@ import { NavBar } from "../components/NavBar.js";
 import { getAllLeaves } from "../api/getAllLeaves.js";
 import { DataGrid } from "@mui/x-data-grid";
 import { commonColumns } from "./CommonColumns.js";
-import Button from '@mui/material/Button';
-import { saveProcessedLeave } from "../api/saveProcessedLeave"
+import Button from "react-bootstrap/Button";
+import { saveProcessedLeave } from "../api/saveProcessedLeave";
 export const Admin = (props) => {
   const navigate = useNavigate();
   const [appliedPeople, setAppliedPeople] = useState([]);
@@ -19,8 +19,9 @@ export const Admin = (props) => {
       valueOptions: ["Approve", "Deny"],
       editable: true,
       type: "singleSelect",
+      width: "150",
     },
-    { field: "remarks", headerName: "Remarks", editable: true},
+    { field: "remarks", headerName: "Remarks", editable: true, width: "220" },
     {
       field: "",
       type: "actions",
@@ -31,25 +32,24 @@ export const Admin = (props) => {
         };
         return <Button onClick={onClick}>Send</Button>;
       },
-      },
-    ];
-    
-    
+    },
+  ];
+
   const saveLeave = (rowData) => {
-    const {userName, ...rest} = rowData;
+    const { userName, ...rest } = rowData;
     saveProcessedLeave(rest).then((response) => {
-      if(response != null){
-        getAllLeaves().then((response) =>{
+      if (response != null) {
+        getAllLeaves().then((response) => {
           setAppliedPeople([]);
           setProcessedPeople([]);
           setPeople(response);
         });
       }
     });
-  }
-  
+  };
+
   const finalColumns = commonColumns.concat(columns);
-  
+
   const setPeople = (allLeaves) => {
     setDataLoading(false);
     allLeaves.forEach((leaveRecord) => {
@@ -74,7 +74,7 @@ export const Admin = (props) => {
     getAllLeavesResponse.then((allLeaves) => {
       setPeople(allLeaves);
     });
-  }
+  };
   useEffectOnce(() => {
     getLeaves();
   });
@@ -85,16 +85,15 @@ export const Admin = (props) => {
   };
 
   const handleCellEdit = (event) => {
-    const {id, field, value} = event;
+    const { id, field, value } = event;
     const appliedPeopleClone = appliedPeople.map((application) => {
-      if(application.id === id){
-        return {...application, [field]: value};
+      if (application.id === id) {
+        return { ...application, [field]: value };
       }
       return application;
-    })
+    });
     setAppliedPeople(appliedPeopleClone);
   };
-
 
   return (
     <>
@@ -103,28 +102,26 @@ export const Admin = (props) => {
       ) : (
         <div style={{ width: "100%", height: "400px" }}>
           <NavBar></NavBar>
-          <button
+          <Button
+            variant="secondary"
             onClick={handlePreviousBttn}
             style={{
-              background: "white",
               borderRadius: "10px",
               marginLeft: "1200px",
               marginTop: "10px",
             }}
           >
             Previous applications
-          </button>
-          <div style={{ height: "100%", display: "flex" }}>
+          </Button>
+          <div style={{ height: "100%", display: "flex" , marginTop: "10px"}}>
             <DataGrid
-              autoHeight= {true}
-              // pagination= {true}
+              autoHeight={true}
               rows={appliedPeople}
               columns={finalColumns}
               pageSize={5}
               rowsPerPageOptions={[5]}
               loading={!appliedPeople.length}
               onCellEditCommit={handleCellEdit}
-              // checkboxSelection
             />
           </div>
         </div>
