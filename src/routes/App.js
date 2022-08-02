@@ -6,10 +6,10 @@ import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm";
 import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
-import { Admin } from "../pages/Admin";
+import { Admin } from "../pages/LeaveManagement/Admin";
 import { Users } from "../pages/Users";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
-import { PreviousApplications } from "../pages/PreviousApplications";
+import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 
 function App() {
