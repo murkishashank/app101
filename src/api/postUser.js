@@ -12,7 +12,7 @@ export const postUser = (userData) => {
 };
 
 export const PostWorkStatus = (workStatusData) => {
-  return request(`http://localhost:8080/api/tasks`, {
+  return fetch(`http://localhost:8080/api/tasks`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",

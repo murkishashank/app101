@@ -9,12 +9,14 @@ import { LoginUserDetailContext } from "../../UserContext/LoginUserDetailContext
 import { getWorkStatusByUserId } from "../../api/getUserByUserName";
 import { PostWorkStatus } from "../../api/postUser";
 import { getSavePayload } from "./validateSave";
+import { FormLabel } from "@mui/material";
 
 export const WorkStatus = () => {
   const [rowData, setRowData] = useState([]);
   // const [filterData, setFilterData] = useState([]);
   // const [filter, setFilter] = useState("No filter");
   const userId = localStorage.getItem("userID");
+  const [savingStatus, setSavingStatus] = useState(false);
 
   useEffect(() => {
     getWorkStatusByUserId(userId).then((data) => {
@@ -42,8 +44,16 @@ export const WorkStatus = () => {
   };
 
   const handleSave = () => {
+    setSavingStatus(true);
     const payload = getSavePayload(rowData);
-    PostWorkStatus(payload);
+    PostWorkStatus(payload).then((response) => {
+      if (response.status === 200) {
+        alert("Details saved successfully.");
+        setSavingStatus(false);
+      } else {
+        alert("Error while saving data.");
+      }
+    });
   };
 
   return (
@@ -53,7 +63,11 @@ export const WorkStatus = () => {
       <div style={{ height: 500, width: "inherit" }}>
         <div>
           <Button variant="secondary" onClick={handleSave}>
-            Save
+            {savingStatus ? (
+              <FormLabel>Saving </FormLabel>
+            ) : (
+              <FormLabel>Save</FormLabel>
+            )}
           </Button>
         </div>
         <DataGrid
