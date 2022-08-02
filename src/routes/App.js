@@ -46,8 +46,15 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile userData={userData} />} />
           <Route path="/users" element={<Users />} />
-          <Route path="/admin" element={<Admin processedPeople={handlePrevoiusAppl} />} />
-          <Route path="/previousApplications" element={<PreviousApplications processedPeople={processedPeople} />} />
+          <Route path="/workStatus" element={<WorkStatus></WorkStatus>} />
+          <Route
+            path="/admin"
+            element={<Admin processedPeople={handlePrevoiusAppl} />}
+          />
+          <Route
+            path="/previousApplications"
+            element={<PreviousApplications processedPeople={processedPeople} />}
+          />
         </Routes>
       </LoginUserDetailsProvider>
     </>
