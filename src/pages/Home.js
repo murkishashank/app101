@@ -53,7 +53,6 @@ export const Home = () => {
         payload[key] === null ||
         payload[key] === undefined
       ) {
-        console.log(key, payload[key]);
         if (
           key !== "approvedFlag" &&
           key !== "approvedDate" &&
