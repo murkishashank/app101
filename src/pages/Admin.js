@@ -37,8 +37,15 @@ export const Admin = (props) => {
     
   const saveLeave = (rowData) => {
     const {userName, ...rest} = rowData;
-    const response = saveProcessedLeave(rest)
-    console.log(response);
+    saveProcessedLeave(rest).then((response) => {
+      if(response != null){
+        getAllLeaves().then((response) =>{
+          setAppliedPeople([]);
+          setProcessedPeople([]);
+          setPeople(response);
+        });
+      }
+    });
   }
   
   const finalColumns = commonColumns.concat(columns);
