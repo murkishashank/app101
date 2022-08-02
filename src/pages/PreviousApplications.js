@@ -6,8 +6,9 @@ export const PreviousApplications = (props) => {
   const [processedPeople, setProcessedPeople] = useState([]);
 
   const columns = [
-    { field: "approvedFlag", headerName: "Approved Status" },
-    { field: "remarks", headerName: "Remarks" },
+    { field: "approvedFlag", headerName: "Approved Status", width: "150"},
+    { field: "approvedDate", headerName: "Approved Date", width: "130"},
+    { field: "remarks", headerName: "Remarks", width: "220"},
   ];
 
   const finalColumns = commonColumns.concat(columns);
