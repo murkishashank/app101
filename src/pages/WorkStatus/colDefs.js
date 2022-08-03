@@ -6,7 +6,7 @@ export const taskStatusOptions = [
 ];
 export const workStatusColDefs = [
   { field: "taskName", headerName: "Task Name" },
-  { field: "taskDescription", headerName: "Task description", width: "350" },
+  { field: "taskDescription", headerName: "Task description", width: "270" },
   {
     field: "taskStatus",
     headerName: "Task Status",
@@ -17,11 +17,11 @@ export const workStatusColDefs = [
   },
   { field: "assignedBy", headerName: "Assigned By" },
   {
-    field: "assignedTimeStamp",
+    field: "taskAssignedDate",
     headerName: "Assigned Date",
     type: "date",
     width: "150",
   },
-  { field: "completedTimeStamp", headerName: "Completed Date" },
+  { field: "taskCompletedDate", headerName: "Completed Date", width: "120" },
   { field: "remarks", headerName: "Remarks", width: "500", editable: true },
 ];
