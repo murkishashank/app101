@@ -6,11 +6,14 @@ import "../css/CommonStyling.css";
 export const LeaveCard = (props) => {
   const leaveData = props.leaveData;
   let status;
+  let remarks;
   leaveData.approvedFlag === "Rejected"
     ? (status = "Rejected")
     : leaveData.approvedFlag === ""
     ? (status = "Pending")
     : (status = "Approved");
+
+  leaveData.remarks === null ? remarks = "No comments yet." : remarks = leaveData.remarks;
 
   const handleOnClick = () => {
     props.onEdit(props.index);
@@ -43,7 +46,7 @@ export const LeaveCard = (props) => {
           To: {leaveData.toDate}
         </Card.Subtitle>
         <Card.Text>Status: {status}</Card.Text>
-        <Card.Text>Remarks: {leaveData.remarks}</Card.Text>
+        <Card.Text>Remarks: {remarks}</Card.Text>
       </Card.Body>
     </Card>
   );

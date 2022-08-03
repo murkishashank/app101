@@ -43,6 +43,16 @@ export const NavBar = () => {
                 </b>
               </Nav.Link>
             )}
+             {designation === "Manager" ? <Nav.Link as={Link} to="/taskForm">
+             <b>
+                  <h5>Work</h5>
+                </b>
+              </Nav.Link> : <Nav.Link as={Link} to="/workStatus">
+              <b>
+                  <h5>Work</h5>
+                </b>
+              </Nav.Link>}
+            
           </Nav>
         </Navbar.Collapse>
       </Container>
