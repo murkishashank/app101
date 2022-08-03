@@ -4,8 +4,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 export const LeaveForm = (props) => {
-  let errorObj = props.errorObject;
-  let leaveFormData = props.leaveObj;
+  let errorObj = props.errorobject;
+  let leaveFormData = props.leaveobj;
 
   const handleOnChange = (event) => {
     props.onChange(event);
