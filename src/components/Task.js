@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { TaskCard } from "../components/TaskCard";
 import { NavBar } from "../components/NavBar";
 import "../css/CommonStyling.css";
 import Button from "react-bootstrap/Button";
