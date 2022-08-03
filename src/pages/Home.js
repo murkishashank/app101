@@ -9,7 +9,6 @@ import { getLeavedById } from "../api/getLeavesById";
 import { saveLeave } from "../api/saveLeave";
 
 export const Home = (props) => {
-
   const userId = localStorage.getItem("userID");
   const dataObj = {
     userId: userId,
@@ -28,19 +27,18 @@ export const Home = (props) => {
   const [formData, setFormData] = useState(dataObj);
   const [errorObject, setErrorObject] = useState(dataObj);
 
-
   useEffect(() => {
     setLeaveDataLoading(true);
-    getLeavedById(userId).then(response => {
+    getLeavedById(userId).then((response) => {
       setLeaveData(response);
       setLeaveDataLoading(false);
-    })
+    });
   }, [userId]);
 
   const handleOnChange = (event) => {
-    const formDataClone = { ...formData }
+    const formDataClone = { ...formData };
     formDataClone[event.target.name] = event.target.value;
-    setFormData(formDataClone)
+    setFormData(formDataClone);
   };
 
   const convertDateToDbFormat = (date) => {
@@ -89,20 +87,21 @@ export const Home = (props) => {
     const { userName, ...payload } = formData;
     const isValid = validateField(payload);
     if (isValid) {
-      saveLeave(payload).then(response => {
-        console.log(response);
-        if (response.id) {
-          setModalShow(false);
-          setFormData(dataObj);
-        } else {
-          alert("Error while applying the data.");
-        }
-      }).catch(error => console.log);
+      saveLeave(payload)
+        .then((response) => {
+          console.log(response);
+          if (response.id) {
+            setModalShow(false);
+            setFormData(dataObj);
+          } else {
+            alert("Error while applying the data.");
+          }
+        })
+        .catch((error) => console.log);
     } else {
       alert("Enter all the required fields.");
     }
   };
-
 
   const handleCellEditBtn = (params) => {
     setFormData(params.row);
@@ -111,7 +110,6 @@ export const Home = (props) => {
 
   return (
     <>
-      <NavBar></NavBar>
       {leaveDataLoading ? (
         <h1>Loading...</h1>
       ) : (

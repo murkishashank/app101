@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 // import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 // import { postUser } from "../api/postUser"
-import { getUser } from "../api/getUserByUserName"
+import { getUser } from "../api/getUserByUserName";
 // import { useNavigate } from "react-router-dom";
 // import { NavBar } from "../components/NavBar";
 // import Image from "react-bootstrap/Image";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export const Profile = (props) => {
   // const [show, setShow] = useState(false);
@@ -17,7 +17,7 @@ export const Profile = (props) => {
   // const handleShow = () => setShow(true);
 
   const [userData, setUserData] = useState({});
-  const { userName, firstName, lastName, age, mobileNumber } = userData
+  const { userName, firstName, lastName, age, mobileNumber } = userData;
   const [editMode, setEditMode] = useState(false);
 
   // const navigate = useNavigate();
@@ -26,8 +26,8 @@ export const Profile = (props) => {
     const user = getUser(props.userData.userName);
     user.then((data) => {
       setUserData(data);
-    })
-  }, [props])
+    });
+  }, [props]);
 
   // const saveUser = () => {
   //   setEditMode(true)
@@ -41,13 +41,13 @@ export const Profile = (props) => {
   // }
 
   const handleOnChange = (key, value) => {
-    const userDataClone = { ...userData, [key]: value }
-    setUserData(userDataClone)
-  }
+    const userDataClone = { ...userData, [key]: value };
+    setUserData(userDataClone);
+  };
 
   <Container>
     <Row>
-      <Modal >
+      <Modal>
         <Modal.Header closeButton>
           <Modal.Title>User Details</Modal.Title>
         </Modal.Header>
@@ -56,25 +56,45 @@ export const Profile = (props) => {
             <Form.Group className="mb-3" controlId="formGroupFirstName">
               <Form.Label>First Name</Form.Label>
               <Form.Control
-                type="firstName" value={firstName} readOnly={editMode}
-                onChange={(event) => handleOnChange("firstName", event.target.value)}
+                type="firstName"
+                value={firstName}
+                readOnly={editMode}
+                onChange={(event) =>
+                  handleOnChange("firstName", event.target.value)
+                }
                 autoFocus
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupLastName">
               <Form.Label>Last Name</Form.Label>
-              <Form.Control type="lastName" value={lastName} readOnly={editMode}
-                onChange={(event) => handleOnChange("lastName", event.target.value)} />
+              <Form.Control
+                type="lastName"
+                value={lastName}
+                readOnly={editMode}
+                onChange={(event) =>
+                  handleOnChange("lastName", event.target.value)
+                }
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPhone">
               <Form.Label>Phone</Form.Label>
-              <Form.Control type="phone" value={mobileNumber} readOnly={editMode}
-                onChange={(event) => handleOnChange("mobileNumber", event.target.value)} />
+              <Form.Control
+                type="phone"
+                value={mobileNumber}
+                readOnly={editMode}
+                onChange={(event) =>
+                  handleOnChange("mobileNumber", event.target.value)
+                }
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupAge">
               <Form.Label>Age</Form.Label>
-              <Form.Control type="age" value={age} readOnly={editMode}
-                onChange={(event) => handleOnChange("age", event.target.value)} />
+              <Form.Control
+                type="age"
+                value={age}
+                readOnly={editMode}
+                onChange={(event) => handleOnChange("age", event.target.value)}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -90,7 +110,7 @@ export const Profile = (props) => {
       <Col>2 of 3</Col>
       <Col>3 of 3</Col>
     </Row>
-  </Container>
+  </Container>;
 
   // return (
   //   <>
@@ -169,4 +189,4 @@ export const Profile = (props) => {
   //     </Modal>
   //   </>
   // )
-}
+};

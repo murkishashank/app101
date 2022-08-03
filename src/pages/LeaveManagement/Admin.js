@@ -102,7 +102,6 @@ export const Admin = (props) => {
         <h1>Loading...</h1>
       ) : (
         <div style={{ width: "100%", height: "400px" }}>
-          <NavBar></NavBar>
           <Button
             variant="secondary"
             onClick={handlePreviousBttn}
