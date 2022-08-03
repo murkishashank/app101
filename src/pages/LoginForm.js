@@ -21,9 +21,7 @@ export const LoginForm = (props) => {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  useEffect(() => {
-    console.log("name", state);
-  }, [state]);
+
   // const [fetchUserData] = useFetch();
 
   const fetchUserName = (userName) => {

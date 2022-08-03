@@ -119,7 +119,6 @@ export const Home = () => {
 
   return (
     <>
-      <NavBar></NavBar>
       {leaveDataLoading ? (
         <h1>Loading...</h1>
       ) : (

@@ -46,6 +46,18 @@ export const NavBar = () => {
           </Nav>
         </Navbar.Collapse>
       </Container>
+      {/* <!--Avatar--> */}
+      <Nav.Link as={Link} to="/profile">
+        <img
+          src="../image.jpg"
+          class="rounded-circle"
+          height="30"
+          width="30"
+          alt="Black and White Portrait of a Man"
+          loading="lazy"
+        />
+      </Nav.Link>
+      {/* <!--Avatar--> */}
     </Navbar>
   );
 };
