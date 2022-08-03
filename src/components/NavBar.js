@@ -52,13 +52,6 @@ export const NavBar = () => {
                 <h5>Profile</h5>
               </b>
             </Nav.Link>
-            {designation === "Manager" && (
-              <Nav.Link as={Link} to="/admin">
-                <b>
-                  <h5>Leave Management</h5>
-                </b>
-              </Nav.Link>
-            )}
             {designation === "Human Resource" && (
               <Nav.Link as={Link} to="/leavesData">
                 <b>
@@ -66,15 +59,6 @@ export const NavBar = () => {
                 </b>
               </Nav.Link>
             )}
-             {designation === "Manager" ? <Nav.Link as={Link} to="/taskForm">
-             <b>
-                  <h5>Work</h5>
-                </b>
-              </Nav.Link> : <Nav.Link as={Link} to="/workStatus">
-              <b>
-                  <h5>Work</h5>
-                </b>
-              </Nav.Link>}
             
           </Nav>
         </Navbar.Collapse>
