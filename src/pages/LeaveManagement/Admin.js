@@ -1,12 +1,12 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffectOnce } from "../CustomHooks/useEffectOnce.js";
-import { NavBar } from "../components/NavBar.js";
-import { getAllLeaves } from "../api/getAllLeaves.js";
+import { useEffectOnce } from "../../CustomHooks/useEffectOnce";
+import { NavBar } from "../../components/NavBar";
+import { getAllLeaves } from "../../api/getAllLeaves";
 import { DataGrid } from "@mui/x-data-grid";
 import { commonColumns } from "./CommonColumns.js";
 import Button from "react-bootstrap/Button";
-import { saveProcessedLeave } from "../api/saveProcessedLeave";
+import { saveProcessedLeave } from "../../api/saveProcessedLeave";
 export const Admin = (props) => {
   const navigate = useNavigate();
   const [appliedPeople, setAppliedPeople] = useState([]);
@@ -39,6 +39,7 @@ export const Admin = (props) => {
     const { userName, ...rest } = rowData;
     saveProcessedLeave(rest).then((response) => {
       if (response != null) {
+        alert(`Leave processed successfully.`);
         getAllLeaves().then((response) => {
           setAppliedPeople([]);
           setProcessedPeople([]);
@@ -113,7 +114,7 @@ export const Admin = (props) => {
           >
             Previous applications
           </Button>
-          <div style={{ height: "100%", display: "flex" , marginTop: "10px"}}>
+          <div style={{ height: "100%", display: "flex", marginTop: "10px" }}>
             <DataGrid
               autoHeight={true}
               rows={appliedPeople}

@@ -6,11 +6,13 @@ import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm";
 import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
+// import { WorkStatus } from "../pages/WorkStatus";
+import {Task} from "../components/Task";
 import { Admin } from "../pages/Admin";
 import { Users } from "../pages/Users";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/PreviousApplications";
-import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
+import { WorkStatus } from "../pages/WorkStatus/WorkStatus.js";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -48,13 +50,16 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/workStatus" element={<WorkStatus></WorkStatus>} />
           <Route
-            path="/admin"
-            element={<Admin processedPeople={handlePrevoiusAppl} />}
-          />
-          <Route
             path="/previousApplications"
             element={<PreviousApplications processedPeople={processedPeople} />}
           />
+          <Route path="/workStatus" element={<WorkStatus></WorkStatus>} />
+          <Route path="/admin" element={<Admin prevoiusAppl={handlePrevoiusAppl} />} />
+          {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
+          <Route path ="/workStatus" element = {<WorkStatus/>}/>
+          <Route path = "/taskForm" element = {<Task/>}/>
+
+          {/* <Route path="/previousApplications" element={<PreviousApplications approvedpeople={approvedPeople} deniedpeople={deniedPeople} />} /> */}
         </Routes>
       </LoginUserDetailsProvider>
     </>
