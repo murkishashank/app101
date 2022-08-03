@@ -37,15 +37,34 @@ export const NavBar = () => {
               </b>
             </Nav.Link>
             {designation === "Manager" && (
-              <Nav.Link as={Link} to="/admin">
-                <b>
-                  <h5>Leave Management</h5>
-                </b>
-              </Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/admin">
+                  <b>
+                    <h5>Leave Management</h5>
+                  </b>
+                </Nav.Link>
+                <Nav.Link as={Link} to="/taskForm">
+                  <b>
+                    <h5>Work</h5>
+                  </b>
+                </Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
       </Container>
+      {/* <!--Avatar--> */}
+      <Nav.Link as={Link} to="/profile">
+        <img
+          src="../image.jpg"
+          class="rounded-circle"
+          height="30"
+          width="30"
+          alt="Black and White Portrait of a Man"
+          loading="lazy"
+        />
+      </Nav.Link>
+      {/* <!--Avatar--> */}
     </Navbar>
   );
 };

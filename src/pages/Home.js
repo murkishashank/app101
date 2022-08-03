@@ -1,38 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { LeaveCard } from "../components/LeaveCard";
 import { NavBar } from "../components/NavBar";
 import "../css/CommonStyling.css";
 import Button from "react-bootstrap/Button";
 import { LeaveForm } from "../components/LeaveForm";
+import { DataTable } from "../components/DataTable";
+import { leavesColDefs } from "./leavesColDefs";
+import { getLeavedById } from "../api/getLeavesById";
+import { saveLeave } from "../api/saveLeave";
 
-export const Home = () => {
+export const Home = (props) => {
+  const userId = localStorage.getItem("userID");
   const dataObj = {
+    userId: userId,
     reason: "",
     fromDate: "",
     toDate: "",
     leaveType: "",
+    appliedDate: "",
+    approvedFlag: "",
+    approvedDate: "",
+    remarks: "",
   };
   const [leaveData, setLeaveData] = useState([]);
   const [leaveDataLoading, setLeaveDataLoading] = useState(true);
-  const [index, setIndex] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [formData, setFormData] = useState(dataObj);
   const [errorObject, setErrorObject] = useState(dataObj);
 
-  const userId = localStorage.getItem("userID");
-
   useEffect(() => {
     setLeaveDataLoading(true);
-    fetch(`http://localhost:8080/api/userLeave/${userId}`, { method: "GET" })
-      .then((response) => response.json())
-      .then((result) => {
-        setLeaveData(result);
-        setLeaveDataLoading(false);
-      });
+    getLeavedById(userId).then((response) => {
+      setLeaveData(response);
+      setLeaveDataLoading(false);
+    });
   }, [userId]);
 
   const handleOnChange = (event) => {
-    formData[event.target.name] = event.target.value;
+    const formDataClone = { ...formData };
+    formDataClone[event.target.name] = event.target.value;
+    setFormData(formDataClone);
   };
 
   const convertDateToDbFormat = (date) => {
@@ -53,7 +59,6 @@ export const Home = () => {
         payload[key] === null ||
         payload[key] === undefined
       ) {
-        console.log(key, payload[key]);
         if (
           key !== "approvedFlag" &&
           key !== "approvedDate" &&
@@ -74,46 +79,32 @@ export const Home = () => {
   };
 
   const handleSubmit = () => {
-    const payload = {
-      ...formData,
-      appliedDate: convertDateToDbFormat(getDateFormat(new Date())),
-    };
+    if (!formData.id) {
+      formData["appliedDate"] = convertDateToDbFormat(
+        getDateFormat(new Date())
+      );
+    }
+    const { userName, ...payload } = formData;
     const isValid = validateField(payload);
     if (isValid) {
-      const url = "http://localhost:8080/api/leave/";
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(payload),
-      };
-      fetch(url, options)
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.requestId) {
-            // alert("Details saved successfully.");
+      saveLeave(payload)
+        .then((response) => {
+          console.log(response);
+          if (response.id) {
             setModalShow(false);
-            setIndex(null);
-            leaveData.push(payload);
-            setFormData({
-              reason: "",
-              fromDate: "",
-              toDate: "",
-              leaveType: "",
-            });
+            setFormData(dataObj);
           } else {
             alert("Error while applying the data.");
           }
-        });
+        })
+        .catch((error) => console.log);
     } else {
       alert("Enter all the required fields.");
     }
   };
 
-  const handleEdit = (key) => {
-    setIndex(key);
-    setFormData(leaveData[key]);
+  const handleCellEditBtn = (params) => {
+    setFormData(params.row);
     setModalShow(true);
   };
 
@@ -130,26 +121,20 @@ export const Home = () => {
           <LeaveForm
             show={modalShow}
             onHide={() => {
+              setFormData(dataObj);
               setErrorObject(dataObj);
               setModalShow(false);
-              setIndex(null);
             }}
             onChange={handleOnChange}
             onSubmit={handleSubmit}
-            errorObject={errorObject}
-            leaveObj={index !== null ? leaveData[index] : leaveData}
+            errorobject={errorObject}
+            leaveobj={formData}
           />
-          {leaveData.map((leaveitem, key) => {
-            return (
-              <div className="leaveCard">
-                <LeaveCard
-                  leaveData={leaveitem}
-                  onEdit={handleEdit}
-                  index={key}
-                ></LeaveCard>
-              </div>
-            );
-          })}
+          <DataTable
+            rowData={leaveData}
+            colData={leavesColDefs}
+            onClickEdit={handleCellEditBtn}
+          ></DataTable>
         </div>
       )}
     </>

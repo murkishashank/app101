@@ -1,5 +1,4 @@
 .leaveCard {
-    padding: 1rem;
     display: flex;
     justify-content: center;
 }
@@ -13,4 +12,13 @@
 
 .errorMessage {
     color: red;
+}
+.leaveInfoGrid {
+    padding: 25px;
+}
+
+.applyButton {
+    margin: 2px auto 5px 0px;
+    display: inline-block;
+    position: relative;
 }
