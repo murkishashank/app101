@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useReducer } from "react";
+import { React, useEffect, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { encrypt, decrypt } from "../utils/Encryption";
 import Form from "react-bootstrap/Form";
@@ -14,7 +14,7 @@ export const RegistrationForm = () => {
     firstName: "",
     lastName: "",
     mobileNumber: "",
-    age: null,
+    dateOfBirth: "",
     statusFlag: 0,
     dataLoading: true,
   };
@@ -34,7 +34,7 @@ export const RegistrationForm = () => {
           firstName: "",
           lastName: "",
           mobileNumber: "",
-          age: null,
+          dateOfBirth: "",
           statusFlag: 0,
           dataLoading: false,
         };
@@ -90,7 +90,7 @@ export const RegistrationForm = () => {
       });
     if (dataValues.includes(null) || dataValues.includes("")) {
       alert("All fields are required");
-    } else if (updatedState.mobileNumber.length != 10) {
+    } else if (updatedState.mobileNumber.length !== 10) {
       alert("Enter valid phone number.");
     } else if (isUserNamePresent === true) {
       alert("Username already in use.");
@@ -186,16 +186,16 @@ export const RegistrationForm = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="age">
-              <h6>Age: </h6>
+            <Form.Label htmlFor="date">
+              <h6>DOB: </h6>
             </Form.Label>
             <Form.Control
               className="form-control"
-              type="number"
-              placeholder="Age"
-              id="age"
-              name="age"
-              defaultValue={updatedState.age}
+              type="date"
+              placeholder="dd-mm-yyyy"
+              id="date"
+              name="dateOfBirth"
+              defaultValue={updatedState.dateOfBirth}
               onChange={handleOnChange}
             />
           </Form.Group>

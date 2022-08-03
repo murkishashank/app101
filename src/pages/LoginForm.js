@@ -4,7 +4,7 @@ import { decrypt } from "../utils/Encryption";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { getUser } from "../api/getUserByUserName";
-import 'react-dropdown/style.css';
+
 export const LoginForm = (props) => {
   localStorage.clear();
   const navigate = useNavigate();
