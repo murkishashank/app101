@@ -4,6 +4,7 @@ import { decrypt } from "../utils/Encryption";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { getUser } from "../api/getUserByUserName";
+
 export const LoginForm = (props) => {
   localStorage.clear();
   const navigate = useNavigate();
@@ -22,7 +23,6 @@ export const LoginForm = (props) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
-    console.log("name", state);
   }, [state]);
   // const [fetchUserData] = useFetch();
 
