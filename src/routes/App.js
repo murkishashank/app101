@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css"
 import "../css/App.css";
 import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm";
 import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
-import { Admin } from "../pages/LeaveManagement/Admin";
+// import { WorkStatus } from "../pages/WorkStatus";
+import {Task} from "../components/Task";
+import {Admin } from "../pages/LeaveManagement/Admin"
+// import { Admin } from ".../pages/LeaveManagement/Admin";
 import { Users } from "../pages/Users";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
@@ -47,7 +50,6 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile userData={userData} />} />
           <Route path="/users" element={<Users />} />
-          <Route path="/workStatus" element={<WorkStatus></WorkStatus>} />
           <Route
             path="/admin"
             element={<Admin processedPeople={handlePrevoiusAppl} />}
@@ -57,6 +59,10 @@ function App() {
             element={<PreviousApplications processedPeople={processedPeople} />}
           />
           <Route path="/leavesData" element={<HumanResource />} />
+          <Route path="/workStatus" element={<WorkStatus></WorkStatus>} />
+          {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
+          <Route path ="/workStatus" element = {<WorkStatus/>}/>
+          <Route path = "/taskForm" element = {<Task/>}/>
         </Routes>
       </LoginUserDetailsProvider>
     </>

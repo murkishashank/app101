@@ -1,10 +1,8 @@
-import { useContext, useEffect } from "react";
+
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
-import { LoginUserDetailContext } from "../UserContext/LoginUserDetailContext";
 export const NavBar = () => {
   const designation = localStorage.getItem("designation");
   return (
@@ -50,6 +48,16 @@ export const NavBar = () => {
                 </b>
               </Nav.Link>
             )}
+             {designation === "Manager" ? <Nav.Link as={Link} to="/taskForm">
+             <b>
+                  <h5>Work</h5>
+                </b>
+              </Nav.Link> : <Nav.Link as={Link} to="/workStatus">
+              <b>
+                  <h5>Work</h5>
+                </b>
+              </Nav.Link>}
+            
           </Nav>
         </Navbar.Collapse>
       </Container>
