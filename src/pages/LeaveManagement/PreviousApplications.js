@@ -20,7 +20,6 @@ export const PreviousApplications = (props) => {
   return (
     <>
       <div style={{ width: "100%", height: "400px" }}>
-        <NavBar></NavBar>
         <div style={{ height: "100%", display: "flex" }}>
           <DataGrid
             rows={processedPeople}

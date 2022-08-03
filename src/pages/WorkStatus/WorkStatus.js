@@ -1,4 +1,3 @@
-import { NavBar } from "../../components/NavBar";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState, useContext } from "react";
 import { Button } from "react-bootstrap";
@@ -10,6 +9,7 @@ import { FormLabel } from "@mui/material";
 import { useWorkStatusSlice } from "./slice/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { selectSavingStatus, selectUserRecords } from "./slice/selectors";
+import { NavBar } from "../../components/NavBar";
 
 export const WorkStatus = () => {
   const rowData = useSelector(selectUserRecords);
@@ -64,6 +64,11 @@ export const WorkStatus = () => {
           onCellEditCommit={handleCellChange}
         ></DataGrid>
       </div>
+      <DataGrid
+        rows={rowData}
+        columns={workStatusColDefs}
+        onCellEditCommit={handleCellChange}
+      ></DataGrid>
     </div>
   );
 };
