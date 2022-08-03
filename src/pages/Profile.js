@@ -1,9 +1,9 @@
-// import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 // import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
-// import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 // import { postUser } from "../api/postUser"
-// import { getUser } from "../api/getUserByUserName"
+import { getUser } from "../api/getUserByUserName"
 // import { useNavigate } from "react-router-dom";
 // import { NavBar } from "../components/NavBar";
 // import Image from "react-bootstrap/Image";
@@ -12,6 +12,38 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 export const Profile = (props) => {
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+
+  const [userData, setUserData] = useState({});
+  const { userName, firstName, lastName, age, mobileNumber } = userData
+  const [editMode, setEditMode] = useState(false);
+
+  // const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = getUser(props.userData.userName);
+    user.then((data) => {
+      setUserData(data);
+    })
+  }, [props])
+
+  // const saveUser = () => {
+  //   setEditMode(true)
+  //   const saveUserInfo = postUser(userData)
+  //   saveUserInfo.then(response => {
+  //     if (response) {
+  //       alert("User updated successfully");
+  //       handleClose()
+  //     }
+  //   })
+  // }
+
+  const handleOnChange = (key, value) => {
+    const userDataClone = { ...userData, [key]: value }
+    setUserData(userDataClone)
+  }
 
   <Container>
     <Row>
@@ -59,38 +91,6 @@ export const Profile = (props) => {
       <Col>3 of 3</Col>
     </Row>
   </Container>
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-
-  // const [userData, setUserData] = useState({});
-  // const { userName, firstName, lastName, age, mobileNumber } = userData
-  // const [editMode, setEditMode] = useState(false);
-
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const user = getUser(props.userData.userName);
-  //   user.then((data) => {
-  //     setUserData(data);
-  //   })
-  // }, [props])
-
-  // const saveUser = () => {
-  //   setEditMode(true)
-  //   const saveUserInfo = postUser(userData)
-  //   saveUserInfo.then(response => {
-  //     if (response) {
-  //       alert("User updated successfully");
-  //       handleClose()
-  //     }
-  //   })
-  // }
-
-  // const handleOnChange = (key, value) => {
-  //   const userDataClone = { ...userData, [key]: value }
-  //   setUserData(userDataClone)
-  // }
 
   // return (
   //   <>
