@@ -43,6 +43,13 @@ export const NavBar = () => {
                 </b>
               </Nav.Link>
             )}
+            {designation === "Human Resource" && (
+              <Nav.Link as={Link} to="/leavesData">
+                <b>
+                  <h5>Leaves data</h5>
+                </b>
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

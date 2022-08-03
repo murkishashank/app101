@@ -11,6 +11,7 @@ import { Users } from "../pages/Users";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
+import { HumanResource } from "../pages/HumanResource/HumanResource";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -55,6 +56,7 @@ function App() {
             path="/previousApplications"
             element={<PreviousApplications processedPeople={processedPeople} />}
           />
+          <Route path="/leavesData" element={<HumanResource />} />
         </Routes>
       </LoginUserDetailsProvider>
     </>
