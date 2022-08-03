@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { postUser } from "../api/postUser"
 import { getUser } from "../api/getUserByUserName"
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { NavBar } from "../components/NavBar";
 import Image from "react-bootstrap/Image";
 
@@ -25,7 +25,7 @@ export const Profile = (props) => {
     user.then((data) => {
       setUserData(data);
     })
-  }, [])
+  }, [props])
 
   const saveUser = () => {
     setEditMode(true)
@@ -46,22 +46,39 @@ export const Profile = (props) => {
   return (
     <>
       <NavBar></NavBar>
-      <div style={{ marginTop: "20px", marginLeft: "20px" }}>
-        <Button variant="primary" onClick={handleShow}>
-          Edit Profile
-        </Button>
-        <Button style={{ marginLeft: "50px" }} variant="primary" onClick={() => { navigate("/") }}>
-          Logout
-        </Button>
-        <Form>
-          <Image src="../image.jpg" style={{ marginTop: "50px", width: "110px", height: "100px", borderRadius: "50%" }} />
-          <Form.Group>
-
-            <Form.Label>{userName}</Form.Label>
+      <div className="d-flex justify-content-center" >
+        <Form style={{ marginTop: "20px", fontWeight: "bold", width: "400px" }} >
+          <Button variant="primary" onClick={handleShow}>
+            Edit Profile
+          </Button>
+          <Button style={{ marginLeft: "100px" }} variant="primary" onClick={() => { navigate("/") }}>
+            Logout
+          </Button>
+          <div>
+            <Image src="../image.jpg" style={{ marginTop: "20px", width: "110px", height: "100px", borderRadius: "50%" }} />
+          </div>
+          <Form.Label>{userName}</Form.Label>
+          <Form.Group className="mb-3" controlId="formGroupFirstName">
+            <Form.Label>First Name</Form.Label>
+            <Form.Control
+              type="firstName" value={firstName} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formGroupLastName">
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control type="lastName" value={lastName} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formGroupPhone">
+            <Form.Label>Phone</Form.Label>
+            <Form.Control type="phone" value={mobileNumber} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formGroupAge">
+            <Form.Label>Age</Form.Label>
+            <Form.Control type="age" value={age} />
           </Form.Group>
         </Form>
       </div>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} size="lg"
+        aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header closeButton>
           <Modal.Title>Profile</Modal.Title>
         </Modal.Header>
