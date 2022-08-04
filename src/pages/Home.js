@@ -114,6 +114,7 @@ export const Home = (props) => {
         <h1>Loading...</h1>
       ) : (
         <div>
+          <NavBar />
           <Button variant="secondary" onClick={() => setModalShow(true)}>
             Apply for leave
           </Button>
