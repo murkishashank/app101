@@ -39,7 +39,6 @@ export const Task = () => {
       if(colDef.required === true){
       return colDef.field}
     }).filter(Boolean)
-    console.log("ke", payload, keys)
     let isDataValid = true;
     keys.forEach((key) => {
       if (
@@ -58,7 +57,6 @@ export const Task = () => {
     getAllTasks().then((data) => {
         setAllTasksData(data);
         setDataLoading(false);
-        console.log("sa", allTasksData)
     });
   };
 
@@ -194,7 +192,6 @@ export const Task = () => {
       fetchAllTasks();
     }, []);
     useEffect(() => {
-      console.log("all", allTasksData)
     }, [allTasksData])
   return (
     <div>

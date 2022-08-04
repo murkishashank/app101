@@ -89,7 +89,6 @@ export const Home = (props) => {
     if (isValid) {
       saveLeave(payload)
         .then((response) => {
-          console.log(response);
           if (response.id) {
             setModalShow(false);
             setFormData(dataObj);

@@ -33,7 +33,6 @@ export const WorkStatus = () => {
   const handleSave = () => {
     dispatch(actions.updateSavingStatus(true));
     const payload = getSavePayload(rowData);
-    console.log("payload", payload);
 
     PostWorkStatus(payload).then((response) => {
       if (response.status === 200) {
