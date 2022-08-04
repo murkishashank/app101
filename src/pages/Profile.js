@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-// import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-// import { postUser } from "../api/postUser"
+// import Modal from 'react-bootstrap/Modal';
+import { postUser } from "../api/postUser"
 import { getUser } from "../api/getUserByUserName"
-// import { useNavigate } from "react-router-dom";
-// import { NavBar } from "../components/NavBar";
-// import Image from "react-bootstrap/Image";
+import { useNavigate } from "react-router-dom";
+import { NavBar } from "../components/NavBar";
+import Image from "react-bootstrap/Image";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -17,10 +17,11 @@ export const Profile = (props) => {
   // const handleShow = () => setShow(true);
 
   const [userData, setUserData] = useState({});
-  const { userName, firstName, lastName, age, mobileNumber } = userData
-  const [editMode, setEditMode] = useState(false);
+  const { userName, firstName, lastName, dateOfBirth, mobileNumber, emailId, personalEmailId, alternativeMobileNumber,
+    permanentAddress, contactAddress, reportingManager, joiningDate, designation } = userData
+  const [editMode, setEditMode] = useState(true);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const user = getUser(props.userData.userName);
@@ -29,36 +30,58 @@ export const Profile = (props) => {
     })
   }, [props])
 
-  // const saveUser = () => {
-  //   setEditMode(true)
-  //   const saveUserInfo = postUser(userData)
-  //   saveUserInfo.then(response => {
-  //     if (response) {
-  //       alert("User updated successfully");
-  //       handleClose()
-  //     }
-  //   })
-  // }
+  const saveUser = () => {
+    setEditMode(true)
+    const saveUserInfo = postUser(userData)
+    saveUserInfo.then(response => {
+      if (response) {
+        alert("User updated successfully");
+
+      }
+    })
+  }
 
   const handleOnChange = (key, value) => {
     const userDataClone = { ...userData, [key]: value }
     setUserData(userDataClone)
   }
+  return (
 
-  <Container>
-    <Row>
-      <Modal >
-        <Modal.Header closeButton>
-          <Modal.Title>User Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+    <Container style={{ backgroundColor: "transparent" }}>
+      <NavBar></NavBar>
+      <Row style={{ marginTop: "20px", fontWeight: "lighter", width: "1200px" }}>
+        <Col style={{ border: "groove" }}>
+
+          <Form.Label className=" d-flex justify-content-center" style={{ fontSize: "20px" }}>Personal Details</Form.Label>
+          <div className=" d-flex justify-content-center">
+            <Image src="../image.jpg" style={{ width: "110px", height: "100px", borderRadius: "50%" }} />
+          </div>
+          <Form.Label className=" d-flex justify-content-center">{userName}</Form.Label>
+          <Col>
+            {editMode &&
+              (<>
+                <Button variant="primary" onClick={() => { setEditMode(false) }}>
+                  Edit Profile
+                </Button>
+
+              </>
+              )
+            }
+
+            {editMode === false &&
+              (<>
+                <Button variant="primary" onClick={saveUser}>Save</Button>
+                <Button variant="secondary" style={{ marginLeft: "200px" }} onClick={() => { setEditMode(true) }}>Cancel</Button>
+              </>)
+            }
+
+          </Col>
           <Form>
             <Form.Group className="mb-3" controlId="formGroupFirstName">
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="firstName" value={firstName} readOnly={editMode}
                 onChange={(event) => handleOnChange("firstName", event.target.value)}
-                autoFocus
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupLastName">
@@ -66,107 +89,68 @@ export const Profile = (props) => {
               <Form.Control type="lastName" value={lastName} readOnly={editMode}
                 onChange={(event) => handleOnChange("lastName", event.target.value)} />
             </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formGroupAge">
+              <Form.Label>DOB: {dateOfBirth}</Form.Label>
+              <Form.Control type="date" value={dateOfBirth} readOnly={editMode}
+                onChange={(event) => handleOnChange("dateOfBirth", event.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formGroupPersonalEmail">
+              <Form.Label>Personal Email</Form.Label>
+              <Form.Control type="email" value={personalEmailId} readOnly={editMode}
+                onChange={(event) => handleOnChange("personalEmailId", event.target.value)} />
+            </Form.Group>
+          </Form>
+        </Col>
+        <Col style={{ border: "groove" }}>
+          <Form>
+            <Form.Label className=" d-flex justify-content-center" style={{ fontSize: "20px" }}>Contact Details</Form.Label>
+
+            <Form.Group>
+              <Form.Label>Permanent Address</Form.Label>
+              <Form.Control as={"textarea"} rows={5} type="address" value={permanentAddress}></Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Contact Address</Form.Label>
+              <Form.Control as={"textarea"} rows={5} type="address" value={contactAddress}></Form.Control>
+            </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPhone">
-              <Form.Label>Phone</Form.Label>
+              <Form.Label>Mobile Number</Form.Label>
               <Form.Control type="phone" value={mobileNumber} readOnly={editMode}
                 onChange={(event) => handleOnChange("mobileNumber", event.target.value)} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupAge">
-              <Form.Label>Age</Form.Label>
-              <Form.Control type="age" value={age} readOnly={editMode}
-                onChange={(event) => handleOnChange("age", event.target.value)} />
+            <Form.Group className="mb-3" controlId="formGroupPhone">
+              <Form.Label>Alternative Mobile Number</Form.Label>
+              <Form.Control type="phone" value={alternativeMobileNumber} readOnly={editMode}
+                onChange={(event) => handleOnChange("alternativeMobileNumber", event.target.value)} />
             </Form.Group>
           </Form>
-        </Modal.Body>
-      </Modal>
-    </Row>
-    <Row>
-      <Col>1 of 3</Col>
-      <Col>2 of 3</Col>
-      <Col>3 of 3</Col>
-    </Row>
-    <Row>
-      <Col>1 of 3</Col>
-      <Col>2 of 3</Col>
-      <Col>3 of 3</Col>
-    </Row>
-  </Container>
+        </Col>
+        <Col style={{ border: "groove" }}>
+          <Form>
+            <Form.Label className=" d-flex justify-content-center" style={{ fontSize: "20px" }}>Employee Details</Form.Label>
+            <Form.Group className="mb-3" controlId="formGroupJoinDate">
+              <Form.Label>Joining Date</Form.Label>
+              <Form.Control type="date" value={joiningDate} readOnly={true} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formGroupName">
+              <Form.Label>Reporting Manager</Form.Label>
+              <Form.Control type="name" value={reportingManager} readOnly={true} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formGroupDesignation">
+              <Form.Label>Designation</Form.Label>
+              <Form.Control type="name" value={designation} readOnly={true} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formGroupEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="email" value={emailId} readOnly={true} />
+            </Form.Group>
+          </Form>
+        </Col>
 
-  // return (
-  //   <>
-  //     <NavBar></NavBar>
-  //     <div className="d-flex justify-content-center" >
-  //       <Form style={{ marginTop: "20px", fontWeight: "bold", width: "400px" }} >
-  //         <Button variant="primary" onClick={handleShow}>
-  //           Edit Profile
-  //         </Button>
-  //         <Button style={{ marginLeft: "100px" }} variant="primary" onClick={() => { navigate("/") }}>
-  //           Logout
-  //         </Button>
-  //         <div>
-  //           <Image src="../image.jpg" style={{ marginTop: "20px", width: "110px", height: "100px", borderRadius: "50%" }} />
-  //         </div>
-  //         <Form.Label>{userName}</Form.Label>
-  //         <Form.Group className="mb-3" controlId="formGroupFirstName">
-  //           <Form.Label>First Name</Form.Label>
-  //           <Form.Control
-  //             type="firstName" value={firstName} />
-  //         </Form.Group>
-  //         <Form.Group className="mb-3" controlId="formGroupLastName">
-  //           <Form.Label>Last Name</Form.Label>
-  //           <Form.Control type="lastName" value={lastName} />
-  //         </Form.Group>
-  //         <Form.Group className="mb-3" controlId="formGroupPhone">
-  //           <Form.Label>Phone</Form.Label>
-  //           <Form.Control type="phone" value={mobileNumber} />
-  //         </Form.Group>
-  //         <Form.Group className="mb-3" controlId="formGroupAge">
-  //           <Form.Label>Age</Form.Label>
-  //           <Form.Control type="age" value={age} />
-  //         </Form.Group>
-  //       </Form>
-  //     </div>
-  //     <Modal show={show} onHide={handleClose} size="lg"
-  //       aria-labelledby="contained-modal-title-vcenter" centered>
-  //       <Modal.Header closeButton>
-  //         <Modal.Title>Profile</Modal.Title>
-  //       </Modal.Header>
-  //       <Modal.Body>
-  //         <Form>
-  //           <Form.Group className="mb-3" controlId="formGroupFirstName">
-  //             <Form.Label>First Name</Form.Label>
-  //             <Form.Control
-  //               type="firstName" value={firstName} readOnly={editMode}
-  //               onChange={(event) => handleOnChange("firstName", event.target.value)}
-  //               autoFocus
-  //             />
-  //           </Form.Group>
-  //           <Form.Group className="mb-3" controlId="formGroupLastName">
-  //             <Form.Label>Last Name</Form.Label>
-  //             <Form.Control type="lastName" value={lastName} readOnly={editMode}
-  //               onChange={(event) => handleOnChange("lastName", event.target.value)} />
-  //           </Form.Group>
-  //           <Form.Group className="mb-3" controlId="formGroupPhone">
-  //             <Form.Label>Phone</Form.Label>
-  //             <Form.Control type="phone" value={mobileNumber} readOnly={editMode}
-  //               onChange={(event) => handleOnChange("mobileNumber", event.target.value)} />
-  //           </Form.Group>
-  //           <Form.Group className="mb-3" controlId="formGroupAge">
-  //             <Form.Label>Age</Form.Label>
-  //             <Form.Control type="age" value={age} readOnly={editMode}
-  //               onChange={(event) => handleOnChange("age", event.target.value)} />
-  //           </Form.Group>
-  //         </Form>
-  //       </Modal.Body>
-  //       <Modal.Footer>
-  //         <Button variant="secondary" onClick={handleClose}>
-  //           Close
-  //         </Button>
-  //         <Button variant="primary" onClick={saveUser}>
-  //           Save Changes
-  //         </Button>
-  //       </Modal.Footer>
-  //     </Modal>
-  //   </>
-  // )
+      </Row>
+
+    </Container>
+  )
+
 }
