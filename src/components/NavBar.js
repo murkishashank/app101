@@ -1,4 +1,3 @@
-
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -39,7 +38,7 @@ export const NavBar = () => {
                     <h5>Leave Management</h5>
                   </b>
                 </Nav.Link>
-                
+
                 <Nav.Link as={Link} to="/taskForm">
                   <b>
                     <h5>Work</h5>
@@ -52,28 +51,20 @@ export const NavBar = () => {
                 <h5>Profile</h5>
               </b>
             </Nav.Link>
-            {designation === "Manager" && (
+            {designation === "Human Resource" && (
               <>
-                <Nav.Link as={Link} to="/admin">
+                <Nav.Link as={Link} to="/leavesData">
                   <b>
-                    <h5>Leave Management</h5>
+                    <h5>Leaves data</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/taskForm">
+                <Nav.Link as={Link} to="/empDetails">
                   <b>
-                    <h5>Work</h5>
+                    <h5>Manage Employee Details</h5>
                   </b>
                 </Nav.Link>
               </>
             )}
-            {designation === "Human Resource" && (
-              <Nav.Link as={Link} to="/leavesData">
-                <b>
-                  <h5>Leaves data</h5>
-                </b>
-              </Nav.Link>
-            )}
-            
           </Nav>
         </Navbar.Collapse>
       </Container>

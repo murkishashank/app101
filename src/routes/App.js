@@ -15,7 +15,7 @@ import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext"
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
-import { NavBar } from "../components/NavBar";
+import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -68,6 +68,7 @@ function App() {
         {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
         <Route path="/workStatus" element={<WorkStatus />} />
         <Route path="/taskForm" element={<Task />} />
+        <Route path="/empDetails" element={<ManageEmpDetails />} />
 
         {/* <Route path="/previousApplications" element={<PreviousApplications approvedpeople={approvedPeople} deniedpeople={deniedPeople} />} /> */}
       </Routes>
