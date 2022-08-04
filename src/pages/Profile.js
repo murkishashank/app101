@@ -27,8 +27,8 @@ export const Profile = (props) => {
     const user = getUser(props.userData.userName);
     user.then((data) => {
       setUserData(data);
-    })
-  }, [props])
+    });
+  }, [props]);
 
   const saveUser = () => {
     setEditMode(true)
@@ -86,8 +86,14 @@ export const Profile = (props) => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupLastName">
               <Form.Label>Last Name</Form.Label>
-              <Form.Control type="lastName" value={lastName} readOnly={editMode}
-                onChange={(event) => handleOnChange("lastName", event.target.value)} />
+              <Form.Control
+                type="lastName"
+                value={lastName}
+                readOnly={editMode}
+                onChange={(event) =>
+                  handleOnChange("lastName", event.target.value)
+                }
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formGroupAge">
