@@ -101,8 +101,7 @@ export const Task = () => {
     };
     
     const isValid = validateField(payload);
-    const assignedId = localStorage.getItem("userID");
-    payload.assignedBy = assignedId;
+    // const assignedId = localStorage.getItem("userID");
     if (isValid) {
       const url = "http://localhost:8080/api/tasks";
       const options = {
