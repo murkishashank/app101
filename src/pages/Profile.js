@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/Form';
 // import Modal from 'react-bootstrap/Modal';
 import { postUser } from "../api/postUser"
 import { getUser } from "../api/getUserByUserName"
-import { useNavigate } from "react-router-dom";
 import { NavBar } from "../components/NavBar";
 import Image from "react-bootstrap/Image";
 import Container from 'react-bootstrap/Container';
@@ -12,16 +11,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 export const Profile = (props) => {
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
 
   const [userData, setUserData] = useState({});
   const { userName, firstName, lastName, dateOfBirth, mobileNumber, emailId, personalEmailId, alternativeMobileNumber,
     permanentAddress, contactAddress, reportingManager, joiningDate, designation } = userData
   const [editMode, setEditMode] = useState(true);
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     const user = getUser(props.userData.userName);
