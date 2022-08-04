@@ -9,7 +9,6 @@ import { Profile } from "../pages/Profile";
 // import { WorkStatus } from "../pages/WorkStatus";
 import { Task } from "../components/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
-// import { Admin } from ".../pages/LeaveManagement/Admin";
 import { Users } from "../pages/Users";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
@@ -29,7 +28,7 @@ function App() {
   function handleLoginUserDetails(userDetails) {
     localStorage.setItem("designation", userDetails.designation);
     localStorage.setItem("userID", userDetails.id);
-    localStorage.setItem("userName", userDetails.userName);
+    localStorage.setItem("userName", userDetails.userName)
     setUserData(userDetails);
   }
 

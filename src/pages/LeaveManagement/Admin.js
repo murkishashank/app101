@@ -98,6 +98,8 @@ export const Admin = (props) => {
 
   return (
     <>
+
+      <NavBar></NavBar>
       {dataLoading ? (
         <h1>Loading...</h1>
       ) : (
