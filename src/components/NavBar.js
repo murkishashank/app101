@@ -1,6 +1,6 @@
-
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
+import Image from "react-bootstrap/Image";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 export const NavBar = () => {
@@ -13,7 +13,7 @@ export const NavBar = () => {
       <Container>
         <Navbar.Brand as={Link} to="/home">
           <div style={{ marginTop: "-7px" }}>
-            <img src={"../Tecnics.png"} height="30"></img>
+            <Image src={"../Tecnics.png"} height="30"></Image>
           </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -39,7 +39,7 @@ export const NavBar = () => {
                     <h5>Leave Management</h5>
                   </b>
                 </Nav.Link>
-                
+
                 <Nav.Link as={Link} to="/taskForm">
                   <b>
                     <h5>Work</h5>
@@ -52,20 +52,7 @@ export const NavBar = () => {
                 <h5>Profile</h5>
               </b>
             </Nav.Link>
-            {designation === "Manager" && (
-              <>
-                <Nav.Link as={Link} to="/admin">
-                  <b>
-                    <h5>Leave Management</h5>
-                  </b>
-                </Nav.Link>
-                <Nav.Link as={Link} to="/taskForm">
-                  <b>
-                    <h5>Work</h5>
-                  </b>
-                </Nav.Link>
-              </>
-            )}
+
             {designation === "Human Resource" && (
               <Nav.Link as={Link} to="/leavesData">
                 <b>
@@ -73,22 +60,13 @@ export const NavBar = () => {
                 </b>
               </Nav.Link>
             )}
-            
+
           </Nav>
         </Navbar.Collapse>
+        <Nav.Link as={Link} to="/">
+          <Image src="../check-out.png" style={{ width: "40px", height: "40px" }}></Image>
+        </Nav.Link>
       </Container>
-      {/* <!--Avatar--> */}
-      <Nav.Link as={Link} to="/profile">
-        <img
-          src="../image.jpg"
-          class="rounded-circle"
-          height="30"
-          width="30"
-          alt="Black and White Portrait of a Man"
-          loading="lazy"
-        />
-      </Nav.Link>
-      {/* <!--Avatar--> */}
     </Navbar>
   );
 };

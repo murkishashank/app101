@@ -9,7 +9,6 @@ import { Profile } from "../pages/Profile";
 // import { WorkStatus } from "../pages/WorkStatus";
 import { Task } from "../components/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
-// import { Admin } from ".../pages/LeaveManagement/Admin";
 import { Users } from "../pages/Users";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
