@@ -6,7 +6,6 @@ import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm/LoginForm";
 import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
-// import { WorkStatus } from "../pages/WorkStatus";
 import { Task } from "../components/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
 import { Users } from "../pages/Users";

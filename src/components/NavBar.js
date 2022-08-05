@@ -34,13 +34,12 @@ export const NavBar = () => {
               </>
             ) : (
               <>
-                <Nav.Link as={Link} to="/admin">
+                <Nav.Link as={Link} to="/admin/leavemanagement">
                   <b>
                     <h5>Leave Management</h5>
                   </b>
                 </Nav.Link>
-
-                <Nav.Link as={Link} to="/taskForm">
+                <Nav.Link as={Link} to="/admin/taskform">
                   <b>
                     <h5>Work</h5>
                   </b>
