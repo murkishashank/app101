@@ -19,20 +19,20 @@ export const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" style={{ float: "right" }}>
           <Nav className="me-auto">
-            {designation !== "Manager" ? (
+            {designation === "null" ? (
               <>
                 <Nav.Link as={Link} to="/home">
                   <b>
                     <h5>Home</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/workStatus">
+                <Nav.Link as={Link} to="/workstatus">
                   <b>
                     <h5>Work Status</h5>
                   </b>
                 </Nav.Link>
               </>
-            ) : (
+            ) : designation === "Manager" ? (
               <>
                 <Nav.Link as={Link} to="/admin/leavemanagement">
                   <b>
@@ -45,25 +45,32 @@ export const NavBar = () => {
                   </b>
                 </Nav.Link>
               </>
+            ) : (
+              <>
+                <Nav.Link as={Link} to="/home">
+                  <b>
+                    <h5>Home</h5>
+                  </b>
+                </Nav.Link>
+                <Nav.Link as={Link} to="/hr/leavesdata">
+                  <b>
+                    <h5>Leaves data</h5>
+                  </b>
+                </Nav.Link>
+              </>
             )}
             <Nav.Link as={Link} to="/profile">
               <b>
                 <h5>Profile</h5>
               </b>
             </Nav.Link>
-
-            {designation === "Human Resource" && (
-              <Nav.Link as={Link} to="/leavesData">
-                <b>
-                  <h5>Leaves data</h5>
-                </b>
-              </Nav.Link>
-            )}
-
           </Nav>
         </Navbar.Collapse>
         <Nav.Link as={Link} to="/">
-          <Image src="../check-out.png" style={{ width: "40px", height: "40px" }}></Image>
+          <Image
+            src="../check-out.png"
+            style={{ width: "40px", height: "40px" }}
+          ></Image>
         </Nav.Link>
       </Container>
     </Navbar>

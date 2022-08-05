@@ -13,7 +13,6 @@ import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext"
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
-import { NavBar } from "../components/NavBar";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -27,13 +26,14 @@ function App() {
   function handleLoginUserDetails(userDetails) {
     localStorage.setItem("designation", userDetails.designation);
     localStorage.setItem("userID", userDetails.id);
-    localStorage.setItem("userName", userDetails.userName)
+    localStorage.setItem("userName", userDetails.userName);
     setUserData(userDetails);
   }
 
   return (
     <LoginUserDetailsProvider value={userData}>
       <Routes>
+        {/* Main Routes */}
         <Route
           path="/"
           element={<LoginForm loginUserDetails={handleLoginUserDetails} />}
@@ -43,31 +43,30 @@ function App() {
           element={<RegistrationForm />}
         ></Route>
         <Route
-          path="/registrationForm/:userId"
+          path="/registrationform/:userId"
           element={<RegistrationForm />}
         />
+
+        {/* User Routes */}
+        
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile userData={userData} />} />
-        <Route path="/users" element={<Users />} />
+        <Route path="/workstatus" element={<WorkStatus />} />
+
+        {/* Admin Routes */}
+        
         <Route
-          path="/admin"
+          path="/admin/leavemanagement"
           element={<Admin processedPeople={handlePrevoiusAppl} />}
         />
         <Route
-          path="/previousApplications"
+          path="/previousapplications"
           element={<PreviousApplications processedPeople={processedPeople} />}
         />
-        <Route path="/leavesData" element={<HumanResource />} />
-        <Route path="/workStatus" element={<WorkStatus></WorkStatus>} />
-        <Route
-          path="/admin"
-          element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
-        />
-        {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
-        <Route path="/workStatus" element={<WorkStatus />} />
-        <Route path="/taskForm" element={<Task />} />
+        <Route path="/admin/taskform" element={<Task />} />
 
-        {/* <Route path="/previousApplications" element={<PreviousApplications approvedpeople={approvedPeople} deniedpeople={deniedPeople} />} /> */}
+        {/* HR Routes */}
+        <Route path="/hr/leavesdata" element={<HumanResource />} />
       </Routes>
     </LoginUserDetailsProvider>
   );
