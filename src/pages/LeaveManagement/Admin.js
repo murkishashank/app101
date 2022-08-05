@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffectOnce } from "../../CustomHooks/useEffectOnce";
 import { NavBar } from "../../components/NavBar";
@@ -98,11 +98,12 @@ export const Admin = (props) => {
 
   return (
     <>
+
+      <NavBar></NavBar>
       {dataLoading ? (
         <h1>Loading...</h1>
       ) : (
         <div style={{ width: "100%", height: "400px" }}>
-          <NavBar></NavBar>
           <Button
             variant="secondary"
             onClick={handlePreviousBttn}

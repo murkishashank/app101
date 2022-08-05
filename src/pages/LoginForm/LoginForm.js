@@ -1,30 +1,42 @@
 import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
-import { decrypt } from "../utils/Encryption";
+import { decrypt } from "../../utils/Encryption";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { getUser } from "../api/getUserByUserName";
+import { getUser } from "../../api/getUserByUserName";
+import { useLoginFormSlice } from "./Slice/action";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUserLoginDetails } from "./Slice/selector";
+import Image from "react-bootstrap/Image";
 
 export const LoginForm = (props) => {
   localStorage.clear();
   const navigate = useNavigate();
 
-  const initialState = { userName: "", password: "" };
-  const reducer = (state, action) => {
-    switch (action.key) {
-      case "userName":
-        return { ...state, userName: action.value };
-      case "password":
-        return { ...state, password: action.value };
-      default:
-        return state;
-    }
-  };
+  const dispatch = useDispatch();
 
-  const [state, dispatch] = useReducer(reducer, initialState);
-  useEffect(() => {
-  }, [state]);
+  const { actions } = useLoginFormSlice();
+  const userLoginDetails = useSelector(selectUserLoginDetails);
+  const { userName, password } = userLoginDetails;
+
+  // const initialState = { userName: "", password: "" };
+  // const reducer = (state, action) => {
+  //   switch (action.key) {
+  //     case "userName":
+  //       return { ...state, userName: action.value };
+  //     case "password":
+  //       return { ...state, password: action.value };
+  //     default:
+  //       return state;
+  //   }
+  // };
+
+  // const [state, dispatch] = useReducer(reducer, initialState);
   // const [fetchUserData] = useFetch();
+
+  const handleOnChange = (key, value) => {
+    dispatch(actions.updateUserLoginDetails({ key: key, value: value }));
+  };
 
   const fetchUserName = (userName) => {
     getUser(userName).then((data) => {
@@ -36,7 +48,6 @@ export const LoginForm = (props) => {
     if (userDetails == null) {
       alert("user does not exist. Please Register Now ");
     }
-    const { userName, password } = state;
     if (Object.keys(userDetails).length) {
       if (
         userName === userDetails.userName &&
@@ -58,14 +69,13 @@ export const LoginForm = (props) => {
         style={{
           width: "46%",
           height: "50%",
-          // backgroundColor: "#F5F2F2",
           marginTop: 213,
         }}
       >
         <Form.Group>
           <center>
             <Form.Label>
-              <img src={"../Tecnics.png"} height="90px" alt="logo"></img>
+              <Image src={"../Tecnics.png"} height="90px"></Image>
               <h3> New Here?</h3>
               <Form.Label>
                 <h5> Sign up and discover new opportunities</h5>
@@ -108,7 +118,7 @@ export const LoginForm = (props) => {
         >
           <center>
             <Form.Label>
-              <img src={"../Tecnics.png"} height="75" alt="logo"></img>
+              <Image src={"../Tecnics.png"} height="75"></Image>
               <h3>Login Form</h3>
             </Form.Label>
           </center>
@@ -123,8 +133,8 @@ export const LoginForm = (props) => {
               id="userName"
               name="userName"
               onChange={(event) => {
-                dispatch({ key: "userName", value: event.target.value });
-                // handleOnChange("userName", event.target.value);
+                // dispatch({ key: "userName", value: event.target.value });
+                handleOnChange("userName", event.target.value);
               }}
             />
           </Form.Group>
@@ -139,8 +149,8 @@ export const LoginForm = (props) => {
               id="password"
               name="password"
               onChange={(event) => {
-                dispatch({ key: "password", value: event.target.value });
-                // handleOnChange("password", event.target.value);
+                // dispatch({ key: "password", value: event.target.value });
+                handleOnChange("password", event.target.value);
               }}
             />
           </Form.Group>
@@ -149,7 +159,7 @@ export const LoginForm = (props) => {
               <Button
                 className="btn btn-secondary"
                 onClick={() => {
-                  fetchUserName(state.userName);
+                  fetchUserName(userName);
                   // fetchUserName(loginDetails.userName);
                 }}
               >

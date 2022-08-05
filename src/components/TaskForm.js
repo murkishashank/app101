@@ -3,30 +3,42 @@ import Modal from 'react-bootstrap/Modal';
 import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import { getAllUserIds } from "../api/getAllUserIds";
+import { taskStatusOptions} from "../components/TaskColDefs"
+
 
 export const TaskForm = (props) => {
-    let leaveFormData = props.taskObj
+    let taskFormData = props.taskObj
+    const [userNames, setUserNames] = useState([])
+    const[userIds, setUserIds] = useState([]);
+
     const handleOnChange = (event) => {
+        if(event.target.name === "userName") {
+           let index = userNames.map((value, index) => {
+            if(value === event.target.value) {
+                return index;
+            }
+           }).filter(Boolean);
+           let userId = userIds[index]
+            props.userID(userId)
+        }
         props.onChange(event);
     }
 
     const handleSubmit = () => {
         props.onSubmit();
     }
-    const[userIds, setUserIds] = useState([]);
-
     const fetchUserName = () => {
         getAllUserIds().then((data) => {
-            setUserIds(data)
+            setUserIds(Object.keys(data))
+            setUserNames(Object.values(data))
         });
       };
+
   
       useEffect(() => {
-        // console.log("done", props)
         fetchUserName();
       }, []);
 
-    const options = ["Assigned", "WIP", "QA", "Completed"];
 
     return <Modal
         {...props}
@@ -42,9 +54,9 @@ export const TaskForm = (props) => {
         <Modal.Body>
             <Form>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>User Id</Form.Label>
-                <Form.Select onChange={handleOnChange} name='userId' defaultValue={leaveFormData.userId} >
-                        {userIds.map(option => {
+                <Form.Label>User Name</Form.Label>
+                <Form.Select onChange={handleOnChange} name='userName' defaultValue={taskFormData.userName} >
+                        {userNames.map((option, index) => {
                             return(<option> {option}</option>)
                         })}
                     </Form.Select>
@@ -57,7 +69,7 @@ export const TaskForm = (props) => {
                         name='taskName'
                         placeholder="Task Name"
                         onChange={handleOnChange}
-                        defaultValue={leaveFormData.taskName}
+                        defaultValue={taskFormData.taskName}
                         autoFocus
                     />
                 </Form.Group>
@@ -68,7 +80,7 @@ export const TaskForm = (props) => {
                         placeholder="Task Description"
                         name='taskDescription'
                         onChange={handleOnChange}
-                        defaultValue={leaveFormData.taskDescription}
+                        defaultValue={taskFormData.taskDescription}
                         autoFocus
                         required
                     />
@@ -78,8 +90,8 @@ export const TaskForm = (props) => {
                     controlId="exampleForm.ControlTextarea1"
                 >
                     <Form.Label>Task Status</Form.Label>
-                    <Form.Select onChange={handleOnChange} name='taskStatus' defaultValue={leaveFormData.taskStatus} >
-                        {options.map(option => {
+                    <Form.Select onChange={handleOnChange} name='taskStatus' defaultValue={taskFormData.taskStatus} >
+                        {taskStatusOptions.map(option => {
                             return(<option> {option}</option>)
                         })}
                     </Form.Select>
@@ -87,11 +99,40 @@ export const TaskForm = (props) => {
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Assigned By</Form.Label>
             <Form.Control
-                type="Integer"
+            type = "string"
                 name='assignedBy'
                 placeholder="Assigned By"
-                onChange={handleOnChange}
-                defaultValue={leaveFormData.assignedBy}
+                defaultValue={taskFormData.assignedBy}
+                autoFocus
+            />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Assigned Date</Form.Label>
+            <Form.Control
+            type = "date"
+                name='taskAssignedDate'
+                placeholder="Assigned Date"
+                defaultValue={taskFormData.taskAssignedDate}
+                autoFocus
+            />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Completed Date</Form.Label>
+            <Form.Control
+            type = "date"
+                name='taskCompletedDate'
+                placeholder="Completed Date"
+                defaultValue={taskFormData.taskCompletedDate}
+                autoFocus
+            />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Remarks</Form.Label>
+            <Form.Control
+            type = "string"
+                name='remarks'
+                placeholder="Remarks"
+                defaultValue={taskFormData.remarks}
                 autoFocus
             />
             </Form.Group>

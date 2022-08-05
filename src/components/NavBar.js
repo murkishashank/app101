@@ -1,10 +1,8 @@
-import { useContext, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
+import Image from "react-bootstrap/Image";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
-import { LoginUserDetailContext } from "../UserContext/LoginUserDetailContext";
 export const NavBar = () => {
   const designation = localStorage.getItem("designation");
   return (
@@ -15,7 +13,7 @@ export const NavBar = () => {
       <Container>
         <Navbar.Brand as={Link} to="/home">
           <div style={{ marginTop: "-7px" }}>
-            <img src={"../Tecnics.png"} height="30" alt="logo"></img>
+            <Image src={"../Tecnics.png"} height="30"></Image>
           </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -53,8 +51,20 @@ export const NavBar = () => {
                 <h5>Profile</h5>
               </b>
             </Nav.Link>
+
+            {designation === "Human Resource" && (
+              <Nav.Link as={Link} to="/leavesData">
+                <b>
+                  <h5>Leaves data</h5>
+                </b>
+              </Nav.Link>
+            )}
+
           </Nav>
         </Navbar.Collapse>
+        <Nav.Link as={Link} to="/">
+          <Image src="../check-out.png" style={{ width: "40px", height: "40px" }}></Image>
+        </Nav.Link>
       </Container>
     </Navbar>
   );

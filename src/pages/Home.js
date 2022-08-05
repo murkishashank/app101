@@ -9,7 +9,6 @@ import { getLeavedById } from "../api/getLeavesById";
 import { saveProcessedLeave } from '../api/saveProcessedLeave'
 
 export const Home = (props) => {
-
   const userId = localStorage.getItem("userID");
   const dataObj = {
     userId: userId,
@@ -28,19 +27,18 @@ export const Home = (props) => {
   const [formData, setFormData] = useState(dataObj);
   const [errorObject, setErrorObject] = useState(dataObj);
 
-
   useEffect(() => {
     setLeaveDataLoading(true);
-    getLeavedById(userId).then(response => {
+    getLeavedById(userId).then((response) => {
       setLeaveData(response);
       setLeaveDataLoading(false);
-    })
+    });
   }, [userId]);
 
   const handleOnChange = (event) => {
-    const formDataClone = { ...formData }
+    const formDataClone = { ...formData };
     formDataClone[event.target.name] = event.target.value;
-    setFormData(formDataClone)
+    setFormData(formDataClone);
   };
 
   const convertDateToDbFormat = (date) => {
@@ -116,7 +114,6 @@ export const Home = (props) => {
     }
   };
 
-
   const handleCellEditBtn = (params) => {
     setFormData(params.row);
     setModalShow(true);
@@ -124,11 +121,11 @@ export const Home = (props) => {
 
   return (
     <>
-      <NavBar></NavBar>
       {leaveDataLoading ? (
         <h1>Loading...</h1>
       ) : (
         <div>
+          <NavBar />
           <Button variant="secondary" onClick={() => setModalShow(true)}>
             Apply for leave
           </Button>

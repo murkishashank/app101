@@ -13,7 +13,6 @@ export const DataTable = (props) => {
 
   return (
     <>
-      <NavBar></NavBar>
       <DataGrid
         autoHeight={true}
         pagination={true}
