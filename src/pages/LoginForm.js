@@ -65,7 +65,7 @@ export const LoginForm = (props) => {
         <Form.Group>
           <center>
             <Form.Label>
-              <img src={"../Tecnics.png"} height="90px"></img>
+              <img src={"../Tecnics.png"} height="90px" alt="logo"></img>
               <h3> New Here?</h3>
               <Form.Label>
                 <h5> Sign up and discover new opportunities</h5>
@@ -108,7 +108,7 @@ export const LoginForm = (props) => {
         >
           <center>
             <Form.Label>
-              <img src={"../Tecnics.png"} height="75"></img>
+              <img src={"../Tecnics.png"} height="75" alt="logo"></img>
               <h3>Login Form</h3>
             </Form.Label>
           </center>

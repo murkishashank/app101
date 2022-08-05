@@ -1,7 +1,7 @@
 import { request } from "../utils/requests.ts";
 
 export const postUser = (userData) => {
-  const response = request(`http://localhost:8080/api/users`, {
+  const response = request(`/api/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -12,7 +12,7 @@ export const postUser = (userData) => {
 };
 
 export const PostWorkStatus = (workStatusData) => {
-  return fetch(`http://localhost:8080/api/tasks`, {
+  return fetch(`/api/tasks`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",

@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/App.css";
 import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm";
 import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
-// import { WorkStatus } from "../pages/WorkStatus";
-import {Task} from "../components/Task";
-import {Admin } from "../pages/LeaveManagement/Admin"
-// import { Admin } from ".../pages/LeaveManagement/Admin";
+import { Task } from "../components/Task";
+import { Admin } from "../pages/LeaveManagement/Admin";
 import { Users } from "../pages/Users";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
@@ -51,19 +49,32 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile userData={userData} />} />
           <Route path="/users" element={<Users />} />
-          <Route path="/previousApplications" element={<PreviousApplications approvedpeople={approvedPeople} deniedpeople={deniedPeople} />} />
           <Route
-            path="/previousApplications"
-            element={<PreviousApplications approvedpeople={approvedPeople}
+            path="/admin/previousApplications"
+            element={
+              <PreviousApplications
+                approvedpeople={approvedPeople}
+                deniedpeople={deniedPeople}
+              />
+            }
+          />
+          <Route
+            path="/admin/previousApplications"
+            element={
+              <PreviousApplications
+                approvedpeople={approvedPeople}
                 deniedpeople={deniedPeople}
               />
             }
           />
           <Route path="/workStatus" element={<WorkStatus></WorkStatus>} />
-          <Route path="/admin" element={<Admin prevoiusAppl={handlePrevoiusAppl} />} />
+          <Route
+            path="/admin/leavemanagement"
+            element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
+          />
           {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
-          <Route path ="/workStatus" element = {<WorkStatus/>}/>
-          <Route path = "/taskForm" element = {<Task/>}/>
+          <Route path="/workStatus" element={<WorkStatus />} />
+          <Route path="/admin/taskform" element={<Task />} />
 
           {/* <Route path="/previousApplications" element={<PreviousApplications approvedpeople={approvedPeople} deniedpeople={deniedPeople} />} /> */}
         </Routes>
