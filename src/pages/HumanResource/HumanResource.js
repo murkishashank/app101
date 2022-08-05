@@ -110,7 +110,7 @@ export const HumanResource = () => {
       ) : (
         <div style={{ width: "100%", height: "400px" }}>
           <NavBar></NavBar>
-          <Form.Label htmlFor="userName" style={{ marginLeft: "30px" }}>
+          <Form.Label htmlFor="userName" style={{ marginLeft: "30px", marginTop: "150px"}}>
             <h6>From Date: </h6>
           </Form.Label>
           <Form.Control
@@ -157,11 +157,11 @@ export const HumanResource = () => {
           </Button>
           <div
             style={{
-              height: "90%",
+              height: "133%",
               display: "flex",
-              marginTop: "10px",
-              width: "800px",
-              marginLeft: "30px",
+              marginTop: "-327px",
+              width: "700px",
+              marginLeft: "300px",
             }}
           >
             <DataGrid
@@ -170,9 +170,10 @@ export const HumanResource = () => {
                   ? leavesWithinHrDates
                   : approvedLeaves
               }
+              pagination= {true}
               columns={finalCol}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
+              pageSize={8}
+              rowsPerPageOptions={[8]}
               loading={!approvedLeaves.length}
             />
           </div>
