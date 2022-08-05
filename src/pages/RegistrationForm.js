@@ -3,6 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { encrypt, decrypt } from "../utils/Encryption";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { getUser } from "../api/getUserByUserName";
+import { postUser } from "../api/postUser";
+import { getUserById } from "../api/getUserById";
 
 export const RegistrationForm = () => {
   const { userId = "new" } = { ...useParams() };
@@ -47,10 +50,11 @@ export const RegistrationForm = () => {
 
   useEffect(() => {
     dispatch({ type: "NEW" });
-    fetch(`http://localhost:8080/api/users/${userId}`, { method: "GET" })
-      .then((response) => {
-        return response.json();
-      })
+    // fetch(`http://localhost:8080/api/users/${userId}`, { method: "GET" })
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    getUserById()
       .then((result) => {
         if (result !== null) {
           if (result.password) {
@@ -75,14 +79,8 @@ export const RegistrationForm = () => {
   const handleSubmit = () => {
     const dataValues = Object.values(updatedState);
 
-    const isUserNamePresent = fetch(
-      `http://localhost:8080/api/usersByUserName/${updatedState.userName}`
-    )
-      .then((response) => {
-        if (response.status === 200) {
-          return response.json();
-        }
-      })
+    const isUserNamePresent = 
+    getUser(updatedState.userName)
       .then((result) => {
         if (result?.id) {
           alert("Username already in use.");
@@ -96,14 +94,7 @@ export const RegistrationForm = () => {
       alert("Username already in use.");
     } else {
       updatedState.password = encrypt(updatedState.password);
-      fetch("http://localhost:8080/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(updatedState),
-      })
-        .then((response) => response.json())
+      postUser(updatedState)
         .then((result) => {
           result.userName === updatedState.userName
             ? navigate("/")
