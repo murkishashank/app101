@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { initialState } from "../Slice/action";
+import { initialState } from "./action";
 
-const selectSlice = (state) => state.fromLogin || initialState;
+const selectSlice = (state) => state.loginForm || initialState;
 
 export const selectUserLoginDetails = createSelector(
   [selectSlice],

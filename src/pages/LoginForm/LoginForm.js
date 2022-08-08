@@ -6,7 +6,7 @@ import { getUser } from "../../api/getUserByUserName";
 import { validateLoginDetails } from "../../api/validateLoginDetails";
 import { useLoginFormSlice } from "./Slice/action";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUserLoginDetails } from "./Slice/selector";
+import { selectUserLoginDetails } from "./slice/selector";
 import Image from "react-bootstrap/Image";
 
 export const LoginForm = (props) => {
