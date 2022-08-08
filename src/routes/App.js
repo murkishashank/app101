@@ -70,7 +70,6 @@ function App() {
           element={<PreviousApplications processedPeople={processedPeople} />}
         />
         <Route path="/leavesData" element={<HumanResource />} />
-        <Route path="/workStatus" element={<WorkStatus></WorkStatus>} />
         <Route
           path="/admin"
           element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
