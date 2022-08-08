@@ -57,21 +57,6 @@ export const NavBar = () => {
                     <h5>Leaves data</h5>
                   </b>
                 </Nav.Link>
-              </>
-            )}
-            <Nav.Link as={Link} to="/profile">
-              <b>
-                <h5>Profile</h5>
-              </b>
-            </Nav.Link>
-<<<<<<< HEAD
-            {designation === "Human Resource" && (
-              <>
-                <Nav.Link as={Link} to="/leavesData">
-                  <b>
-                    <h5>Leaves data</h5>
-                  </b>
-                </Nav.Link>
                 <Nav.Link as={Link} to="/empDetails">
                   <b>
                     <h5>Manage Employee Details</h5>
@@ -79,8 +64,11 @@ export const NavBar = () => {
                 </Nav.Link>
               </>
             )}
-=======
->>>>>>> 765dacafb708e9ed0da86e1207716222e985d9f5
+            <Nav.Link as={Link} to="/profile">
+              <b>
+                <h5>Profile</h5>
+              </b>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Nav.Link as={Link} to="/">
