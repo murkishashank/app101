@@ -1,6 +1,6 @@
 import { request } from "../utils/requests.ts";
 
-export const getLeavedById = (userId) => {
+export const getLeavesById = (userId) => {
   return request(`/api/userLeave/${userId}`, {
     method: "GET",
   });

@@ -5,8 +5,8 @@ import Button from "react-bootstrap/Button";
 import { LeaveForm } from "../components/LeaveForm";
 import { DataTable } from "../components/DataTable";
 import { leavesColDefs } from "./leavesColDefs";
-import { getLeavedById } from "../api/getLeavesById";
-import { saveProcessedLeave } from '../api/saveProcessedLeave'
+import { getLeavesById } from "../api/getLeavesById";
+import { saveProcessedLeave } from '../api/saveProcessedLeave';
 
 export const Home = (props) => {
   const userId = localStorage.getItem("userID");
@@ -29,10 +29,11 @@ export const Home = (props) => {
 
   useEffect(() => {
     setLeaveDataLoading(true);
-    getLeavedById(userId).then((response) => {
+    getLeavesById(userId).then((response) => {
       setLeaveData(response);
       setLeaveDataLoading(false);
-    });
+    })
+    .catch(error => console.log);
   }, [userId]);
 
   const handleOnChange = (event) => {
