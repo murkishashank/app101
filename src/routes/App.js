@@ -14,7 +14,6 @@ import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext"
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
-import { NavBar } from "../components/NavBar";
 
 function App() {
   const [userData, setUserData] = useState({});

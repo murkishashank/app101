@@ -64,7 +64,7 @@ export const NavBar = () => {
           </Nav>
         </Navbar.Collapse>
         <Nav.Link as={Link} to="/">
-          <Image src="../check-out.png" style={{ width: "40px", height: "40px" }}></Image>
+          <Image src="../check-out.png" style={{ width: "50px", height: "35px" }}></Image>
         </Nav.Link>
       </Container>
     </Navbar>
