@@ -26,7 +26,7 @@ export const NavBar = () => {
                     <h5>Home</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/workstatus">
+                <Nav.Link as={Link} to="/workStatus">
                   <b>
                     <h5>Work Status</h5>
                   </b>
