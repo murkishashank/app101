@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { encrypt } from "../../../utils/Encryption";
 // import { workStatusUserSaga } from "./saga";
 
 export const initialState = {
@@ -11,8 +12,15 @@ export const loginFormSlice = createSlice({
   reducers: {
     updateUserLoginDetails(state, action) {
       const { key, value } = action.payload;
-      state.userLoginDetails[key] = value;
+      if(key === "password") {
+        state.userLoginDetails[key] = encrypt(value);
+      } else {
+        state.userLoginDetails[key] = value;
+      }
     },
+    setToInitialState(state) {
+      state.userLoginDetails = initialState.userLoginDetails;
+    }
   },
 });
 

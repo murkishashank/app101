@@ -8,7 +8,6 @@ import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
 import { Task } from "../components/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
-import { Users } from "../pages/Users";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
@@ -66,7 +65,7 @@ function App() {
           element={<Admin processedPeople={handlePrevoiusAppl} />}
         />
         <Route
-          path="/previousapplications"
+          path="/admin/previousapplications"
           element={<PreviousApplications processedPeople={processedPeople} />}
         />
         <Route path="/leavesData" element={<HumanResource />} />

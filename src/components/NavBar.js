@@ -3,8 +3,25 @@ import Nav from "react-bootstrap/Nav";
 import Image from "react-bootstrap/Image";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 export const NavBar = () => {
+  const userId = localStorage.getItem("userID");
   const designation = localStorage.getItem("designation");
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userId === null || userId === "") {
+      navigate("/")
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.setItem("designation", "");
+    localStorage.setItem("userID", "");
+    localStorage.setItem("userName", "");
+  }
   return (
     <Navbar
       className="navbar navbar-light"
@@ -69,13 +86,16 @@ export const NavBar = () => {
                 <h5>Profile</h5>
               </b>
             </Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
         <Nav.Link as={Link} to="/">
-          <Image
-            src="../check-out.png"
-            style={{ width: "40px", height: "40px" }}
-          ></Image>
+          <Button onClick={handleLogout}>
+            <Image
+              src="../check-out.png"
+              style={{ width: "40px", height: "40px" }}
+            ></Image>
+          </Button>
         </Nav.Link>
       </Container>
     </Navbar>
