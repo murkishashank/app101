@@ -19,30 +19,42 @@ export const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" style={{ float: "right" }}>
           <Nav className="me-auto">
-            {designation !== "Manager" ? (
+            {designation === "null" ? (
               <>
                 <Nav.Link as={Link} to="/home">
                   <b>
                     <h5>Home</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/workStatus">
+                <Nav.Link as={Link} to="/workstatus">
                   <b>
                     <h5>Work Status</h5>
                   </b>
                 </Nav.Link>
               </>
-            ) : (
+            ) : designation === "Manager" ? (
               <>
-                <Nav.Link as={Link} to="/admin">
+                <Nav.Link as={Link} to="/admin/leavemanagement">
                   <b>
                     <h5>Leave Management</h5>
                   </b>
                 </Nav.Link>
-
-                <Nav.Link as={Link} to="/taskForm">
+                <Nav.Link as={Link} to="/admin/taskform">
                   <b>
                     <h5>Work</h5>
+                  </b>
+                </Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link as={Link} to="/home">
+                  <b>
+                    <h5>Home</h5>
+                  </b>
+                </Nav.Link>
+                <Nav.Link as={Link} to="/hr/leavesdata">
+                  <b>
+                    <h5>Leaves data</h5>
                   </b>
                 </Nav.Link>
               </>
@@ -52,6 +64,7 @@ export const NavBar = () => {
                 <h5>Profile</h5>
               </b>
             </Nav.Link>
+<<<<<<< HEAD
             {designation === "Human Resource" && (
               <>
                 <Nav.Link as={Link} to="/leavesData">
@@ -66,6 +79,8 @@ export const NavBar = () => {
                 </Nav.Link>
               </>
             )}
+=======
+>>>>>>> 765dacafb708e9ed0da86e1207716222e985d9f5
           </Nav>
         </Navbar.Collapse>
         <Nav.Link as={Link} to="/">

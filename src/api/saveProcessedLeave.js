@@ -3,7 +3,7 @@ import { request } from "../utils/requests.ts";
 export const saveProcessedLeave = (userLeaveData) => {
 
     const response = request(
-        `http://localhost:8080/api/leave`
+        `/api/leave`
         , {
             method: "POST",
             headers: {

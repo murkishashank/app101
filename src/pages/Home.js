@@ -6,7 +6,7 @@ import { LeaveForm } from "../components/LeaveForm";
 import { DataTable } from "../components/DataTable";
 import { leavesColDefs } from "./leavesColDefs";
 import { getLeavedById } from "../api/getLeavesById";
-import { saveLeave } from "../api/saveLeave";
+import { saveProcessedLeave } from '../api/saveProcessedLeave'
 
 export const Home = (props) => {
   const userId = localStorage.getItem("userID");
@@ -71,7 +71,18 @@ export const Home = (props) => {
           return isDataValid;
         }
       } else {
+        let fromDate = payload.fromDate;
+        let toDate = payload.toDate;
         errorObjectClone[key] = "";
+        if (key === "toDate") {
+          errorObjectClone[key] = `${key} must by greater than fromDate`;
+          let isDateValid
+          isDateValid = fromDate <= toDate;
+          if (isDateValid) {
+            errorObjectClone[key] = "";
+          }
+          return isDataValid;
+        }
         setErrorObject(errorObjectClone);
       }
     });
@@ -87,16 +98,17 @@ export const Home = (props) => {
     const { userName, ...payload } = formData;
     const isValid = validateField(payload);
     if (isValid) {
-      saveLeave(payload)
-        .then((response) => {
-          if (response.id) {
-            setModalShow(false);
-            setFormData(dataObj);
-          } else {
-            alert("Error while applying the data.");
-          }
-        })
-        .catch((error) => console.log);
+      saveProcessedLeave(payload).then(response => {
+        if (response.id) {
+          let leaveDataClone = [...leaveData];
+          leaveDataClone.push(response);
+          setLeaveData(leaveDataClone);
+          setModalShow(false);
+          setFormData(dataObj);
+        } else {
+          alert("Error while applying the data.");
+        }
+      }).catch(error => console.log);
     } else {
       alert("Enter all the required fields.");
     }
