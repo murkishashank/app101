@@ -13,6 +13,7 @@ import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext"
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
+import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -79,6 +80,16 @@ function App() {
         <Route path="/taskForm" element={<Task />} />
 
         {/* HR Routes */}
+        <Route
+          path="/empDetails"
+          element={
+            <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
+          }
+        />
+        <Route
+          path="/editEmpDetails"
+          element={<Profile editEmp={empDetailsEdit} />}
+        />
         <Route path="/hr/leavesdata" element={<HumanResource />} />
       </Routes>
     </LoginUserDetailsProvider>
