@@ -3,13 +3,13 @@ export const getSavePayload = (data) => {
   return data
     .filter((row) => row.editStatus)
     .map((row) => {
-      const { editStatus, completedTimeStamp, ...rest } = row;
+      const { editStatus, taskCompletedDate, ...rest } = row;
       return {
         ...rest,
-        completedTimeStamp:
-          completedTimeStamp === "On progress"
+        taskCompletedDate:
+          taskCompletedDate === "On progress"
             ? null
-            : convertDateToDbFormat(completedTimeStamp),
+            : convertDateToDbFormat(taskCompletedDate),
       };
     });
 };

@@ -63,11 +63,6 @@ export const WorkStatus = () => {
           onCellEditCommit={handleCellChange}
         ></DataGrid>
       </div>
-      <DataGrid
-        rows={rowData}
-        columns={workStatusColDefs}
-        onCellEditCommit={handleCellChange}
-      ></DataGrid>
     </div>
   );
 };
