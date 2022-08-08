@@ -15,20 +15,26 @@ import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplicati
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
 import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
+import { useSelector } from "react-redux";
 
 function App() {
   const [userData, setUserData] = useState({});
   const [processedPeople, setProcessedPeople] = useState([]);
+  const [empDetailsEdit, setEmpDetailsEdit] = useState({});
 
   function handlePrevoiusAppl(data) {
     const { processedPeople } = data;
     setProcessedPeople(processedPeople);
   }
 
+  function handleEmpEditDetails(data) {
+    setEmpDetailsEdit(data);
+  }
+
   function handleLoginUserDetails(userDetails) {
     localStorage.setItem("designation", userDetails.designation);
     localStorage.setItem("userID", userDetails.id);
-    localStorage.setItem("userName", userDetails.userName)
+    localStorage.setItem("userName", userDetails.userName);
     setUserData(userDetails);
   }
 
@@ -59,7 +65,6 @@ function App() {
           element={<PreviousApplications processedPeople={processedPeople} />}
         />
         <Route path="/leavesData" element={<HumanResource />} />
-        <Route path="/workStatus" element={<WorkStatus></WorkStatus>} />
         <Route
           path="/admin"
           element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
@@ -67,7 +72,16 @@ function App() {
         {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
         <Route path="/workStatus" element={<WorkStatus />} />
         <Route path="/taskForm" element={<Task />} />
-        <Route path="/empDetails" element={<ManageEmpDetails />} />
+        <Route
+          path="/empDetails"
+          element={
+            <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
+          }
+        />
+        <Route
+          path="/editEmpDetails"
+          element={<Profile editEmp={empDetailsEdit} />}
+        />
 
         {/* <Route path="/previousApplications" element={<PreviousApplications approvedpeople={approvedPeople} deniedpeople={deniedPeople} />} /> */}
       </Routes>

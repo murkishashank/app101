@@ -26,7 +26,7 @@ export const workStatusSlice = createSlice({
       state.workStatusRecords[index][key] = value;
       state.workStatusRecords[index]["editStatus"] = true;
       if (key === "taskStatus") {
-        state.workStatusRecords[index]["completedTimeStamp"] =
+        state.workStatusRecords[index]["taskCompletedDate"] =
           value === "Completed" ? getDateFormat(new Date()) : "On progress";
       }
     },

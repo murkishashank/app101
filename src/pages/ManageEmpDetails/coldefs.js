@@ -1,4 +1,19 @@
-const designation = ["HR", "Manager", "Associate", "Intern"];
+export const employeeRoles = [
+  "Human Resource",
+  "Manager",
+  "Associate",
+  "Intern",
+];
+export const requiredEmpColDefs = [
+  "firstName",
+  "lastName",
+  "mobileNumber",
+  "designation",
+  "emailId",
+  "reportingManager",
+  "dateOfBirth",
+  "contactAddress",
+];
 export const empColDefs = [
   { field: "id", headerName: "Employee ID" },
   { field: "firstName", headerName: "First name", editable: true },
@@ -13,8 +28,13 @@ export const empColDefs = [
     headerName: " Alt. Mobile number",
     editable: true,
   },
-  { field: "dateOfBirth", headerName: "DOB", type: "Date", editable: true },
-  { field: "designation", headerName: "Designation", editable: true },
+  {
+    field: "designation",
+    headerName: "Designation",
+    editable: true,
+    type: "singleSelect",
+    valueOptions: employeeRoles,
+  },
   { field: "joiningDate", headerName: "Joining date" },
   { field: "emailId", headerName: " E-mail", editable: true },
   { field: "personalEmailId", headerName: "Personal E-mail", editable: true },
