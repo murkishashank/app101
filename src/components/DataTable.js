@@ -1,4 +1,5 @@
 import { DataGrid } from "@mui/x-data-grid";
+import { NavBar } from "./NavBar";
 
 export const DataTable = (props) => {
   const handleCellEdit = (params) => {
@@ -14,14 +15,12 @@ export const DataTable = (props) => {
     <>
       <DataGrid
         autoHeight={true}
-        pagination= {true}
+        pagination={true}
         rows={props.rowData}
         columns={props.colData}
         pageSize={5}
         rowsPerPageOptions={[5]}
         onCellClick={handleCellEdit}
-        // loading={!appliedPeople.length}
-        // onCellEditCommit={handleCellEdit}
       />
     </>
   );
