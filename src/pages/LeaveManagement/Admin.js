@@ -82,7 +82,7 @@ export const Admin = (props) => {
 
   const handlePreviousBttn = () => {
     props.processedPeople({ processedPeople });
-    navigate("/admin/previousapplications");
+    navigate("/admin/previous-applications");
   };
 
   const handleCellEdit = (event) => {
@@ -122,7 +122,6 @@ export const Admin = (props) => {
               columns={finalColumns}
               pageSize={5}
               rowsPerPageOptions={[5]}
-              loading={!appliedPeople.length}
               onCellEditCommit={handleCellEdit}
             />
           </div>

@@ -175,7 +175,6 @@ export const HumanResource = () => {
               columns={finalCol}
               pageSize={8}
               rowsPerPageOptions={[8]}
-              loading={!approvedLeaves.length}
             />
           </div>
         </div>

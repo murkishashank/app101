@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export const NavBar = () => {
   const userId = localStorage.getItem("userID");
   const designation = localStorage.getItem("designation");
+  const userName = localStorage.getItem("userName")
   const navigate = useNavigate();
   useEffect(() => {
     if (userId === null || userId === "") {
@@ -51,12 +52,12 @@ export const NavBar = () => {
               </>
             ) : designation === "Manager" ? (
               <>
-                <Nav.Link as={Link} to="/admin/leavemanagement">
+                <Nav.Link as={Link} to="/admin/leave-management">
                   <b>
                     <h5>Leave Management</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/admin/taskform">
+                <Nav.Link as={Link} to="/admin/task">
                   <b>
                     <h5>Work</h5>
                   </b>
@@ -69,7 +70,7 @@ export const NavBar = () => {
                     <h5>Home</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/hr/leavesdata">
+                <Nav.Link as={Link} to="/hr/leaves-data">
                   <b>
                     <h5>Leaves data</h5>
                   </b>
@@ -91,6 +92,7 @@ export const NavBar = () => {
         </Navbar.Collapse>
         <Nav.Link as={Link} to="/">
           <Button onClick={handleLogout}>
+        <b>{userName} </b>
             <Image
               src="../check-out.png"
               style={{ width: "40px", height: "40px" }}
