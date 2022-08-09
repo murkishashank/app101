@@ -82,7 +82,7 @@ export const Admin = (props) => {
 
   const handlePreviousBttn = () => {
     props.processedPeople({ processedPeople });
-    navigate("/admin/previousApplications");
+    navigate("/admin/previousapplications");
   };
 
   const handleCellEdit = (event) => {
