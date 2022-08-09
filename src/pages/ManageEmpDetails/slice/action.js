@@ -17,7 +17,6 @@ export const manageEmpSlice = createSlice({
   initialState: initialState,
   reducers: {
     loadAllEmployeeRecords(state, action) {
-      console.log("records", action.payload);
       state.empDetailsRecords = action.payload;
     },
 
