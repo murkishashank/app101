@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export const NavBar = () => {
   const userId = localStorage.getItem("userID");
   const designation = localStorage.getItem("designation");
+  const userName = localStorage.getItem("userName")
   const navigate = useNavigate();
   useEffect(() => {
     if (userId === null || userId === "") {
@@ -91,6 +92,7 @@ export const NavBar = () => {
         </Navbar.Collapse>
         <Nav.Link as={Link} to="/">
           <Button onClick={handleLogout}>
+        <b>{userName} </b>
             <Image
               src="../check-out.png"
               style={{ width: "40px", height: "40px" }}
