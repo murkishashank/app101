@@ -43,7 +43,7 @@ export const NavBar = () => {
                     <h5>Home</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/workStatus">
+                <Nav.Link as={Link} to="/work-status">
                   <b>
                     <h5>Work Status</h5>
                   </b>
@@ -74,7 +74,7 @@ export const NavBar = () => {
                     <h5>Leaves data</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/empDetails">
+                <Nav.Link as={Link} to="/emp-details">
                   <b>
                     <h5>Manage Employee Details</h5>
                   </b>

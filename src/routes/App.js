@@ -56,7 +56,7 @@ function App() {
 
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile userData={userData} />} />
-        <Route path="/workstatus" element={<WorkStatus />} />
+        <Route path="/work-status" element={<WorkStatus />} />
 
         {/* Admin Routes */}
 
@@ -74,18 +74,18 @@ function App() {
           element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
         />
         {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
-        <Route path="/workStatus" element={<WorkStatus />} />
+        <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/taskForm" element={<Task />} />
 
         {/* HR Routes */}
         <Route
-          path="/empDetails"
+          path="/emp-details"
           element={
             <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
           }
         />
         <Route
-          path="/editEmpDetails"
+          path="/edit-emp-details"
           element={<Profile editEmp={empDetailsEdit} />}
         />
         <Route path="/hr/leavesdata" element={<HumanResource />} />
