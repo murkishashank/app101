@@ -6,6 +6,7 @@ import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm/LoginForm";
 import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
+import { Holidays } from "../pages/Holidays";
 import { Task } from "../components/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
@@ -78,6 +79,8 @@ function App() {
         {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
         <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/admin/task" element={<Task />} />
+        <Route path = "/holidays" element = {<Holidays  userData={userData}/>} />
+
 
         {/* HR Routes */}
         <Route
