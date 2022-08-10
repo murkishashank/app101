@@ -29,6 +29,7 @@ export const HumanResource = () => {
   };
 
   const leavesCol = [
+    { field: "approvedDate", headerName: "Approved Date", width: "130" },
     {
       field: "numberOfDays",
       headerName: "Number of days",
@@ -66,7 +67,7 @@ export const HumanResource = () => {
 
   useEffectOnce(() => {
     arrangeIds();
-    commonColumns.splice(5, 2);
+    commonColumns.splice(6, 1);
     setDataLoading(false);
     getLeaves();
   });
@@ -160,7 +161,7 @@ export const HumanResource = () => {
               height: "133%",
               display: "flex",
               marginTop: "-327px",
-              width: "700px",
+              width: "955px",
               marginLeft: "300px",
             }}
           >
@@ -174,7 +175,6 @@ export const HumanResource = () => {
               columns={finalCol}
               pageSize={8}
               rowsPerPageOptions={[8]}
-              loading={!approvedLeaves.length}
             />
           </div>
         </div>

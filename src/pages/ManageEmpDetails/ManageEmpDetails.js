@@ -103,7 +103,6 @@ export const ManageEmpDetails = (props) => {
       );
     } else {
       postUser(payload).then((response) => {
-        console.log("name", response);
         if (response.id === payload.id) {
           alert("Details Saved successfully");
         } else {

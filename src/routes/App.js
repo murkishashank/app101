@@ -63,11 +63,11 @@ function App() {
         {/* Admin Routes */}
 
         <Route
-          path="/admin/leavemanagement"
+          path="/admin/leave-management"
           element={<Admin processedPeople={handlePrevoiusAppl} />}
         />
         <Route
-          path="/admin/previousapplications"
+          path="/admin/previous-applications"
           element={<PreviousApplications processedPeople={processedPeople} />}
         />
         <Route path="/hr/leavesData" element={<HumanResource />} />
@@ -77,7 +77,7 @@ function App() {
         />
         {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
         <Route path="/work-status" element={<WorkStatus />} />
-        <Route path="/taskForm" element={<Task />} />
+        <Route path="/admin/task" element={<Task />} />
 
         {/* HR Routes */}
         <Route
