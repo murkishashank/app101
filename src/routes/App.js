@@ -70,7 +70,7 @@ function App() {
           path="/admin/previous-applications"
           element={<PreviousApplications processedPeople={processedPeople} />}
         />
-        <Route path="/hr/leavesData" element={<HumanResource />} />
+        <Route path="/hr/leaves-data" element={<HumanResource />} />
         <Route
           path="/admin"
           element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
