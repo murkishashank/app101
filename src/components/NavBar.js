@@ -48,7 +48,7 @@ export const NavBar = () => {
                     <h5>Holidays</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/workStatus">
+                <Nav.Link as={Link} to="/work-status">
                   <b>
                     <h5>Work Status</h5>
                   </b>
@@ -79,18 +79,18 @@ export const NavBar = () => {
                     <h5>Leaves</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/empDetails">
+                <Nav.Link as={Link} to="/emp-details">
                   <b>
                     <h5>Employees</h5>
                   </b>
                 </Nav.Link>
               </>
             )}
-              <Nav.Link as={Link} to="/holidays">
-                  <b>
-                    <h5>Holidays</h5>
-                  </b>
-                </Nav.Link>
+            <Nav.Link as={Link} to="/holidays">
+              <b>
+                <h5>Holidays</h5>
+              </b>
+            </Nav.Link>
             <Nav.Link as={Link} to="/profile">
               <b>
                 <h5>Profile</h5>
