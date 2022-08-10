@@ -13,6 +13,7 @@ import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplicati
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
 import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
+import { Feedback } from "../pages/feedback";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -56,7 +57,8 @@ function App() {
 
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile userData={userData} />} />
-        <Route path="/workstatus" element={<WorkStatus />} />
+        <Route path="/work-status" element={<WorkStatus />} />
+        <Route path="/feedback" element={<Feedback />} />
 
         {/* Admin Routes */}
 
@@ -68,20 +70,26 @@ function App() {
           path="/admin/previous-applications"
           element={<PreviousApplications processedPeople={processedPeople} />}
         />
+        <Route path="/hr/leavesData" element={<HumanResource />} />
+        <Route
+          path="/admin"
+          element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
+        />
+        {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
+        <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/admin/task" element={<Task />} />
 
         {/* HR Routes */}
         <Route
-          path="/empDetails"
+          path="/emp-details"
           element={
             <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
           }
         />
         <Route
-          path="/editEmpDetails"
+          path="/edit-emp-details"
           element={<Profile editEmp={empDetailsEdit} />}
         />
-        <Route path="/hr/leaves-data" element={<HumanResource />} />
       </Routes>
     </LoginUserDetailsProvider>
   );
