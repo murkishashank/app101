@@ -1,16 +1,15 @@
-import { useEffect, useReducer } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { decrypt } from "../../utils/Encryption";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { getUser } from "../../api/getUserByUserName";
+import { validateLoginDetails } from "../../api/validateLoginDetails";
 import { useLoginFormSlice } from "./Slice/action";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserLoginDetails } from "./Slice/selector";
 import Image from "react-bootstrap/Image";
 
 export const LoginForm = (props) => {
-  localStorage.clear();
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -18,48 +17,62 @@ export const LoginForm = (props) => {
   const { actions } = useLoginFormSlice();
   const userLoginDetails = useSelector(selectUserLoginDetails);
   const { userName, password } = userLoginDetails;
-
-  // const initialState = { userName: "", password: "" };
-  // const reducer = (state, action) => {
-  //   switch (action.key) {
-  //     case "userName":
-  //       return { ...state, userName: action.value };
-  //     case "password":
-  //       return { ...state, password: action.value };
-  //     default:
-  //       return state;
-  //   }
-  // };
-
-  // const [state, dispatch] = useReducer(reducer, initialState);
-  // const [fetchUserData] = useFetch();
+  const [errorMessage, setErrorMessage] = useState({
+    userName: "",
+    password: "",
+    loginError: "",
+  });
 
   const handleOnChange = (key, value) => {
     dispatch(actions.updateUserLoginDetails({ key: key, value: value }));
   };
 
-  const fetchUserName = (userName) => {
-    getUser(userName).then((data) => {
-      validateLogin(data);
-    });
+  const handleLogin = (userLoginDetails) => {
+    const isPayloadValid = validatePayload(userLoginDetails);
+    if (isPayloadValid) {
+      validateLoginDetails(userLoginDetails).then((data) => {
+        getUserDetails(data);
+      });
+    }
   };
 
-  const validateLogin = (userDetails) => {
-    if (userDetails == null) {
-      alert("user does not exist. Please Register Now ");
-    }
-    if (Object.keys(userDetails).length) {
+  const validatePayload = (payload) => {
+    let isPayloadValid;
+    const keys = Object.keys(payload);
+    const errorMessageClone = { ...errorMessage };
+    keys.forEach((key) => {
       if (
-        userName === userDetails.userName &&
-        password === decrypt(userDetails.password)
+        payload[key] === "" ||
+        payload[key] === null ||
+        payload[key] === undefined
       ) {
+        errorMessageClone[key] = `${key} is required`;
+        setErrorMessage(errorMessageClone);
+        isPayloadValid = false;
+        return isPayloadValid;
+      } else {
+        errorMessageClone[key] = "";
+        setErrorMessage(errorMessageClone);
+        isPayloadValid = true;
+        return isPayloadValid;
+      }
+    });
+    return isPayloadValid;
+  };
+
+  const getUserDetails = (isUserValid) => {
+    if (isUserValid) {
+      getUser(userName).then((data) => {
         if (props.loginUserDetails) {
-          props.loginUserDetails(userDetails);
+          dispatch(actions.setToInitialState())
+          props.loginUserDetails(data);
         }
         navigate("/home");
-      } else {
-        alert("invalid username password");
-      }
+      });
+    } else {
+      const errorMessageClone = { ...errorMessage };
+      errorMessageClone["loginError"] = "Invalid username or password";
+      setErrorMessage(errorMessageClone);
     }
   };
 
@@ -106,7 +119,7 @@ export const LoginForm = (props) => {
       >
         <div
           style={{
-            height: 400,
+            height: "auto",
             width: 450,
             backgroundColor: "#F5F2F2",
             borderRadius: "25px",
@@ -138,6 +151,7 @@ export const LoginForm = (props) => {
               }}
             />
           </Form.Group>
+          <p className="errorMessage">{errorMessage.userName}</p>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="lastName">
               <h6>Password:</h6>
@@ -154,18 +168,20 @@ export const LoginForm = (props) => {
               }}
             />
           </Form.Group>
+          <p className="errorMessage">{errorMessage.password}</p>
           <Form.Group>
             <Form.Group style={{ marginTop: "10px" }} className="d-grid">
               <Button
                 className="btn btn-secondary"
                 onClick={() => {
-                  fetchUserName(userName);
+                  handleLogin(userLoginDetails);
                   // fetchUserName(loginDetails.userName);
                 }}
               >
                 Login
               </Button>
             </Form.Group>
+            <p className="errorMessage">{errorMessage.loginError}</p>
           </Form.Group>
         </div>
       </div>

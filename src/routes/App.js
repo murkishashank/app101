@@ -12,14 +12,21 @@ import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext"
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
+import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
+import { Feedback } from "../pages/feedback";
 
 function App() {
   const [userData, setUserData] = useState({});
   const [processedPeople, setProcessedPeople] = useState([]);
+  const [empDetailsEdit, setEmpDetailsEdit] = useState({});
 
   function handlePrevoiusAppl(data) {
     const { processedPeople } = data;
     setProcessedPeople(processedPeople);
+  }
+
+  function handleEmpEditDetails(data) {
+    setEmpDetailsEdit(data);
   }
 
   function handleLoginUserDetails(userDetails) {
@@ -50,22 +57,39 @@ function App() {
 
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile userData={userData} />} />
-        <Route path="/workstatus" element={<WorkStatus />} />
+        <Route path="/work-status" element={<WorkStatus />} />
+        <Route path="/feedback" element={<Feedback />} />
 
         {/* Admin Routes */}
 
         <Route
-          path="/admin/leavemanagement"
+          path="/admin/leave-management"
           element={<Admin processedPeople={handlePrevoiusAppl} />}
         />
         <Route
-          path="/previousapplications"
+          path="/admin/previous-applications"
           element={<PreviousApplications processedPeople={processedPeople} />}
         />
-        <Route path="/admin/taskform" element={<Task />} />
+        <Route path="/hr/leaves-data" element={<HumanResource />} />
+        <Route
+          path="/admin"
+          element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
+        />
+        {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
+        <Route path="/work-status" element={<WorkStatus />} />
+        <Route path="/admin/task" element={<Task />} />
 
         {/* HR Routes */}
-        <Route path="/hr/leavesdata" element={<HumanResource />} />
+        <Route
+          path="/emp-details"
+          element={
+            <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
+          }
+        />
+        <Route
+          path="/edit-emp-details"
+          element={<Profile editEmp={empDetailsEdit} />}
+        />
       </Routes>
     </LoginUserDetailsProvider>
   );

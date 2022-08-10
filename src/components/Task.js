@@ -6,7 +6,7 @@ import { TaskForm } from "../components/TaskForm.js";
 import { DataGrid } from "@mui/x-data-grid";
 import {taskColDefs} from "../components/TaskColDefs"
 import { getAllTasks } from "../api/getAllTasks";
-
+import Box from '@mui/material/Box';
 
 export const Task = () => {
   const [allTasksData, setAllTasksData] = useState([]);
@@ -64,6 +64,7 @@ export const Task = () => {
     field: "",
     type: "actions",
     headerName: "Actions",
+    headerClassName: 'super-app-theme--header',
     renderCell: (params) => {
       const onClick = () => {
        setTaskFormDisplay(true)
@@ -216,11 +217,42 @@ export const Task = () => {
             Save
           </Button>
         </div>
-        <DataGrid
+        <Box
+      sx={{
+        width: '100%',
+        '& .super-app-theme--header': {
+          backgroundColor: 'rgba(255, 7, 0, 0.55)',
+        },
+      height: 300,
+      width: '100%',
+      '& .super-app-theme--cell': {
+        backgroundColor: 'rgba(224, 183, 60, 0.55)',
+        color: '#AFF7F6',
+        fontWeight: '600',
+      },
+      '& .super-app.QA': {
+        backgroundColor: '#F75742',
+        color: '#1a3e72',
+        fontWeight: '600',
+      },
+      '& .super-app.pending': {
+        backgroundColor: '#FFF334',
+        color: '#1a3e72',
+        fontWeight: '600',
+      },
+      '& .super-app.completed': {
+        backgroundColor: '#38C43B',
+        color: '#1a3e72',
+        fontWeight: '600',
+      },
+    }}
+    >
+      <DataGrid
           rows={allTasksData}
           columns={col}
           onCellEditCommit={handleCellChange}
         ></DataGrid>
+    </Box>
       </div>
     </div>}
     </div>

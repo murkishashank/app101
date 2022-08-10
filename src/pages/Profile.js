@@ -24,15 +24,14 @@ export const Profile = (props) => {
   const [editMode, setEditMode] = useState(true);
 
   const saveUser = () => {
-    setEditMode(true)
-    const saveUserInfo = postUser(userData)
-    saveUserInfo.then(response => {
+    setEditMode(true);
+    const saveUserInfo = postUser(userData);
+    saveUserInfo.then((response) => {
       if (response) {
         alert("User updated successfully");
-
       }
-    })
-  }
+    });
+  };
 
   const handleOnChange = (key, value) => {
     const userDataClone = { ...userData, [key]: value }
@@ -81,8 +80,14 @@ export const Profile = (props) => {
             <Form.Group as={Row} className="mb-3" controlId="formGroupPersonalEmail">
               <Form.Label column sm={3}>Personal Email</Form.Label>
               <Col sm={9}>
-                <Form.Control type="email" value={personalEmailId} readOnly={editMode}
-                  onChange={(event) => handleOnChange("personalEmailId", event.target.value)} />
+                <Form.Control
+                type="email"
+                value={personalEmailId}
+                readOnly={editMode}
+                  onChange={(event) =>
+                  handleOnChange("personalEmailId", event.target.value)
+                }
+              />
               </Col>
             </Form.Group>
           </Col>

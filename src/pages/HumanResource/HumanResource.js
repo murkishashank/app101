@@ -29,6 +29,7 @@ export const HumanResource = () => {
   };
 
   const leavesCol = [
+    { field: "approvedDate", headerName: "Approved Date", width: "130" },
     {
       field: "numberOfDays",
       headerName: "Number of days",
@@ -66,14 +67,14 @@ export const HumanResource = () => {
 
   useEffectOnce(() => {
     arrangeIds();
-    commonColumns.splice(5, 2);
+    commonColumns.splice(6, 1);
     setDataLoading(false);
     getLeaves();
   });
 
   const handleClearBttn = () => {
-    fromDateRef.current.value = "yyyy-MM-dd";
-    toDateRef.current.value = "yyyy-MM-dd";
+    fromDateRef.current.value = "yyyy-mm-dd";
+    toDateRef.current.value = "yyyy-mm-dd";
     setFromDateByHr();
     setToDateByHr();
     setleavesWithinHrDates([]);
@@ -89,18 +90,21 @@ export const HumanResource = () => {
     }
   };
 
+  const filterLeaves = (approvedLeave) => {
+    let toDate = approvedLeave.toDate;
+    let fromDate = approvedLeave.fromDate;
+    if (fromDate >= fromDateByHr && toDate <= toDateByHr) {
+      return approvedLeave;
+    }
+  };
+
   const handleSubmitBttn = () => {
-    const leavesWithinHrDatesClone = approvedLeaves
-      .map((approveLeave) => {
-        if (
-          approveLeave.fromDate >= fromDateByHr &&
-          approveLeave.toDate <= toDateByHr
-        ) {
-          return approveLeave;
-        }
-      })
-      .filter(Boolean);
-    setleavesWithinHrDates(leavesWithinHrDatesClone);
+    const leavesWithinHrDatesClone = approvedLeaves.filter(filterLeaves);
+    if(leavesWithinHrDatesClone.length === 0){
+      alert("No records found in the range.");
+    }else{
+      setleavesWithinHrDates(leavesWithinHrDatesClone);
+    }
   };
 
   return (
@@ -110,7 +114,10 @@ export const HumanResource = () => {
       ) : (
         <div style={{ width: "100%", height: "400px" }}>
           <NavBar></NavBar>
-          <Form.Label htmlFor="userName" style={{ marginLeft: "30px", marginTop: "150px"}}>
+          <Form.Label
+            htmlFor="userName"
+            style={{ marginLeft: "30px", marginTop: "150px" }}
+          >
             <h6>From Date: </h6>
           </Form.Label>
           <Form.Control
@@ -160,7 +167,7 @@ export const HumanResource = () => {
               height: "133%",
               display: "flex",
               marginTop: "-327px",
-              width: "700px",
+              width: "955px",
               marginLeft: "300px",
             }}
           >
@@ -170,11 +177,10 @@ export const HumanResource = () => {
                   ? leavesWithinHrDates
                   : approvedLeaves
               }
-              pagination= {true}
+              pagination={true}
               columns={finalCol}
               pageSize={8}
               rowsPerPageOptions={[8]}
-              loading={!approvedLeaves.length}
             />
           </div>
         </div>
