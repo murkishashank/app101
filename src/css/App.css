@@ -12,7 +12,34 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+table {
+  border: 2px solid forestgreen;
+  width: 800px;
+  height: 400px;
+}
+table.center {
+  margin-top: 50px;
+  margin-left: auto; 
+  margin-right: auto;
+}
+th {
+  border-bottom: 1px solid black;
+  text-align: center;
+  border-right-width: 1px;
+  background-color: #79EAE5;
+}
+tr {
+  border-bottom: 1px solid black;
+  text-align: center;
+  border-right-width: 1px;
+}
+td {
+  text-align: center;
+  border-right-width: 1px;
+}
+p.padding {
+  padding-top: 200cm;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
