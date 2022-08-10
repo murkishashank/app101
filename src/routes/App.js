@@ -8,7 +8,6 @@ import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
 import { Task } from "../components/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
-import { Users } from "../pages/Users";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
@@ -48,13 +47,13 @@ function App() {
         />
 
         {/* User Routes */}
-        
+
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile userData={userData} />} />
         <Route path="/workstatus" element={<WorkStatus />} />
 
         {/* Admin Routes */}
-        
+
         <Route
           path="/admin/leavemanagement"
           element={<Admin processedPeople={handlePrevoiusAppl} />}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-// import Modal from 'react-bootstrap/Modal';
 import { postUser } from "../api/postUser"
 import { getUser } from "../api/getUserByUserName"
 import { NavBar } from "../components/NavBar";
@@ -9,21 +8,20 @@ import Image from "react-bootstrap/Image";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { EditProfileComponent } from "../components/EditProfileComponent";
 
 export const Profile = (props) => {
-
   const [userData, setUserData] = useState({});
-  const { userName, firstName, lastName, dateOfBirth, mobileNumber, emailId, personalEmailId, alternativeMobileNumber,
-    permanentAddress, contactAddress, reportingManager, joiningDate, designation } = userData
-  const [editMode, setEditMode] = useState(true);
-
-
   useEffect(() => {
-    const user = getUser(props.userData.userName);
+    const user = getUser(props.userData.userName)
     user.then((data) => {
       setUserData(data);
     });
-  }, [props]);
+  }, [props])
+
+  const { userName, firstName, lastName, dateOfBirth, mobileNumber, emailId, personalEmailId, alternativeMobileNumber,
+    permanentAddress, contactAddress, reportingManager, joiningDate, designation } = userData
+  const [editMode, setEditMode] = useState(true);
 
   const saveUser = () => {
     setEditMode(true)
@@ -40,118 +38,113 @@ export const Profile = (props) => {
     const userDataClone = { ...userData, [key]: value }
     setUserData(userDataClone)
   }
+  const [show, setShow] = useState(false);
+
   return (
-
-    <Container style={{ backgroundColor: "transparent" }}>
-      <NavBar></NavBar>
-      <Row style={{ marginTop: "20px", fontWeight: "lighter", width: "1200px" }}>
-        <Col style={{ border: "groove" }}>
-
-          <Form.Label className=" d-flex justify-content-center" style={{ fontSize: "20px" }}>Personal Details</Form.Label>
-          <div className=" d-flex justify-content-center">
-            <Image src="../image.jpg" style={{ width: "110px", height: "100px", borderRadius: "50%" }} />
-          </div>
-          <Form.Label className=" d-flex justify-content-center">{userName}</Form.Label>
-          <Col>
-            {editMode &&
-              (<>
-                <Button variant="primary" onClick={() => { setEditMode(false) }}>
-                  Edit Profile
-                </Button>
-
-              </>
-              )
-            }
-
-            {editMode === false &&
-              (<>
-                <Button variant="primary" onClick={saveUser}>Save</Button>
-                <Button variant="secondary" style={{ marginLeft: "200px" }} onClick={() => { setEditMode(true) }}>Cancel</Button>
-              </>)
-            }
-
+    <div style={{ backgroundColor: "#eee" }}>
+      <NavBar ></NavBar>
+      <Container className="py-3">
+        <Form as={Row} className="mb-4 p-2" style={{ backgroundColor: "white", borderRadius: "10px", width: '55rem' }}>
+          <Form.Label style={{ fontWeight: "bold", fontSize: "20px" }}>Personal Details</Form.Label>
+          <Col sm={3} className="text-center">
+            <Image alt="avatar" className="rounded-circle" src="../image.jpg" style={{ width: "150px" }} fluid />
+            <Form.Label className="d-flex justify-content-center mt-2">{props.userData.userName}</Form.Label>
+            <Button variant="outline-primary" className="ms-1" onClick={() => setShow(true)}>Request Edit</Button>
+            <EditProfileComponent show={show} userData={userData} onHide={() => { setShow(false) }}></EditProfileComponent>
           </Col>
-          <Form>
-            <Form.Group className="mb-3" controlId="formGroupFirstName">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="firstName" value={firstName} readOnly={editMode}
-                onChange={(event) => handleOnChange("firstName", event.target.value)}
-              />
+          <Col sm={9}>
+            <Form.Group as={Row} className="mb-3" controlId="formHorizontalFirstName">
+              <Form.Label column sm={3}>First Name</Form.Label>
+              <Col sm={9}>
+                <Form.Control
+                  type="firstName" value={firstName} readOnly={editMode}
+                  onChange={(event) => handleOnChange("firstName", event.target.value)}
+                />
+              </Col>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupLastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="lastName"
-                value={lastName}
-                readOnly={editMode}
-                onChange={(event) =>
-                  handleOnChange("lastName", event.target.value)
-                }
-              />
+            <Form.Group as={Row} className="mb-3" controlId="formGroupLastName">
+              <Form.Label column sm={3}>Last Name</Form.Label>
+              <Col sm={9}>
+                <Form.Control
+                  type="lastName" value={lastName} readOnly={editMode}
+                  onChange={(event) => handleOnChange("lastName", event.target.value)}
+                />
+              </Col>
             </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGroupAge">
-              <Form.Label>DOB: {dateOfBirth}</Form.Label>
-              <Form.Control type="date" value={dateOfBirth} readOnly={editMode}
-                onChange={(event) => handleOnChange("dateOfBirth", event.target.value)} />
+            <Form.Group as={Row} className="mb-3" controlId="formGroupAge">
+              <Form.Label column sm={3}>DOB </Form.Label>
+              <Col sm={9}>
+                <Form.Control type="date" value={dateOfBirth} readOnly={editMode}
+                  onChange={(event) => handleOnChange("dateOfBirth", event.target.value)} />
+              </Col>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPersonalEmail">
-              <Form.Label>Personal Email</Form.Label>
-              <Form.Control type="email" value={personalEmailId} readOnly={editMode}
-                onChange={(event) => handleOnChange("personalEmailId", event.target.value)} />
+            <Form.Group as={Row} className="mb-3" controlId="formGroupPersonalEmail">
+              <Form.Label column sm={3}>Personal Email</Form.Label>
+              <Col sm={9}>
+                <Form.Control type="email" value={personalEmailId} readOnly={editMode}
+                  onChange={(event) => handleOnChange("personalEmailId", event.target.value)} />
+              </Col>
             </Form.Group>
-          </Form>
-        </Col>
-        <Col style={{ border: "groove" }}>
-          <Form>
-            <Form.Label className=" d-flex justify-content-center" style={{ fontSize: "20px" }}>Contact Details</Form.Label>
-
-            <Form.Group>
-              <Form.Label>Permanent Address</Form.Label>
+          </Col>
+        </Form>
+        <Form as={Row} className="mb-4 p-2" style={{ backgroundColor: "white", borderRadius: "10px", width: '55rem' }}>
+          <Form.Label style={{ fontWeight: "bold", fontSize: "20px" }}>Contact Details</Form.Label>
+          <Form.Group as={Row} className="mb-3" controlId="formGroupPermanentAddress">
+            <Form.Label column sm={4}>Permanent Address</Form.Label>
+            <Col sm={8}>
               <Form.Control as={"textarea"} rows={5} type="address" value={permanentAddress}></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Contact Address</Form.Label>
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formGroupPersonalEmail">
+            <Form.Label column sm={4}>Contact Address</Form.Label>
+            <Col sm={8}>
               <Form.Control as={"textarea"} rows={5} type="address" value={contactAddress}></Form.Control>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPhone">
-              <Form.Label>Mobile Number</Form.Label>
-              <Form.Control type="phone" value={mobileNumber} readOnly={editMode}
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="horizontalFormMobileNumber">
+            <Form.Label column sm={4}>Mobile Number</Form.Label>
+            <Col sm={8}>
+              <Form.Control type="number" value={mobileNumber} readOnly={editMode}
                 onChange={(event) => handleOnChange("mobileNumber", event.target.value)} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPhone">
-              <Form.Label>Alternative Mobile Number</Form.Label>
-              <Form.Control type="phone" value={alternativeMobileNumber} readOnly={editMode}
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="horizontalFormNumber">
+            <Form.Label column sm={4}>Alternative Mobile Number</Form.Label>
+            <Col sm={8}>
+              <Form.Control type="number" value={alternativeMobileNumber} readOnly={editMode}
                 onChange={(event) => handleOnChange("alternativeMobileNumber", event.target.value)} />
-            </Form.Group>
-          </Form>
-        </Col>
-        <Col style={{ border: "groove" }}>
-          <Form>
-            <Form.Label className=" d-flex justify-content-center" style={{ fontSize: "20px" }}>Employee Details</Form.Label>
-            <Form.Group className="mb-3" controlId="formGroupJoinDate">
-              <Form.Label>Joining Date</Form.Label>
+            </Col>
+          </Form.Group>
+        </Form>
+        <Form as={Row} className="mb-4 p-2" style={{ backgroundColor: "white", borderRadius: "10px", width: '55rem' }}>
+          <Form.Label style={{ fontWeight: "bold", fontSize: "20px" }}>Employee Details</Form.Label>
+          <Form.Group as={Row} className="mb-3" controlId="formGroupJoinDate">
+            <Form.Label column sm={4} >Joining Date</Form.Label>
+            <Col sm={8}>
               <Form.Control type="date" value={joiningDate} readOnly={true} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupName">
-              <Form.Label>Reporting Manager</Form.Label>
-              <Form.Control type="name" value={reportingManager} readOnly={true} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupDesignation">
-              <Form.Label>Designation</Form.Label>
-              <Form.Control type="name" value={designation} readOnly={true} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupEmail">
-              <Form.Label>Email</Form.Label>
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formGroupName">
+            <Form.Label column sm={4}>Reporting Manager</Form.Label>
+            <Col sm={8}>
+              <Form.Control type="text" value={reportingManager} readOnly={true} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formGroupDesignation">
+            <Form.Label column sm={4}>Designation</Form.Label>
+            <Col sm={8}>
+              <Form.Control type="text" value={designation} readOnly={true} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formGroupEmail">
+            <Form.Label column sm={4}>Email</Form.Label>
+            <Col sm={8}>
               <Form.Control type="email" value={emailId} readOnly={true} />
-            </Form.Group>
-          </Form>
-        </Col>
-
-      </Row>
-
-    </Container>
+            </Col>
+          </Form.Group>
+        </Form>
+      </Container>
+    </div>
   )
 
 }
