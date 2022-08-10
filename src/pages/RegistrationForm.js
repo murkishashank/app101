@@ -20,6 +20,8 @@ export const RegistrationForm = () => {
     dateOfBirth: "",
     statusFlag: 0,
     dataLoading: true,
+    department: "",
+    company: "",
   };
 
   const reducer = (state, action) => {
@@ -40,12 +42,15 @@ export const RegistrationForm = () => {
           dateOfBirth: "",
           statusFlag: 0,
           dataLoading: false,
+          department: "",
+          company: "",
         };
       default:
         break;
     }
   };
 
+  const companyOptions = ["", "USA", "India"]
   const [updatedState, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -110,7 +115,7 @@ export const RegistrationForm = () => {
       ) : (
         <div
           style={{
-            height: 600,
+            height: 800,
             width: 400,
             backgroundColor: "white",
             borderRadius: "25px",
@@ -203,6 +208,29 @@ export const RegistrationForm = () => {
               defaultValue={updatedState.mobileNumber}
               onChange={handleOnChange}
             />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="department">
+              <h6>Department: </h6>
+            </Form.Label>
+            <Form.Control
+              className="form-control"
+              type="string"
+              placeholder="department"
+              id="department"
+              name="department"
+              defaultValue={updatedState.department}
+              onChange={handleOnChange}
+            />
+          </Form.Group><Form.Group className="mb-3">
+            <Form.Label htmlFor="company">
+              <h6>Company: </h6>
+            </Form.Label>
+            <Form.Select onChange={handleOnChange} name='company' defaultValue={updatedState.company} >
+                        {companyOptions.map(option => {
+                            return(<option> {option}</option>)
+                        })}
+                    </Form.Select>
           </Form.Group>
           <Form.Group style={{ marginTop: "10px" }} className="d-grid">
             <Button
