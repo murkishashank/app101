@@ -65,7 +65,7 @@ export const ManageEmpDetails = (props) => {
     const handleOnClick = () => {
       if (props.setEditEmpDetails) {
         props.setEditEmpDetails(params.row);
-        navigate("/editEmpDetails");
+        navigate("/edit-emp-details");
       }
     };
     return (
