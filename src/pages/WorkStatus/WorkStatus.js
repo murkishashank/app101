@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { Button } from "react-bootstrap";
 import { workStatusColDefs } from "./colDefs";
 import { getWorkStatusByUserId } from "../../api/getUserByUserName";
-import { PostWorkStatus } from "../../api/postUser";
+import { PostWorkStatus } from "../../api/postWorkStatus";
 import { getSavePayload } from "./validateSave";
 import { FormLabel } from "@mui/material";
 import { useWorkStatusSlice } from "./slice/actions";
