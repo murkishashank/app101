@@ -17,11 +17,12 @@ export const ManageEmpDetails = (props) => {
   const dispatch = useDispatch();
   const employeeRecords = useSelector(selectEmpRecords);
   const navigate = useNavigate();
+
   useEffect(() => {
     getAllUsers().then((data) => {
       dispatch(actions.loadAllEmployeeRecords(data));
     });
-  }, []);
+  });
 
   const actionColumn = [
     {
@@ -37,7 +38,7 @@ export const ManageEmpDetails = (props) => {
       renderCell: (params) => <ActionButton row={params.row} />,
     },
     {
-      field: "saveAtion",
+      field: "saveAction",
       headerName: "Save",
       renderCell: (params) => <SaveAction row={params.row} />,
     },
