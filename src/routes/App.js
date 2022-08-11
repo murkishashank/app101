@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../css/App.css";
+
+// import "../css/App.css";
 import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm/LoginForm";
 import { Home } from "../pages/Home";
@@ -44,11 +45,8 @@ function App() {
         <Route
           path="/"
           element={<LoginForm loginUserDetails={handleLoginUserDetails} />}
-        ></Route>
-        <Route
-          path="/registrationform/new"
-          element={<RegistrationForm />}
-        ></Route>
+        />
+        <Route path="/registrationform/new" element={<RegistrationForm />} />
         <Route
           path="/registrationform/:userId"
           element={<RegistrationForm />}
@@ -79,8 +77,7 @@ function App() {
         {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
         <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/admin/task" element={<Task />} />
-        <Route path = "/holidays" element = {<Holidays  userData={userData}/>} />
-
+        <Route path="/holidays" element={<Holidays userData={userData} />} />
 
         {/* HR Routes */}
         <Route
