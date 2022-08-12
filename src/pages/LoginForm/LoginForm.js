@@ -22,7 +22,7 @@ import logo from "../../assets/images/tecnics.png";
 import { getUser } from "../../api/getUserByUserName";
 import { validateLoginDetails } from "../../api/validateLoginDetails";
 import { useLoginFormSlice } from "./Slice/action";
-import { selectUserLoginDetails } from "./Slice/selector";
+import { selectErrorsMessage, selectUserLoginDetails } from "./Slice/selector";
 
 export const LoginForm = (props) => {
   const navigate = useNavigate();
@@ -31,14 +31,18 @@ export const LoginForm = (props) => {
 
   const { actions } = useLoginFormSlice();
   const userLoginDetails = useSelector(selectUserLoginDetails);
+  const errorMessage = useSelector(selectErrorsMessage);
   const { userName, password } = userLoginDetails;
-  const [errorMessage, setErrorMessage] = useState({
-    userName: "",
-    password: "",
-    loginError: "",
-  });
 
   const handleOnChange = (key, value) => {
+    if (errorMessage[key].error && value.length) {
+      dispatch(
+        actions.updateErrors({
+          key: key,
+          errorObject: { error: false, errorMessage: "" },
+        })
+      );
+    }
     dispatch(actions.updateUserLoginDetails({ key: key, value: value }));
   };
 
@@ -54,22 +58,21 @@ export const LoginForm = (props) => {
   const validatePayload = (payload) => {
     let isPayloadValid;
     const keys = Object.keys(payload);
-    const errorMessageClone = { ...errorMessage };
     keys.forEach((key) => {
       if (
         payload[key] === "" ||
         payload[key] === null ||
         payload[key] === undefined
       ) {
-        errorMessageClone[key] = `${key} is required`;
-        setErrorMessage(errorMessageClone);
+        dispatch(
+          actions.updateErrors({
+            key: key,
+            errorObject: { error: true, errorMessage: `${key} is required` },
+          })
+        );
         isPayloadValid = false;
-        return isPayloadValid;
       } else {
-        errorMessageClone[key] = "";
-        setErrorMessage(errorMessageClone);
         isPayloadValid = true;
-        return isPayloadValid;
       }
     });
     return isPayloadValid;
@@ -84,10 +87,25 @@ export const LoginForm = (props) => {
         }
         navigate("/home");
       });
+      dispatch(
+        actions.updateErrors({
+          key: "invalidUser",
+          errorObject: {
+            error: false,
+            errorMessage: "",
+          },
+        })
+      );
     } else {
-      const errorMessageClone = { ...errorMessage };
-      errorMessageClone["loginError"] = "Invalid username or password";
-      setErrorMessage(errorMessageClone);
+      dispatch(
+        actions.updateErrors({
+          key: "invalidUser",
+          errorObject: {
+            error: true,
+            errorMessage: "Invalid username or password",
+          },
+        })
+      );
     }
   };
 
@@ -171,7 +189,7 @@ export const LoginForm = (props) => {
               Sign in
             </Typography>
             <Box
-              component="form"
+              // component="form"
               noValidate
               // onSubmit={handleSubmit}
               sx={{ mt: 1 }}
@@ -185,8 +203,8 @@ export const LoginForm = (props) => {
                 name="username"
                 autoComplete="username"
                 autoFocus
-                error
-                helperText={errorMessage.userName}
+                error={errorMessage.userName.error}
+                helperText={errorMessage.userName.errorMessage}
                 onChange={(event) => {
                   // dispatch({ key: "userName", value: event.target.value });
                   handleOnChange("userName", event.target.value);
@@ -201,8 +219,8 @@ export const LoginForm = (props) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                error
-                helperText={errorMessage.password}
+                error={errorMessage.password.error}
+                helperText={errorMessage.password.errorMessage}
                 onChange={(event) => {
                   // dispatch({ key: "password", value: event.target.value });
                   handleOnChange("password", event.target.value);
@@ -224,7 +242,10 @@ export const LoginForm = (props) => {
               >
                 Sign In
               </Button>
-              <p className="errorMessage">{errorMessage.loginError}</p>
+              <p className="errorMessage">
+                {errorMessage.invalidUser.error &&
+                  errorMessage.invalidUser.errorMessage}
+              </p>
 
               <Grid container>
                 <Grid item xs>
