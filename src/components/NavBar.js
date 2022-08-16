@@ -101,6 +101,11 @@ export const NavBar = () => {
                 <h5>Feedback</h5>
               </b>
             </Nav.Link>
+            <Nav.Link as={Link} to="/payslip">
+              <b>
+                <h5>Payslip</h5>
+              </b>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Nav.Link as={Link} to="/">

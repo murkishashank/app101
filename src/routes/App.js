@@ -16,6 +16,7 @@ import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
 import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 import { Feedback } from "../pages/feedback";
+import { Payslip } from "../pages/payslip";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -61,6 +62,7 @@ function App() {
         <Route path="/profile" element={<Profile userData={userData} />} />
         <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/feedback" element={<Feedback />} />
+        <Route path="/payslip" element={<Payslip></Payslip>} />
 
         {/* Admin Routes */}
 
@@ -80,8 +82,11 @@ function App() {
         {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
         <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/admin/task" element={<Task />} />
-        <Route path = "/holidays" element = {<Holidays  userData={userData}/>} />
-        <Route path = "/addHolidays" element = {<GenerateHolidays  userData={userData}/>} />
+        <Route path="/holidays" element={<Holidays userData={userData} />} />
+        <Route
+          path="/addHolidays"
+          element={<GenerateHolidays userData={userData} />}
+        />
         {/* HR Routes */}
         <Route
           path="/emp-details"
