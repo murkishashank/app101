@@ -10,6 +10,17 @@ const theme = createTheme({
       main: "#98a27f",
     },
   },
+  components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            color: "#eb0101",
+          },
+        },
+      },
+    },
+  },
 });
 
 export default theme;
