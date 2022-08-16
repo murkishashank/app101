@@ -6,7 +6,8 @@ import { LeaveForm } from "../components/LeaveForm";
 import { DataTable } from "../components/DataTable";
 import { leavesColDefs } from "./leavesColDefs";
 import { getLeavesById } from "../api/getLeavesById";
-import { saveProcessedLeave } from '../api/saveProcessedLeave';
+import { saveProcessedLeave } from "../api/saveProcessedLeave";
+import { CircularProgress } from "@mui/material";
 
 export const Home = (props) => {
   const userId = localStorage.getItem("userID");
@@ -29,11 +30,12 @@ export const Home = (props) => {
 
   useEffect(() => {
     setLeaveDataLoading(true);
-    getLeavesById(userId).then((response) => {
-      setLeaveData(response);
-      setLeaveDataLoading(false);
-    })
-    .catch(error => console.log);
+    getLeavesById(userId)
+      .then((response) => {
+        setLeaveData(response);
+        setLeaveDataLoading(false);
+      })
+      .catch((error) => console.log);
   }, [userId]);
 
   const handleOnChange = (event) => {
@@ -77,7 +79,7 @@ export const Home = (props) => {
         errorObjectClone[key] = "";
         if (key === "toDate") {
           errorObjectClone[key] = `${key} must by greater than fromDate`;
-          let isDateValid
+          let isDateValid;
           isDateValid = fromDate <= toDate;
           if (isDateValid) {
             errorObjectClone[key] = "";
@@ -99,17 +101,19 @@ export const Home = (props) => {
     const { userName, ...payload } = formData;
     const isValid = validateField(payload);
     if (isValid) {
-      saveProcessedLeave(payload).then(response => {
-        if (response.id) {
-          let leaveDataClone = [...leaveData];
-          leaveDataClone.push(response);
-          setLeaveData(leaveDataClone);
-          setModalShow(false);
-          setFormData(dataObj);
-        } else {
-          alert("Error while applying the data.");
-        }
-      }).catch(error => console.log);
+      saveProcessedLeave(payload)
+        .then((response) => {
+          if (response.id) {
+            let leaveDataClone = [...leaveData];
+            leaveDataClone.push(response);
+            setLeaveData(leaveDataClone);
+            setModalShow(false);
+            setFormData(dataObj);
+          } else {
+            alert("Error while applying the data.");
+          }
+        })
+        .catch((error) => console.log);
     } else {
       alert("Enter all the required fields.");
     }
@@ -123,7 +127,7 @@ export const Home = (props) => {
   return (
     <>
       {leaveDataLoading ? (
-        <h1>Loading...</h1>
+        <CircularProgress />
       ) : (
         <div>
           <NavBar />
