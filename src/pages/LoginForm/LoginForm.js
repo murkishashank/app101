@@ -184,7 +184,7 @@ export const LoginForm = (props) => {
             alignItems: "center",
           }}
         >
-          <Paper elevation={3} sx={{ my: 6, p: 3 }}>
+          <Paper elevation={3} sx={{ p: 3 }}>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
