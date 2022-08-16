@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavBar } from "../../components/NavBar";
 import Pdf from "react-to-pdf";
 import { payslipMockData } from "./mockdata";
@@ -16,11 +16,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { monthsForDays } from "../../utils/months";
-import { selectedMonth } from "./slice/selector";
-import { useSelector } from "react-redux";
+import {
+  selectedMonth,
+  selectEmployeeDetails,
+  selectEmployeeLeavesDetails,
+  selectFinancialDetails,
+} from "./slice/selector";
+import { useSelector, useDispatch } from "react-redux";
 import { usePayslipSliceSaga } from "./slice/actions";
-import { useDispatch } from "react-redux";
-import { allowances } from "../../utils/Allowences";
+import { getUserById } from "../../api/getUserById";
+import { getFinancialDetails } from "../../api/payslip/getFinanciaDetails";
+import { getLeavesById } from "../../api/getLeavesById";
 
 export const style = {
   marginTop: "30px",
@@ -38,22 +44,15 @@ export const Payslip = () => {
   const month = useSelector(selectedMonth);
   const { actions } = usePayslipSliceSaga();
   const dispatch = useDispatch();
+  const userId = localStorage.getItem("userID");
+  const financialDetails = useSelector(selectFinancialDetails);
+  const employeeDetails = useSelector(selectEmployeeDetails);
+  const leavesData = useSelector(selectEmployeeLeavesDetails);
   const {
-    id,
-    firstName,
-    lastName,
-    joiningDate,
-    emailId,
-    designation,
-    financialDetails: {
-      accountNumber,
-      pfAccountNumber,
-      panNumber,
-      bankBranchName,
-    },
-  } = payslipMockData;
-
-  const {
+    accountNumber,
+    pfAccountNumber,
+    panNumber,
+    bankBranchName,
     basic,
     houseRentAllowance,
     conveyance,
@@ -62,20 +61,74 @@ export const Payslip = () => {
     arears,
     otherAllowances,
     professionTax,
-  } = allowances;
+    providentFund,
+  } = financialDetails;
+
+  const { id, firstName, lastName, joiningDate, emailId, designation } =
+    employeeDetails;
+
+  const getTotalDeductions = () => {
+    return professionTax + providentFund;
+  };
   const getTotalAllowances = () => {
     return (
-      basic[designation] +
+      basic +
       houseRentAllowance +
       conveyance +
-      medicalAllowance[designation] +
+      medicalAllowance +
       profPursuitsAllow +
       otherAllowances +
       arears
     );
   };
   const monthsForTotalDays = monthsForDays;
+  const totalDays =
+    month.length &&
+    (month !== "--Select month--" ? monthsForTotalDays[month].noOfDays : 0);
   const ref = React.createRef();
+
+  useEffect(() => {
+    getUserById(userId).then((data) => {
+      dispatch(actions.loadEmployeeDetails(data));
+    });
+    getFinancialDetails(userId).then((data) => {
+      dispatch(actions.loadFinancialDetails(data[0]));
+    });
+    getLeavesById(userId).then((data) => {
+      dispatch(actions.loadEmployeeLeavesRecords(data));
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   let noOfLeaves = 0;
+  //   const approvedLeaves = leavesData
+  //     .filter((row) => row.approvedFlag === "Approve")
+  //     .filter((record) => {
+  //       const { fromDate, toDate } = record;
+  //       const fromDateDay = fromDate.getDate();
+  //       const toDateDay = toDate.getDate();
+  //       if (
+  //         fromDate.getMonth() === monthsForTotalDays[month].monthNumber ||
+  //         toDate.getMonth() === monthsForTotalDays[month].monthNumber
+  //       ) {
+  //         if (fromDate === toDate) {
+  //           noOfLeaves = noOfLeaves++;
+  //         } else if (toDateDay > fromDateDay) {
+  //           noOfLeaves = noOfLeaves + (toDateDay - fromDateDay);
+  //         } else {
+  //           if (toDateDay < fromDateDay) {
+  //             noOfLeaves = noOfLeaves + toDate;
+  //           } else {
+  //             noOfLeaves = noOfLeaves + (31 - toDateDay);
+  //           }
+  //         }
+  //       }
+  //     });
+  //   // Assuming here 3 is the count of over all leaves.
+  //   if (noOfLeaves > 3) {
+  //     const lossOfPay = (approvedLeaves - 3) * 400;
+  //   }
+  // }, [month]);
 
   const handleOnChange = (event) => {
     dispatch(actions.updateMonth(event.target.value));
@@ -162,10 +215,7 @@ export const Payslip = () => {
                     <TableCell sx={{ border: 0 }}>Account number </TableCell>
                     <TableCell sx={{ border: 0 }}>: {accountNumber}</TableCell>
                     <TableCell sx={{ border: 0 }}>Total Days </TableCell>
-                    <TableCell sx={{ border: 0 }}>
-                      {" "}
-                      : {monthsForTotalDays[month]}
-                    </TableCell>
+                    <TableCell sx={{ border: 0 }}>:{totalDays}</TableCell>
                   </TableRow>
                   <TableRow sx={{ border: 0 }}>
                     <TableCell sx={{ border: 0 }}>BranchName </TableCell>
@@ -202,17 +252,13 @@ export const Payslip = () => {
                 </TableRow>
                 <TableRow sx={{ border: 0 }}>
                   <TableCell sx={{ border: 0 }}>BASIC </TableCell>
-                  <TableCell sx={{ border: 0 }}>
-                    {" "}
-                    :{basic[designation]}{" "}
-                  </TableCell>
+                  <TableCell sx={{ border: 0 }}> :{basic} </TableCell>
                   <TableCell sx={{ border: 0 }}>PROVIDENT FUND </TableCell>
-                  <TableCell sx={{ border: 0 }}> : </TableCell>
+                  <TableCell sx={{ border: 0 }}> : {providentFund} </TableCell>
                 </TableRow>
                 <TableRow sx={{ border: 0 }}>
                   <TableCell sx={{ border: 0 }}>HOUSE RENT ALLOWANCE</TableCell>
                   <TableCell sx={{ border: 0 }}>
-                    {" "}
                     : {houseRentAllowance}
                   </TableCell>
                   <TableCell sx={{ border: 0 }}>PROFESSION TAX </TableCell>
@@ -224,18 +270,14 @@ export const Payslip = () => {
                 </TableRow>
                 <TableRow sx={{ border: 0 }}>
                   <TableCell sx={{ border: 0 }}>MEDICAL ALLOWANCE </TableCell>
-                  <TableCell sx={{ border: 0 }}>
-                    {" "}
-                    : {medicalAllowance[designation]}{" "}
-                  </TableCell>
+                  <TableCell sx={{ border: 0 }}>: {medicalAllowance}</TableCell>
                 </TableRow>
                 <TableRow sx={{ border: 0 }}>
                   <TableCell sx={{ border: 0 }}>
                     PROF. PURSUITS ALLOW.
                   </TableCell>
                   <TableCell sx={{ border: 0 }}>
-                    {" "}
-                    : {profPursuitsAllow}{" "}
+                    : {profPursuitsAllow}
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{ border: 0 }}>
@@ -244,10 +286,7 @@ export const Payslip = () => {
                 </TableRow>
                 <TableRow sx={{ border: 0 }}>
                   <TableCell sx={{ border: 0 }}>OTHER ALLOWANCE</TableCell>
-                  <TableCell sx={{ border: 0 }}>
-                    {" "}
-                    : {otherAllowances}{" "}
-                  </TableCell>
+                  <TableCell sx={{ border: 0 }}>: {otherAllowances}</TableCell>
                 </TableRow>
               </Table>
               <hr></hr>
@@ -260,13 +299,13 @@ export const Payslip = () => {
                     <b>Total Earnings</b>
                   </TableCell>
                   <TableCell sx={{ border: 0 }}>
-                    <b>:{getTotalAllowances()}</b>
+                    <b>: {getTotalAllowances()}</b>
                   </TableCell>
                   <TableCell sx={{ border: 0 }}>
                     <b>Total Deductions</b>
                   </TableCell>
                   <TableCell sx={{ border: 0 }}>
-                    <b>:{}</b>
+                    <b>: {getTotalDeductions()}</b>
                   </TableCell>
                 </TableRow>
               </Table>

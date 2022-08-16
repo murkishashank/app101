@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   employeeRecord: {},
-  financialDetails: [],
+  financialDetails: {},
   employeeLeavesRecords: [],
-  month: "",
+  month: "--Select month--",
 };
 
 export const paySlipSlice = createSlice({
