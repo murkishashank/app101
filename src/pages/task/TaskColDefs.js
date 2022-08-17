@@ -1,12 +1,9 @@
-import Button from '@mui/material/Button';
-import { TaskForm } from "../components/TaskForm.js";
 import clsx from 'clsx';
 
 
 export const taskStatusOptions = ["Assigned", "Work in progress", "QA", "Completed"];
 export const taskColDefs = [
   { field: "id", headerName: "Task Id", headerClassName: 'super-app-theme--header'},
-  // {field: "userId", headerName: "User Id"}
   { field: "userName", headerClassName: 'super-app-theme--header', headerName: "User Name", required: true },
 
   { field: "taskName", headerName: "Task Name" ,headerClassName: 'super-app-theme--header', editable: true, required: true},
