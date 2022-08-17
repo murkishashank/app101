@@ -17,6 +17,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { monthsForDays } from "../../utils/months";
 import {
+  selectCurrentSelectedPayslip,
   selectedMonth,
   selectEmployeeDetails,
   selectEmployeeLeavesDetails,
@@ -47,6 +48,7 @@ export const Payslip = () => {
   const userId = localStorage.getItem("userID");
   const financialDetails = useSelector(selectFinancialDetails);
   const employeeDetails = useSelector(selectEmployeeDetails);
+  const selectedMonthPayslip = useSelector(selectCurrentSelectedPayslip);
   const leavesData = useSelector(selectEmployeeLeavesDetails);
   const {
     accountNumber,
@@ -62,7 +64,7 @@ export const Payslip = () => {
     otherAllowances,
     professionTax,
     providentFund,
-  } = financialDetails;
+  } = selectedMonthPayslip;
 
   const { id, firstName, lastName, joiningDate, emailId, designation } =
     employeeDetails;
@@ -92,7 +94,7 @@ export const Payslip = () => {
       dispatch(actions.loadEmployeeDetails(data));
     });
     getFinancialDetails(userId).then((data) => {
-      dispatch(actions.loadFinancialDetails(data[0]));
+      dispatch(actions.loadFinancialDetails(data));
     });
     getLeavesById(userId).then((data) => {
       dispatch(actions.loadEmployeeLeavesRecords(data));
@@ -105,23 +107,27 @@ export const Payslip = () => {
   //     .filter((row) => row.approvedFlag === "Approve")
   //     .filter((record) => {
   //       const { fromDate, toDate } = record;
-  //       const fromDateDay = fromDate.getDate();
-  //       const toDateDay = toDate.getDate();
+  //       const fromDateDay = fromDate.slice(8, 10);
+  //       const toDateDay = toDate.slice(8, 10);
+  //       const date = new Date();
+
+  //       console.log("name", date, date.getMonth() + 1);
   //       if (
-  //         fromDate.getMonth() === monthsForTotalDays[month].monthNumber ||
-  //         toDate.getMonth() === monthsForTotalDays[month].monthNumber
+  //         fromDate.slice(5, 7) === monthsForTotalDays[month].monthNumber ||
+  //         toDate.slice(5, 7) === monthsForTotalDays[month].monthNumber
   //       ) {
-  //         if (fromDate === toDate) {
-  //           noOfLeaves = noOfLeaves++;
-  //         } else if (toDateDay > fromDateDay) {
-  //           noOfLeaves = noOfLeaves + (toDateDay - fromDateDay);
-  //         } else {
-  //           if (toDateDay < fromDateDay) {
-  //             noOfLeaves = noOfLeaves + toDate;
-  //           } else {
-  //             noOfLeaves = noOfLeaves + (31 - toDateDay);
-  //           }
-  //         }
+  //         console.log("name", fromDateDay, toDateDay);
+  //         // if (fromDate === toDate) {
+  //         //   noOfLeaves = noOfLeaves++;
+  //         // } else if (toDateDay > fromDateDay) {
+  //         //   noOfLeaves = noOfLeaves + (toDateDay - fromDateDay);
+  //         // } else {
+  //         //   if (toDateDay < fromDateDay) {
+  //         //     noOfLeaves = noOfLeaves + toDate;
+  //         //   } else {
+  //         //     noOfLeaves = noOfLeaves + (31 - toDateDay);
+  //         //   }
+  //         // }
   //       }
   //     });
   //   // Assuming here 3 is the count of over all leaves.
@@ -132,6 +138,17 @@ export const Payslip = () => {
 
   const handleOnChange = (event) => {
     dispatch(actions.updateMonth(event.target.value));
+    const currentSelectedMonth = event.target.value + "-2022";
+
+    const payslip = financialDetails.filter(
+      (record) => record.salCreditedMonth === currentSelectedMonth
+    );
+    console.log("name", payslip);
+    if (Object.keys(payslip).length) {
+      dispatch(actions.updateSelectedMonthPayslip(payslip[0]));
+    } else {
+      dispatch(actions.updateSelectedMonthPayslip({}));
+    }
   };
   return (
     <div>

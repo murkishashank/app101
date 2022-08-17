@@ -2,9 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   employeeRecord: {},
-  financialDetails: {},
+  financialDetails: [],
   employeeLeavesRecords: [],
   month: "--Select month--",
+  selectedMonthPayslip: {},
 };
 
 export const paySlipSlice = createSlice({
@@ -24,6 +25,9 @@ export const paySlipSlice = createSlice({
 
     updateMonth(state, action) {
       state.month = action.payload;
+    },
+    updateSelectedMonthPayslip(state, action) {
+      state.selectedMonthPayslip = action.payload;
     },
   },
 });

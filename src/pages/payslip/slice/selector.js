@@ -20,3 +20,8 @@ export const selectedMonth = createSelector(
   [selectSlice],
   (state) => state.month
 );
+
+export const selectCurrentSelectedPayslip = createSelector(
+  [selectSlice],
+  (state) => state.selectedMonthPayslip
+);
