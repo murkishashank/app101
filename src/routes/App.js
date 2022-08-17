@@ -16,6 +16,7 @@ import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
 import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 import { Feedback } from "../pages/feedback";
+import { Schedule } from "../pages/Schedule/Schedule";
 import { Payslip } from "../pages/payslip";
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
         <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/payslip" element={<Payslip></Payslip>} />
+        <Route path="/schedule" element={<Schedule />} />
 
         {/* Admin Routes */}
 
