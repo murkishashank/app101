@@ -8,7 +8,7 @@ import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
 import { Holidays } from "../pages/Holiday/Holidays";
 import { GenerateHolidays } from "../pages/Holiday/GenerateHolidays";
-import { Task } from "../components/Task";
+import { Task } from "../pages/task/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
