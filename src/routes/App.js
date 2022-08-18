@@ -18,6 +18,7 @@ import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 import { Feedback } from "../pages/feedback";
 import { Schedule } from "../pages/Schedule/Schedule";
 import { Payslip } from "../pages/payslip";
+import { SelfAppraisalForm } from "../pages/SelfAppraisalForm";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -65,7 +66,10 @@ function App() {
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/payslip" element={<Payslip></Payslip>} />
         <Route path="/schedule" element={<Schedule />} />
-
+        <Route
+          path="/self-appraisal-form"
+          element={<SelfAppraisalForm />}
+        ></Route>
         {/* Admin Routes */}
 
         <Route
@@ -85,10 +89,7 @@ function App() {
         <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/admin/task" element={<Task />} />
         <Route path="/holidays" element={<Holidays userData={userData} />} />
-        <Route
-          path="/addHolidays"
-          element={<GenerateHolidays userData={userData} />}
-        />
+
         {/* HR Routes */}
         <Route
           path="/emp-details"

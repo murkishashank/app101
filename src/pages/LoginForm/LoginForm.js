@@ -4,9 +4,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { getUser } from "../../api/getUserByUserName";
 import { validateLoginDetails } from "../../api/validateLoginDetails";
-import { useLoginFormSlice } from "./slice/action";
+import { useLoginFormSlice } from "./Slice/action";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUserLoginDetails } from "./slice/selector";
+import { selectUserLoginDetails } from "./Slice/selector";
 import Image from "react-bootstrap/Image";
 
 export const LoginForm = (props) => {
