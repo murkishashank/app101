@@ -101,6 +101,11 @@ export const NavBar = () => {
                 <h5>Feedback</h5>
               </b>
             </Nav.Link>
+            <Nav.Link as={Link} to="/self-appraisal-form">
+              <b>
+                <h5>Self-Appraisal</h5>
+              </b>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Nav.Link as={Link} to="/">

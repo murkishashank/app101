@@ -15,7 +15,6 @@ import { employeeRoles } from "./ManageEmpDetails/coldefs";
 
 export const Profile = (props) => {
   const [userData, setUserData] = useState({});
-  const [editMode, setEditMode] = useState(true);
   const hrEditMode = props?.editEmp?.id ? false : true;
   const navigate = useNavigate();
 
