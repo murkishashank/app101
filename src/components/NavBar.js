@@ -101,6 +101,16 @@ export const NavBar = () => {
                 <h5>Feedback</h5>
               </b>
             </Nav.Link>
+            <Nav.Link as={Link} to="/payslip">
+              <b>
+                <h5>Payslip</h5>
+              </b>
+            </Nav.Link>
+            <Nav.Link as={Link} to="/schedule">
+              <b>
+                <h5>Schedule</h5>
+              </b>
+            </Nav.Link>
             <Nav.Link as={Link} to="/self-appraisal-form">
               <b>
                 <h5>Self-Appraisal</h5>
