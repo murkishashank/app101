@@ -17,6 +17,7 @@ import { HumanResource } from "../pages/HumanResource/HumanResource";
 import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 import { Feedback } from "../pages/feedback";
 import { Payslip } from "../pages/payslip";
+import { ManageSalaries } from "../pages/payslip/ManageSalaries";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -94,6 +95,7 @@ function App() {
             <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
           }
         />
+        <Route path="/manage-salaries" element={<ManageSalaries />} />
         <Route
           path="/edit-emp-details"
           element={<Profile editEmp={empDetailsEdit} />}

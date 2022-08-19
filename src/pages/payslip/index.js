@@ -36,7 +36,7 @@ export const style = {
   backgroundColor: "whitesmoke",
 };
 
-export const months = ["--Select month--", "May", "June", "July"];
+export const months = ["--Select month--", "June", "July", "August"];
 export const centerStyle = {
   display: "flex",
   justifyContent: "center",
