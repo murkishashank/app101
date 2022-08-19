@@ -19,6 +19,7 @@ import { Feedback } from "../pages/feedback";
 import { Schedule } from "../pages/Schedule/Schedule";
 import { Payslip } from "../pages/payslip";
 import { SelfAppraisalForm } from "../pages/SelfAppraisalForm";
+import { ManageSalaries } from "../pages/payslip/ManageSalaries";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -97,6 +98,7 @@ function App() {
             <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
           }
         />
+        <Route path="/manage-salaries" element={<ManageSalaries />} />
         <Route
           path="/edit-emp-details"
           element={<Profile editEmp={empDetailsEdit} />}
