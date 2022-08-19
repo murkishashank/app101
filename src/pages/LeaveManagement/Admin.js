@@ -23,8 +23,7 @@ export const Admin = (props) => {
     },
     { field: "remarks", headerName: "Remarks", editable: true, width: "220" },
     {
-      field: "",
-      type: "actions",
+      field: "actions",
       headerName: "Actions",
       renderCell: (params) => {
         const onClick = () => {
@@ -54,8 +53,6 @@ export const Admin = (props) => {
   const setPeople = (allLeaves) => {
     setDataLoading(false);
     allLeaves.forEach((leaveRecord) => {
-      const userName = leaveRecord.userName.userName;
-      leaveRecord.userName = userName;
       if (
         leaveRecord.approvedFlag === null ||
         leaveRecord.approvedFlag === ""

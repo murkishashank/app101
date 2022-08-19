@@ -20,6 +20,7 @@ import { Schedule } from "../pages/Schedule/Schedule";
 import { Payslip } from "../pages/payslip";
 import { SelfAppraisalForm } from "../pages/SelfAppraisalForm";
 import { ManageSalaries } from "../pages/payslip/ManageSalaries";
+import { Graph } from "../pages/graph";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -103,6 +104,8 @@ function App() {
           path="/edit-emp-details"
           element={<Profile editEmp={empDetailsEdit} />}
         />
+        <Route path="/hr/leaves-data" element={<HumanResource />} />
+        <Route path="/graph" element={<Graph />} />
       </Routes>
     </LoginUserDetailsProvider>
   );
