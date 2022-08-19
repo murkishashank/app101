@@ -13,7 +13,7 @@ import {
   Legend,
 } from "chart.js";
 import { getAllUserIds } from "../api/getAllUserIds";
-import TextField from "@mui/material/TextField";
+import { TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 
 export const Graph = () => {

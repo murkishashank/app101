@@ -1,4 +1,4 @@
-import { Button, Grid, Box, ButtonGroup, TextField } from "@mui/material";
+import { Button, Grid, Box, ButtonGroup, TextField, Tab } from "@mui/material";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getLastMonthPayRecords } from "../../../api/payslip/getLastMonthPayRecords";
@@ -15,7 +15,6 @@ import {
 } from "../slice/selector";
 import { useNavigate } from "react-router-dom";
 // import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
