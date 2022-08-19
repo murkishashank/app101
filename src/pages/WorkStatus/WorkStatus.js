@@ -61,6 +61,7 @@ export const WorkStatus = () => {
           rows={rowData}
           columns={workStatusColDefs}
           onCellEditCommit={handleCellChange}
+          getRowId={(row) => row.statusId}
         ></DataGrid>
       </div>
     </div>

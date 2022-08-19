@@ -6,13 +6,14 @@ import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm/LoginForm";
 import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
-import { Task } from "../components/Task";
+import { Task } from "../pages/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
 import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
 import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
+import { Graph } from "../pages/graph";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -82,6 +83,7 @@ function App() {
           element={<Profile editEmp={empDetailsEdit} />}
         />
         <Route path="/hr/leaves-data" element={<HumanResource />} />
+        <Route path="/graph" element={<Graph />} />
       </Routes>
     </LoginUserDetailsProvider>
   );

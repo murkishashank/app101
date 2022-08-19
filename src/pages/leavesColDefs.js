@@ -5,11 +5,11 @@ export const leavesColDefs = [
         field: "userName",
         headerName: "User Name",
         valueGetter: (params) => {
-            return `${params.row.userName.userName}`;
+            return `${params.row.user.userName}`;
         },
     },
     { field: "fromDate", headerName: "From Date" },
-    { field: "toDate", headerName: "toDate" },
+    { field: "toDate", headerName: "To Date" },
     { field: "appliedDate", headerName: "Applied Date" },
     { field: "approvedDate", headerName: "Approved Date" },
     { field: "reason", headerName: "Reason" },
