@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { NavBar } from "../components/NavBar";
-import "../css/CommonStyling.css";
-import Button from "react-bootstrap/Button";
-import { TaskForm } from "../components/TaskForm.js";
+import { NavBar } from "../../components/NavBar";
+import "../../css/CommonStyling.css";
+import { TaskForm } from "./TaskForm.js";
 import { DataGrid } from "@mui/x-data-grid";
 import { taskColDefs } from "./TaskColDefs";
-import { getAllTasks } from "../api/getAllTasks";
-import Box from "@mui/material/Box";
+import { getAllTasks } from "../../api/getAllTasks";
+import { Box, Button } from "@mui/material";
 
 export const Task = () => {
   const [allTasksData, setAllTasksData] = useState([]);
