@@ -22,3 +22,16 @@
     display: inline-block;
     position: relative;
 }
+
+.form{
+    width: 50%;
+    right: 700;
+    margin-left: 300;
+    border-radius: 5;
+    align-self: center;
+    align-items: center;
+    border: 1px solid red;
+    margin: 0vw;
+    padding: 5vw ;
+    /* position:relative;  */
+}

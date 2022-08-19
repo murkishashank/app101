@@ -8,7 +8,7 @@ import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
 import { Holidays } from "../pages/Holiday/Holidays";
 import { GenerateHolidays } from "../pages/Holiday/GenerateHolidays";
-import { Task } from "../components/Task";
+import { Task } from "../pages/task/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
@@ -16,7 +16,9 @@ import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
 import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 import { Feedback } from "../pages/feedback";
+import { Schedule } from "../pages/Schedule/Schedule";
 import { Payslip } from "../pages/payslip";
+import { SelfAppraisalForm } from "../pages/SelfAppraisalForm";
 import { ManageSalaries } from "../pages/payslip/ManageSalaries";
 
 function App() {
@@ -64,7 +66,11 @@ function App() {
         <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/payslip" element={<Payslip></Payslip>} />
-
+        <Route path="/schedule" element={<Schedule />} />
+        <Route
+          path="/self-appraisal-form"
+          element={<SelfAppraisalForm />}
+        ></Route>
         {/* Admin Routes */}
 
         <Route
@@ -84,10 +90,7 @@ function App() {
         <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/admin/task" element={<Task />} />
         <Route path="/holidays" element={<Holidays userData={userData} />} />
-        <Route
-          path="/addHolidays"
-          element={<GenerateHolidays userData={userData} />}
-        />
+
         {/* HR Routes */}
         <Route
           path="/emp-details"

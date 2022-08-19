@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { NavBar } from "../components/NavBar";
-import "../css/CommonStyling.css";
+import { NavBar } from "../../components/NavBar";
+import "../../css/CommonStyling.css";
 import Button from "react-bootstrap/Button";
-import { TaskForm } from "../components/TaskForm.js";
+import { TaskForm } from "./TaskForm.js";
 import { DataGrid } from "@mui/x-data-grid";
-import {taskColDefs} from "../components/TaskColDefs"
-import { getAllTasks } from "../api/getAllTasks";
+import {taskColDefs} from "./TaskColDefs"
+import { getAllTasks } from "../../api/getAllTasks";
 import Box from '@mui/material/Box';
 
 export const Task = () => {
@@ -22,7 +22,7 @@ export const Task = () => {
     taskDescription: "",
     taskStatus: "Assigned",
     assignedBy: userName,
-    userName:"" ,
+    assignedUserName:"" ,
     userId: "1",
     remarks: "",
     taskAssignedDate: "",
@@ -84,13 +84,13 @@ export const Task = () => {
     if(editFlag) {
       setWorkData(workData)
     }
-    const { taskDescription, taskStatus, taskName, assignedBy, id , userName, userId, remarks, taskAssignedDate, taskCompletedDate} = workData;
+    const { taskDescription, taskStatus, taskName, assignedBy, id , assignedUserName, userId, remarks, taskAssignedDate, taskCompletedDate} = workData;
 
     const payload = {
       taskDescription: taskDescription,
       taskStatus: taskStatus,
       taskName: taskName,
-      userName: userName,
+      assignedUserName: assignedUserName,
       id: id,
       assignedBy: assignedBy,
       remarks: remarks,
@@ -122,7 +122,7 @@ export const Task = () => {
               taskDescription: "",
               taskStatus: "",
               assignedBy: "",
-              userName: "",
+              assignedUserName: "",
             });
           } else {
             alert("Error while applying the data task.");
@@ -154,7 +154,7 @@ export const Task = () => {
             taskDescription: "",
             taskStatus: "",
             assignedBy: "",
-            userName: "",
+            assignedUserName: "",
           });
         } else {
             alert("Error while applying the data. post");
