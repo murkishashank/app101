@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { NavBar } from "../components/NavBar";
 import "../css/CommonStyling.css";
 import Button from "react-bootstrap/Button";
 import { LeaveForm } from "../components/LeaveForm";
@@ -130,7 +129,6 @@ export const Home = (props) => {
         <CircularProgress />
       ) : (
         <div>
-          <NavBar />
           <Button variant="secondary" onClick={() => setModalShow(true)}>
             Apply for leave
           </Button>

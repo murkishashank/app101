@@ -1,7 +1,6 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffectOnce } from "../../CustomHooks/useEffectOnce";
-import { NavBar } from "../../components/NavBar";
 import { getAllLeaves } from "../../api/getAllLeaves";
 import { DataGrid } from "@mui/x-data-grid";
 import { commonColumns } from "./CommonColumns.js";
@@ -98,8 +97,6 @@ export const Admin = (props) => {
 
   return (
     <>
-
-      <NavBar></NavBar>
       {dataLoading ? (
         <h1>Loading...</h1>
       ) : (

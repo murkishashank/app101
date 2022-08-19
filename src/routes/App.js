@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // import "../css/App.css";
@@ -18,6 +18,7 @@ import { HumanResource } from "../pages/HumanResource/HumanResource";
 import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 import { Feedback } from "../pages/feedback";
 import { Payslip } from "../pages/payslip";
+import { NavBar } from "../components/NavBar";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -40,6 +41,15 @@ function App() {
     setUserData(userDetails);
   }
 
+  function WithAppBar(props) {
+    return (
+      <div>
+        <NavBar />
+        <div>{props.children}</div>
+      </div>
+    );
+  }
+
   return (
     <LoginUserDetailsProvider value={userData}>
       <Routes>
@@ -53,48 +63,134 @@ function App() {
           path="/registrationform/:userId"
           element={<RegistrationForm />}
         />
-
+      </Routes>
+      <Routes>
         {/* User Routes */}
-
-        <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile userData={userData} />} />
-        <Route path="/work-status" element={<WorkStatus />} />
-        <Route path="/feedback" element={<Feedback />} />
-        <Route path="/payslip" element={<Payslip></Payslip>} />
+        <Route
+          index
+          path="/home"
+          element={
+            <WithAppBar>
+              <Home />
+            </WithAppBar>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <WithAppBar>
+              <Profile userData={userData} />
+            </WithAppBar>
+          }
+        />
+        <Route
+          path="/work-status"
+          element={
+            <WithAppBar>
+              <WorkStatus />
+            </WithAppBar>
+          }
+        />
+        <Route
+          path="/feedback"
+          element={
+            <WithAppBar>
+              <Feedback />
+            </WithAppBar>
+          }
+        />
+        <Route
+          path="/payslip"
+          element={
+            <WithAppBar>
+              <Payslip></Payslip>
+            </WithAppBar>
+          }
+        />
 
         {/* Admin Routes */}
 
         <Route
           path="/admin/leave-management"
-          element={<Admin processedPeople={handlePrevoiusAppl} />}
+          element={
+            <WithAppBar>
+              <Admin processedPeople={handlePrevoiusAppl} />
+            </WithAppBar>
+          }
         />
         <Route
           path="/admin/previous-applications"
-          element={<PreviousApplications processedPeople={processedPeople} />}
+          element={
+            <WithAppBar>
+              <PreviousApplications processedPeople={processedPeople} />
+            </WithAppBar>
+          }
         />
-        <Route path="/hr/leaves-data" element={<HumanResource />} />
+        <Route
+          path="/hr/leaves-data"
+          element={
+            <WithAppBar>
+              <HumanResource />
+            </WithAppBar>
+          }
+        />
         <Route
           path="/admin"
-          element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
+          element={
+            <WithAppBar>
+              <Admin prevoiusAppl={handlePrevoiusAppl} />
+            </WithAppBar>
+          }
         />
-        {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
-        <Route path="/work-status" element={<WorkStatus />} />
-        <Route path="/admin/task" element={<Task />} />
-        <Route path="/holidays" element={<Holidays userData={userData} />} />
+        <Route
+          path="/work-status"
+          element={
+            <WithAppBar>
+              <WorkStatus />
+            </WithAppBar>
+          }
+        />
+        <Route
+          path="/admin/task"
+          element={
+            <WithAppBar>
+              <Task />
+            </WithAppBar>
+          }
+        />
+        <Route
+          path="/holidays"
+          element={
+            <WithAppBar>
+              <Holidays userData={userData} />
+            </WithAppBar>
+          }
+        />
         <Route
           path="/addHolidays"
-          element={<GenerateHolidays userData={userData} />}
+          element={
+            <WithAppBar>
+              <GenerateHolidays userData={userData} />
+            </WithAppBar>
+          }
         />
         {/* HR Routes */}
         <Route
           path="/emp-details"
           element={
-            <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
+            <WithAppBar>
+              {" "}
+              <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
+            </WithAppBar>
           }
         />
         <Route
           path="/edit-emp-details"
-          element={<Profile editEmp={empDetailsEdit} />}
+          element={
+            <WithAppBar>
+              <Profile editEmp={empDetailsEdit} />
+            </WithAppBar>
+          }
         />
       </Routes>
     </LoginUserDetailsProvider>

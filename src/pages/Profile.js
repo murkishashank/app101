@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { postUser } from "../api/postUser";
 import { getUser } from "../api/getUserByUserName";
-import { NavBar } from "../components/NavBar";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -64,7 +63,6 @@ export const Profile = (props) => {
 
   return (
     <div style={{ backgroundColor: "#eee" }}>
-      <NavBar></NavBar>
       <Container className="py-3">
         <Form
           as={Row}

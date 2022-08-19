@@ -1,6 +1,5 @@
 import { commonColumns } from "../LeaveManagement/CommonColumns";
 import { DataGrid } from "@mui/x-data-grid";
-import { NavBar } from "../../components/NavBar";
 import { useState, useRef } from "react";
 import { getAllLeaves } from "../../api/getAllLeaves";
 import { useEffectOnce } from "../../CustomHooks/useEffectOnce";
@@ -100,9 +99,9 @@ export const HumanResource = () => {
 
   const handleSubmitBttn = () => {
     const leavesWithinHrDatesClone = approvedLeaves.filter(filterLeaves);
-    if(leavesWithinHrDatesClone.length === 0){
+    if (leavesWithinHrDatesClone.length === 0) {
       alert("No records found in the range.");
-    }else{
+    } else {
       setleavesWithinHrDates(leavesWithinHrDatesClone);
     }
   };
@@ -113,7 +112,6 @@ export const HumanResource = () => {
         <h1>Loading...</h1>
       ) : (
         <div style={{ width: "100%", height: "400px" }}>
-          <NavBar></NavBar>
           <Form.Label
             htmlFor="userName"
             style={{ marginLeft: "30px", marginTop: "150px" }}
