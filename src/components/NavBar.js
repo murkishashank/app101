@@ -2,19 +2,18 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Image from "react-bootstrap/Image";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
   const userId = localStorage.getItem("userID");
   const designation = localStorage.getItem("designation");
-  const userName = localStorage.getItem("userName")
+  const userName = localStorage.getItem("userName");
   const navigate = useNavigate();
   useEffect(() => {
     if (userId === null || userId === "") {
-      navigate("/")
+      navigate("/");
     }
   }, []);
 
@@ -22,7 +21,7 @@ export const NavBar = () => {
     localStorage.setItem("designation", "");
     localStorage.setItem("userID", "");
     localStorage.setItem("userName", "");
-  }
+  };
   return (
     <Navbar
       className="navbar navbar-light"
@@ -44,7 +43,12 @@ export const NavBar = () => {
                     <h5>Home</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/workStatus">
+                <Nav.Link as={Link} to="/empDetails">
+                  <b>
+                    <h5>Holidays</h5>
+                  </b>
+                </Nav.Link>
+                <Nav.Link as={Link} to="/work-status">
                   <b>
                     <h5>Work Status</h5>
                   </b>
@@ -72,30 +76,54 @@ export const NavBar = () => {
                 </Nav.Link>
                 <Nav.Link as={Link} to="/hr/leaves-data">
                   <b>
-                    <h5>Leaves data</h5>
+                    <h5>Leaves</h5>
                   </b>
                 </Nav.Link>
-                <Nav.Link as={Link} to="/empDetails">
+                <Nav.Link as={Link} to="/emp-details">
                   <b>
-                    <h5>Manage Employee Details</h5>
+                    <h5>Employees</h5>
                   </b>
                 </Nav.Link>
               </>
             )}
+            <Nav.Link as={Link} to="/holidays">
+              <b>
+                <h5>Holidays</h5>
+              </b>
+            </Nav.Link>
             <Nav.Link as={Link} to="/profile">
               <b>
                 <h5>Profile</h5>
               </b>
             </Nav.Link>
-
+            <Nav.Link as={Link} to="/feedback">
+              <b>
+                <h5>Feedback</h5>
+              </b>
+            </Nav.Link>
+            <Nav.Link as={Link} to="/payslip">
+              <b>
+                <h5>Payslip</h5>
+              </b>
+            </Nav.Link>
+            <Nav.Link as={Link} to="/schedule">
+              <b>
+                <h5>Schedule</h5>
+              </b>
+            </Nav.Link>
+            <Nav.Link as={Link} to="/self-appraisal-form">
+              <b>
+                <h5>Self-Appraisal</h5>
+              </b>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Nav.Link as={Link} to="/">
-          <Button onClick={handleLogout}>
-        <b>{userName} </b>
+          <Button variant="outline-dark" onClick={handleLogout}>
+            <b>{userName} </b>
             <Image
               src="../check-out.png"
-              style={{ width: "40px", height: "40px" }}
+              style={{ width: "50px", height: "30px" }}
             ></Image>
           </Button>
         </Nav.Link>
