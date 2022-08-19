@@ -171,9 +171,9 @@ export const Payslip = () => {
               </Select>
             </FormControl>
           </div>
-          <div style={{ marginLeft: "257px", marginTop: "-39px" }}>
+          {/* <div style={{ marginLeft: "257px", marginTop: "-39px" }}>
             <Button variant="outlined">Go</Button>
-          </div>
+          </div> */}
           <div
             style={{
               width: "790px",
