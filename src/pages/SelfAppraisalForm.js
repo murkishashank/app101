@@ -8,17 +8,19 @@ import { postSelfAppraisal } from "../api/postSelfAppraisal";
 export const SelfAppraisalForm = () => {
   const [userData, setUserData] = useState({});
   const userName = localStorage.getItem("userName");
-  const [initialState, setData] = useState({});
+  const userId = localStorage.getItem("userID");
+  const [initialState, setData] = useState({ userId: userId });
   const ref = React.createRef();
+
   useEffect(() => {
     const user = getUser(userName);
     user.then((data) => {
       setUserData(data);
     });
   });
+
   const { mobileNumber, emailId, reportingManager, joiningDate, designation } =
     userData;
-  const { accomplish, project, goal, workShop, issue } = initialState;
 
   const handleOnChange = (e) => {
     let result =
@@ -117,6 +119,16 @@ export const SelfAppraisalForm = () => {
           <TextField
             margin="normal"
             id="outlined-number"
+            label="Email"
+            defaultValue="xyz@tecnics.com"
+            value={emailId}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            margin="normal"
+            id="outlined-number"
             label="Mobile Number"
             defaultValue="7765432467"
             value={mobileNumber}
@@ -152,7 +164,7 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
-            name="accomplish"
+            name="accomplishment"
             rows={5}
             fullWidth
             onChange={handleOnChange}
@@ -197,7 +209,7 @@ export const SelfAppraisalForm = () => {
             variant="filled"
             multiline
             rows={5}
-            name="workShop"
+            name="workshop"
             fullWidth
             onChange={handleOnChange}
           />
