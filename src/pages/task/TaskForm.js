@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { getAllUserIds } from "../../api/getAllUserIds";
-import { taskStatusOptions } from "../task/TaskColDefs";
+import { taskStatusOptions } from "./TaskColDefs";
 import { getUserNameById } from "../../utils/getUserNameById";
 
 export const TaskForm = (props) => {

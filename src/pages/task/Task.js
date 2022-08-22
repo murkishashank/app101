@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavBar } from "../../components/NavBar";
 import "../../css/CommonStyling.css";
-import { TaskForm } from "./TaskForm.js";
+import { TaskForm } from "./TaskForm";
 import { DataGrid } from "@mui/x-data-grid";
 import { taskColDefs } from "./TaskColDefs";
 import { getAllTasks } from "../../api/getAllTasks";
