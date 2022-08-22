@@ -7,10 +7,11 @@ import { DataTable } from "../components/DataTable";
 import { leavesColDefs } from "./leavesColDefs";
 import { getLeavesById } from "../api/getLeavesById";
 import { saveProcessedLeave } from "../api/saveProcessedLeave";
+import { convertDateToDbFormat, getDateFormat } from "../utils/getDateFormat";
 
 export const Home = (props) => {
   const userId = localStorage.getItem("userID");
-  const dataObj = {
+  const initialState = {
     userId: userId,
     reason: "",
     fromDate: "",
@@ -24,8 +25,8 @@ export const Home = (props) => {
   const [leaveData, setLeaveData] = useState([]);
   const [leaveDataLoading, setLeaveDataLoading] = useState(true);
   const [modalShow, setModalShow] = useState(false);
-  const [formData, setFormData] = useState(dataObj);
-  const [errorObject, setErrorObject] = useState(dataObj);
+  const [formData, setFormData] = useState(initialState);
+  const [errorObject, setErrorObject] = useState(initialState);
 
   useEffect(() => {
     setLeaveDataLoading(true);
@@ -41,14 +42,6 @@ export const Home = (props) => {
     const formDataClone = { ...formData };
     formDataClone[event.target.name] = event.target.value;
     setFormData(formDataClone);
-  };
-
-  const convertDateToDbFormat = (date) => {
-    return date.split("/").reverse().join("-");
-  };
-
-  const getDateFormat = (date) => {
-    return new Date(date).toLocaleDateString("fr-FR");
   };
 
   const validateField = (payload) => {
@@ -107,7 +100,7 @@ export const Home = (props) => {
             leaveDataClone.push(response);
             setLeaveData(leaveDataClone);
             setModalShow(false);
-            setFormData(dataObj);
+            setFormData(initialState);
           } else {
             alert("Error while applying the data.");
           }
@@ -136,8 +129,8 @@ export const Home = (props) => {
           <LeaveForm
             show={modalShow}
             onHide={() => {
-              setFormData(dataObj);
-              setErrorObject(dataObj);
+              setFormData(initialState);
+              setErrorObject(initialState);
               setModalShow(false);
             }}
             onChange={handleOnChange}
@@ -149,6 +142,7 @@ export const Home = (props) => {
             rowData={leaveData}
             colData={leavesColDefs}
             onClickEdit={handleCellEditBtn}
+            rowId={"id"}
           ></DataTable>
         </div>
       )}

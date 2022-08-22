@@ -1,14 +1,18 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { NavBar } from "./NavBar";
 
 export const DataTable = (props) => {
-  const handleCellEdit = (params) => {
+  let id = props.rowId;
+  const handleCellClick = (params) => {
     const value = params.colDef.field;
     if (value === "actions") {
       props.onClickEdit(params);
     } else {
       return;
     }
+  };
+
+  const handleCellEdit = (event) => {
+    props.onCellEdit(event);
   };
 
   return (
@@ -20,7 +24,9 @@ export const DataTable = (props) => {
         columns={props.colData}
         pageSize={5}
         rowsPerPageOptions={[5]}
-        onCellClick={handleCellEdit}
+        onCellEditCommit={handleCellEdit}
+        onCellClick={handleCellClick}
+        getRowId={(row) => row[id]}
       />
     </>
   );

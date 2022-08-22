@@ -68,21 +68,16 @@ export const Graph = () => {
     setNoTasksByUsers([0, 0, 0, 0]);
     const noTasksByUsersClone = [...noTasksByUsers];
     let selectedUsersData;
-    console.log("selectedUser", selectedUser !== null);
     const dataByUser = () => {
       if (selectedUser !== null) {
-        console.log("Passed1");
         selectedUsersData = allTasks.filter((record) => {
           return record.userId === parseInt(selectedUser.id);
         });
       } else {
-        console.log("Passed");
         selectedUsersData = allTasks.map(record => {return record});
-        console.log(selectedUsersData);
       }
       doughnutLabels.forEach((label, index) => {
         let counter = 0;
-        console.log("selectedUsersData", selectedUsersData);
         selectedUsersData.forEach((record) => {
           if (record.taskStatus === label) {
             counter++;

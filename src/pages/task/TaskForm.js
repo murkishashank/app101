@@ -4,18 +4,20 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { getAllUserIds } from "../../api/getAllUserIds";
 import { taskStatusOptions } from "../task/TaskColDefs";
+import { getUserNameById } from "../../utils/getUserNameById";
 
 export const TaskForm = (props) => {
-  let taskFormData = props.taskObj;
-  const [userNames, setUserNames] = useState([]);
+  let taskFormData = props.taskobj;
+  let errorObj = props.errorobj;
+  const [users, setUsers] = useState([]);
 
   const handleOnChange = (event) => {
-    if (event.target.name === "userName") {
-      const selectedUser = userNames.filter((record) => {
-        return record.userName === event.target.value;
-      });
-      props.userID(selectedUser[0].id);
-    }
+    // if (event.target.name === "userName") {
+    //   const selectedUser = users.filter((record) => {
+    //     return record.userName === event.target.value;
+    //   });
+    //   props.userID(selectedUser[0]?.id);
+    // }
     props.onChange(event);
   };
 
@@ -25,7 +27,7 @@ export const TaskForm = (props) => {
 
   const fetchUserName = () => {
     getAllUserIds().then((data) => {
-      setUserNames(data);
+      setUsers(data);
     });
   };
 
@@ -52,14 +54,15 @@ export const TaskForm = (props) => {
             <Form.Select
               onChange={handleOnChange}
               name="userName"
-              defaultValue={taskFormData.userName}
+              defaultValue={getUserNameById(users, taskFormData.userId)}
             >
               <option></option>
-              {userNames.map((option, index) => {
+              {users.map((option, index) => {
                 return <option> {option.userName}</option>;
               })}
             </Form.Select>
           </Form.Group>
+          <p className="errorMessage">{errorObj.userId}</p>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Task Name</Form.Label>
             <Form.Control
@@ -71,6 +74,7 @@ export const TaskForm = (props) => {
               autoFocus
             />
           </Form.Group>
+          <p className="errorMessage">{errorObj.taskName}</p>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Task Description</Form.Label>
             <Form.Control
@@ -83,6 +87,7 @@ export const TaskForm = (props) => {
               required
             />
           </Form.Group>
+          <p className="errorMessage">{errorObj.taskDescription}</p>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Task Status</Form.Label>
             <Form.Select
@@ -96,7 +101,8 @@ export const TaskForm = (props) => {
               })}
             </Form.Select>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <p className="errorMessage">{errorObj.taskStatus}</p>
+          {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Assigned Date</Form.Label>
             <Form.Control
               type="date"
@@ -105,7 +111,7 @@ export const TaskForm = (props) => {
               defaultValue={taskFormData.taskAssignedDate}
               autoFocus
             />
-          </Form.Group>
+          </Form.Group> */}
         </Form>
       </Modal.Body>
       <Modal.Footer>

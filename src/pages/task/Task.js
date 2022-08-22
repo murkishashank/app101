@@ -6,39 +6,48 @@ import { DataGrid } from "@mui/x-data-grid";
 import { taskColDefs } from "./TaskColDefs";
 import { getAllTasks } from "../../api/getAllTasks";
 import { Box, Button } from "@mui/material";
+import {
+  convertDateToDbFormat,
+  getDateFormat,
+} from "../../utils/getDateFormat";
+import { getAllUserIds } from "../../api/getAllUserIds";
+import { getIdByUserName } from "../../utils/getUserNameById";
+import { DataTable } from "../../components/DataTable";
 
 export const Task = () => {
-  const [allTasksData, setAllTasksData] = useState([]);
-  const [dataLoading, setDataLoading] = useState(true);
-  const [taskFormDisplay, setTaskFormDisplay] = useState(false);
-  const [editFlag, setEditFlag] = useState(false);
-  const userID = localStorage.getItem("userID");
-
+  const userId = localStorage.getItem("userID");
   const initialWorkData = {
+    userId: "",
     taskName: "",
     taskDescription: "",
     taskStatus: "",
-    assignedBy: "",
-    userId: "",
-    remarks: "",
-    taskAssignedDate: "",
-    taskCompletedDate: "",
+    assignedBy: userId,
+    taskAssignedDate: convertDateToDbFormat(getDateFormat(new Date())),
   };
+
+  const [allTasksData, setAllTasksData] = useState([]);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const [users, setUsers] = useState();
   const [workData, setWorkData] = useState(initialWorkData);
+  const [errorObj, setErrorObj] = useState(initialWorkData);
 
   const handleOnChange = (event) => {
-    workData[event.target.name] = event.target.value;
+    let value = event.target.value;
+    let name = event.target.name;
+    const workDataClone = { ...workData };
+    if (name === "userName") {
+      workDataClone["userId"] = getIdByUserName(users, value);
+    } else {
+      workDataClone[name] = value;
+    }
+    setWorkData(workDataClone);
   };
 
   const validateField = (payload) => {
-    console.log(payload);
-    const keys = taskColDefs
-      .map((colDef) => {
-        if (colDef.required === true) {
-          return colDef.field;
-        }
-      })
-      .filter(Boolean);
+    const keys = Object.keys(payload);
+    const errorObjClone = { ...errorObj };
     let isDataValid = true;
     keys.forEach((key) => {
       if (
@@ -46,74 +55,43 @@ export const Task = () => {
         payload[key] === null ||
         payload[key] === undefined
       ) {
-        console.log(key, payload[key]);
+        errorObjClone[key] = `${key} is required`;
+        setErrorObj(errorObjClone);
         isDataValid = false;
         return isDataValid;
+      } else {
+        errorObjClone[key] = "";
+        setErrorObj(errorObjClone);
       }
     });
     return isDataValid;
   };
 
   const fetchAllTasks = () => {
-    getAllTasks().then((data) => {
-      setAllTasksData(data);
-      setDataLoading(false);
-    });
+    getAllTasks()
+      .then((data) => {
+        setAllTasksData(data);
+        setDataLoading(false);
+      })
+      .catch(console.log);
   };
 
-  const columns = [
-    {
-      field: "actions",
-      headerName: "Actions",
-      headerClassName: "super-app-theme--header",
-      renderCell: (params) => {
-        const onClick = () => {
-          setTaskFormDisplay(true);
-          setWorkData(params.row);
-          setEditFlag(true);
-        };
-        return (
-          <Button variant="secondary" onClick={onClick}>
-            Edit
-          </Button>
-        );
-      },
-    },
-  ];
-
-  const col = taskColDefs.concat(columns);
-
-  const handleUserId = (value) => {
-    workData.userId = value;
+  const handleCellEditBtn = (params) => {
+    setIsEditing(true);
+    setWorkData(params.row);
+    setModalShow(true);
   };
 
-  const handleSubmit = () => {
-    if (editFlag) {
-      setWorkData(workData);
+  const handleSave = () => {
+    let payload;
+    let isValid;
+    if (isEditing) {
+      payload = [workData];
+      isValid = validateField(payload[0]);
+    } else {
+      payload = allTasksData.filter((row) => row.editStatus);
+      isValid = true;
     }
-    const {
-      taskDescription,
-      taskStatus,
-      taskName,
-      userId,
-      remarks,
-      taskAssignedDate,
-      taskCompletedDate,
-    } = workData;
-
-    const payload = {
-      taskDescription: taskDescription,
-      taskStatus: taskStatus,
-      taskName: taskName,
-      assignedBy: userID,
-      remarks: remarks,
-      taskAssignedDate: taskAssignedDate,
-      taskCompletedDate: taskCompletedDate,
-      userId: userId,
-    };
-
-    const isValid = validateField(payload);
-    console.log(payload);
     if (isValid) {
       const url = "http://localhost:8080/api/tasks";
       const options = {
@@ -121,66 +99,27 @@ export const Task = () => {
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify([payload]),
+        body: JSON.stringify(payload),
       };
       fetch(url, options)
         .then((response) => response.json())
         .then((result) => {
-          if (result) {
-            alert("Details saved successfully.");
-            setTaskFormDisplay(false);
+          if (result[0].statusId) {
             fetchAllTasks();
-            setWorkData({
-              taskName: "",
-              taskDescription: "",
-              taskStatus: "",
-              assignedBy: "",
-            });
+            setModalShow(false);
+            setWorkData(initialWorkData);
           } else {
             alert("Error while applying the data task.");
           }
-        });
-    } else {
-      alert("Enter all the required fields.");
+        })
+        .catch(console.log);
     }
-  };
-
-  const handleSave = () => {
-    const editedRows = allTasksData.filter((row) => row.editStatus);
-    const url = "http://localhost:8080/api/tasks";
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(editedRows),
-    };
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result) {
-          alert("Details saved successfully.");
-          setWorkData({
-            taskName: "",
-            taskDescription: "",
-            taskStatus: "",
-            assignedBy: "",
-            userName: "",
-          });
-        } else {
-          alert("Error while applying the data. post");
-        }
-      });
-  };
-
-  const getDateFormat = (date) => {
-    return new Date(date).toLocaleDateString("fr-FR");
   };
 
   const handleCellChange = (event) => {
     const { id, field, value } = event;
     const allTasksDataClone = allTasksData.map((row) => {
-      if (row.id === id) {
+      if (row.statusId === id) {
         return {
           ...row,
           [field]: value,
@@ -195,14 +134,24 @@ export const Task = () => {
     });
     setAllTasksData(allTasksDataClone);
   };
+
   const newRecord = () => {
-    setTaskFormDisplay(true);
+    setIsEditing(true);
+    setModalShow(true);
     setWorkData(initialWorkData);
   };
+
+  const getAllUsers = () => {
+    getAllUserIds()
+      .then((response) => setUsers(response))
+      .catch(console.log);
+  };
+
   useEffect(() => {
     fetchAllTasks();
+    getAllUsers();
   }, []);
-  useEffect(() => {}, [allTasksData]);
+
   return (
     <div>
       {dataLoading ? (
@@ -210,25 +159,23 @@ export const Task = () => {
       ) : (
         <div>
           <NavBar></NavBar>
-          <h5>All tasks</h5>
           <div style={{ height: 500, width: "inherit" }}>
             <div>
-              {" "}
               <Button variant="secondary" onClick={newRecord}>
                 Add New Task
               </Button>
-              {taskFormDisplay && (
-                <TaskForm
-                  show={taskFormDisplay}
-                  onHide={() => {
-                    setTaskFormDisplay(false);
-                  }}
-                  onChange={handleOnChange}
-                  onSubmit={handleSubmit}
-                  userID={handleUserId}
-                  taskObj={workData}
-                />
-              )}
+              <TaskForm
+                show={modalShow}
+                onHide={() => {
+                  setIsEditing(false);
+                  setModalShow(false);
+                  setErrorObj(initialWorkData);
+                }}
+                onChange={handleOnChange}
+                onSubmit={handleSave}
+                taskobj={workData}
+                errorobj={errorObj}
+              />
               <Button
                 variant="secondary"
                 className="editbtn"
@@ -267,12 +214,13 @@ export const Task = () => {
                 },
               }}
             >
-              <DataGrid
-                rows={allTasksData}
-                columns={col}
-                onCellEditCommit={handleCellChange}
-                getRowId={(row) => row.statusId}
-              ></DataGrid>
+              <DataTable
+                rowData={allTasksData}
+                colData={taskColDefs}
+                rowId={"statusId"}
+                onCellEdit={handleCellChange}
+                onClickEdit={handleCellEditBtn}
+              ></DataTable>
             </Box>
           </div>
         </div>
