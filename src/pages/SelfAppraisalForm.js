@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { TextField, Container, Typography, Button } from "@mui/material";
 import Pdf from "react-to-pdf";
 import { NavBar } from "../components/NavBar";
 import { getUser } from "../api/getUserByUserName";
+import React from 'react';
+import { postSelAppraisal } from "../api/postSelAppraisal";
+
 
 export const SelfAppraisalForm = () => {
   const [userData, setUserData] = useState({});
   const userName = localStorage.getItem("userName");
+  const [initialState, setData] = useState({});
   const ref = React.createRef();
   useEffect(() => {
     const user = getUser(userName);
@@ -16,9 +20,29 @@ export const SelfAppraisalForm = () => {
   });
   const { mobileNumber, emailId, reportingManager, joiningDate, designation } =
     userData;
+    const {
+      accomplish,
+      project,
+      goal,
+      workShop,
+      issue,
+    } = initialState;
+    
 
-  const handleOnChange = (value) => {
-    console.log(value);
+  const handleOnChange = (e) => {
+    let result = typeof e.target.value === 'string' ? (e.target.value).split('\n') : '';
+    const user = {...initialState, [e.target.name]: result};
+    setData(user);
+  };
+
+  const handleOnSubmit = () => {
+    const saveData = postSelAppraisal(initialState);
+    saveData.then((response) => {
+      if (response) {
+        console.log(response);
+        alert("saved successful");
+      }
+    });
   };
 
   return (
@@ -136,9 +160,10 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
+            name="accomplish"
             rows={5}
             fullWidth
-            onChange={(event) => handleOnChange(event.target.value)}
+            onChange={handleOnChange}
           />
           <Typography variant="subtitle2" gutterBottom component="h3">
             2. Projects Worked on, Client Presentations, Sales Proposals
@@ -150,9 +175,10 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
+            name = "project"
             rows={5}
             fullWidth
-            onChange={(event) => handleOnChange(event.target.value)}
+            onChange={handleOnChange}
           />
           <Typography variant="subtitle2" gutterBottom component="h3">
             3. Trainings/Workshops conducted/attended, Awards/certificates
@@ -164,9 +190,10 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
+            name = "goal"
             rows={5}
             fullWidth
-            onChange={(event) => handleOnChange(event.target.value)}
+            onChange={handleOnChange}
           />
           <Typography variant="subtitle2" gutterBottom component="h3">
             4. Issues faced & Suggestions for improvement (Max 5 items only)
@@ -178,8 +205,9 @@ export const SelfAppraisalForm = () => {
             variant="filled"
             multiline
             rows={5}
+            name = "workShop"
             fullWidth
-            onChange={(event) => handleOnChange(event.target.value)}
+            onChange={handleOnChange}
           />
           <Typography variant="subtitle2" gutterBottom component="h3">
             5. What goals (specific measurable results) do you expect to
@@ -191,14 +219,16 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
+            name="issue"
             rows={5}
             fullWidth
-            onChange={(event) => handleOnChange(event.target.value)}
+            onChange={handleOnChange}
           />
         </div>
         <Button
           variant="contained"
           style={{ marginBottom: "10px", marginTop: "10px" }}
+          onClick = {handleOnSubmit}
         >
           Submit
         </Button>
