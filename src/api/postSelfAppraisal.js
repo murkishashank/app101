@@ -1,6 +1,6 @@
 import { request } from "../utils/requests.ts";
 
-export const postSelAppraisal = (userData) => {
+export const postSelfAppraisal = (userData) => {
   return request(`/api/selfAppraisal`, {
     method: "POST",
     headers: {

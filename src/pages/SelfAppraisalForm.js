@@ -4,7 +4,7 @@ import Pdf from "react-to-pdf";
 import { NavBar } from "../components/NavBar";
 import { getUser } from "../api/getUserByUserName";
 import React from 'react';
-import { postSelAppraisal } from "../api/postSelAppraisal";
+import { postSelfAppraisal } from "../api/postSelfAppraisal";
 
 
 export const SelfAppraisalForm = () => {
@@ -36,7 +36,7 @@ export const SelfAppraisalForm = () => {
   };
 
   const handleOnSubmit = () => {
-    const saveData = postSelAppraisal(initialState);
+    const saveData = postSelfAppraisal(initialState);
     saveData.then((response) => {
       if (response) {
         console.log(response);
