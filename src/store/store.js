@@ -4,6 +4,7 @@ import loginFormReducer from "../pages/LoginForm/slice/action";
 import manageEmpReducer from "../pages/ManageEmpDetails/slice/action";
 import feedbackReducer from "../pages/feedback/slice/actions";
 import payslipReducer from "../pages/payslip/slice/actions";
+
 export const store = configureStore({
   reducer: {
     workStatusUser: workStatusUserReducer,

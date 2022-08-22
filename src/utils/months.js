@@ -12,3 +12,17 @@ export const monthsForDays = {
   November: { noOfDays: 30, monthNumber: 11 },
   December: { noOfDays: 31, monthNumber: 12 },
 };
+export const monthsNumber = {
+  0: "January",
+  1: "February",
+  2: "March",
+  3: "April",
+  4: "May",
+  5: "June",
+  6: "July",
+  7: "August",
+  8: "September",
+  9: "October",
+  10: "November",
+  11: "December",
+};
