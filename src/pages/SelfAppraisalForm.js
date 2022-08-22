@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Container, Typography, Button } from "@mui/material";
 import Pdf from "react-to-pdf";
 import { NavBar } from "../components/NavBar";
 import { getUser } from "../api/getUserByUserName";
-import React from 'react';
 import { postSelfAppraisal } from "../api/postSelfAppraisal";
-
 
 export const SelfAppraisalForm = () => {
   const [userData, setUserData] = useState({});
@@ -20,18 +18,12 @@ export const SelfAppraisalForm = () => {
   });
   const { mobileNumber, emailId, reportingManager, joiningDate, designation } =
     userData;
-    const {
-      accomplish,
-      project,
-      goal,
-      workShop,
-      issue,
-    } = initialState;
-    
+  const { accomplish, project, goal, workShop, issue } = initialState;
 
   const handleOnChange = (e) => {
-    let result = typeof e.target.value === 'string' ? (e.target.value).split('\n') : '';
-    const user = {...initialState, [e.target.name]: result};
+    let result =
+      typeof e.target.value === "string" ? e.target.value.split("\n") : "";
+    const user = { ...initialState, [e.target.name]: result };
     setData(user);
   };
 
@@ -175,7 +167,7 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
-            name = "project"
+            name="project"
             rows={5}
             fullWidth
             onChange={handleOnChange}
@@ -190,7 +182,7 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
-            name = "goal"
+            name="goal"
             rows={5}
             fullWidth
             onChange={handleOnChange}
@@ -205,7 +197,7 @@ export const SelfAppraisalForm = () => {
             variant="filled"
             multiline
             rows={5}
-            name = "workShop"
+            name="workShop"
             fullWidth
             onChange={handleOnChange}
           />
@@ -228,7 +220,7 @@ export const SelfAppraisalForm = () => {
         <Button
           variant="contained"
           style={{ marginBottom: "10px", marginTop: "10px" }}
-          onClick = {handleOnSubmit}
+          onClick={handleOnSubmit}
         >
           Submit
         </Button>
