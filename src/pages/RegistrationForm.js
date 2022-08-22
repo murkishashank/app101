@@ -114,9 +114,8 @@ export const RegistrationForm = () => {
     fr.readAsDataURL(image);
     fr.onload = (event) => {
       if(event.target.result.includes("image")){
-        var fileBase64 = event.target.result
-          .replace("data:", "")
-          .replace(/^.+,/, "");
+        console.log(event.target.result);
+        var fileBase64 = event.target.result;
         updatedState.addressProof = fileBase64;
         if (updatedState.addressProof !== null) {
           setUploadStatus("Uploaded");
@@ -126,6 +125,7 @@ export const RegistrationForm = () => {
         alert("Only images are allowed.")
       }
     }
+
   };
 
   const handleCancel = () => {
