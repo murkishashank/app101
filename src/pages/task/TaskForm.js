@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { getAllUserIds } from "../api/getAllUserIds";
-import { taskStatusOptions } from "../pages/TaskColDefs";
+import { getAllUserIds } from "../../api/getAllUserIds";
+import { taskStatusOptions } from "./TaskColDefs";
 
 export const TaskForm = (props) => {
   let taskFormData = props.taskObj;
