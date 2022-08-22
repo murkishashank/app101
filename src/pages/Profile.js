@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-// import Modal from 'react-bootstrap/Modal';
 import { postUser } from "../api/postUser";
 import { getUser } from "../api/getUserByUserName";
 import { NavBar } from "../components/NavBar";
@@ -9,10 +8,27 @@ import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useNavigate } from "react-router-dom";
+
+import { EditProfileComponent } from "../components/EditProfileComponent";
 import { employeeRoles } from "./ManageEmpDetails/coldefs";
-import { useSelector } from "react-redux";
+
 export const Profile = (props) => {
   const [userData, setUserData] = useState({});
+  const hrEditMode = props?.editEmp?.id ? false : true;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (props.editEmp) {
+      setUserData(props.editEmp);
+    } else {
+      const user = getUser(props.userData.userName);
+      user.then((data) => {
+        setUserData(data);
+      });
+    }
+  }, [props]);
+
   const {
     userName,
     firstName,
@@ -28,26 +44,13 @@ export const Profile = (props) => {
     joiningDate,
     designation,
   } = userData;
-  const [editMode, setEditMode] = useState(true);
-  const hrEditMode = props?.editEmp?.id ? editMode : true;
-
-  useEffect(() => {
-    if (props.editEmp) {
-      setUserData(props.editEmp);
-    } else {
-      const user = getUser(props.userData.userName);
-      user.then((data) => {
-        setUserData(data);
-      });
-    }
-  }, [props]);
 
   const saveUser = () => {
-    setEditMode(true);
     const saveUserInfo = postUser(userData);
     saveUserInfo.then((response) => {
       if (response) {
         alert("User updated successfully");
+        navigate("/emp-details");
       }
     });
   };
@@ -56,189 +59,272 @@ export const Profile = (props) => {
     const userDataClone = { ...userData, [key]: value };
     setUserData(userDataClone);
   };
+  const [show, setShow] = useState(false);
+
   return (
-    <Container style={{ backgroundColor: "transparent" }}>
+    <div style={{ backgroundColor: "#eee" }}>
       <NavBar></NavBar>
-      <Row
-        style={{ marginTop: "20px", fontWeight: "lighter", width: "1200px" }}
-      >
-        <Col style={{ border: "groove" }}>
-          <Form.Label
-            className=" d-flex justify-content-center"
-            style={{ fontSize: "20px" }}
-          >
+      <Container className="py-3">
+        <Form
+          as={Row}
+          className="mb-4 p-2"
+          style={{
+            backgroundColor: "white",
+            borderRadius: "10px",
+            width: "55rem",
+          }}
+        >
+          <Form.Label style={{ fontWeight: "bold", fontSize: "20px" }}>
             Personal Details
           </Form.Label>
-          <div className=" d-flex justify-content-center">
+          <Col sm={3} className="text-center">
             <Image
+              alt="avatar"
+              className="rounded-circle"
               src="../image.jpg"
-              style={{ width: "110px", height: "100px", borderRadius: "50%" }}
+              style={{ width: "150px" }}
+              fluid
             />
-          </div>
-          <Form.Label className=" d-flex justify-content-center">
-            {userName}
-          </Form.Label>
-          <Col>
-            {editMode && (
+            <Form.Label className="d-flex justify-content-center mt-2">
+              {userName}
+            </Form.Label>
+            {hrEditMode === true && (
+              <Button
+                variant="outline-primary"
+                className="ms-1"
+                onClick={() => setShow(true)}
+              >
+                Request Edit
+              </Button>
+            )}
+            {hrEditMode === false && (
               <>
                 <Button
-                  variant="primary"
-                  onClick={() => {
-                    setEditMode(false);
-                  }}
+                  variant="outline-primary"
+                  className="ms-1"
+                  onClick={saveUser}
                 >
-                  Edit Profile
-                </Button>
-              </>
-            )}
-
-            {editMode === false && (
-              <>
-                <Button variant="primary" onClick={saveUser}>
                   Save
                 </Button>
-                <Button
-                  variant="secondary"
-                  style={{ marginLeft: "200px" }}
-                  onClick={() => {
-                    setEditMode(true);
-                  }}
-                >
-                  Cancel
-                </Button>
               </>
             )}
+            <EditProfileComponent
+              show={show}
+              userData={userData}
+              onHide={() => {
+                setShow(false);
+              }}
+            ></EditProfileComponent>
           </Col>
-          <Form>
-            <Form.Group className="mb-3" controlId="formGroupFirstName">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="firstName"
-                value={firstName}
-                readOnly={editMode}
-                onChange={(event) =>
-                  handleOnChange("firstName", event.target.value)
-                }
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupLastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="lastName"
-                value={lastName}
-                readOnly={editMode}
-                onChange={(event) =>
-                  handleOnChange("lastName", event.target.value)
-                }
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGroupAge">
-              <Form.Label>DOB: {dateOfBirth}</Form.Label>
-              <Form.Control
-                type="date"
-                value={dateOfBirth}
-                readOnly={editMode}
-                onChange={(event) =>
-                  handleOnChange("dateOfBirth", event.target.value)
-                }
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPersonalEmail">
-              <Form.Label>Personal Email</Form.Label>
-              <Form.Control
-                type="email"
-                value={personalEmailId}
-                readOnly={editMode}
-                onChange={(event) =>
-                  handleOnChange("personalEmailId", event.target.value)
-                }
-              />
-            </Form.Group>
-          </Form>
-        </Col>
-        <Col style={{ border: "groove" }}>
-          <Form>
-            <Form.Label
-              className=" d-flex justify-content-center"
-              style={{ fontSize: "20px" }}
+          <Col sm={9}>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalFirstName"
             >
-              Contact Details
+              <Form.Label column sm={3}>
+                First Name
+              </Form.Label>
+              <Col sm={9}>
+                <Form.Control
+                  type="firstName"
+                  value={firstName}
+                  readOnly={hrEditMode}
+                  onChange={(event) =>
+                    handleOnChange("firstName", event.target.value)
+                  }
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="formGroupLastName">
+              <Form.Label column sm={3}>
+                Last Name
+              </Form.Label>
+              <Col sm={9}>
+                <Form.Control
+                  type="lastName"
+                  value={lastName}
+                  readOnly={hrEditMode}
+                  onChange={(event) =>
+                    handleOnChange("lastName", event.target.value)
+                  }
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="formGroupAge">
+              <Form.Label column sm={3}>
+                DOB{" "}
+              </Form.Label>
+              <Col sm={9}>
+                <Form.Control
+                  type="date"
+                  value={dateOfBirth}
+                  readOnly={hrEditMode}
+                  onChange={(event) =>
+                    handleOnChange("dateOfBirth", event.target.value)
+                  }
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formGroupPersonalEmail"
+            >
+              <Form.Label column sm={3}>
+                Personal Email
+              </Form.Label>
+              <Col sm={9}>
+                <Form.Control
+                  type="email"
+                  value={personalEmailId}
+                  readOnly={hrEditMode}
+                  onChange={(event) =>
+                    handleOnChange("personalEmailId", event.target.value)
+                  }
+                />
+              </Col>
+            </Form.Group>
+          </Col>
+        </Form>
+        <Form
+          as={Row}
+          className="mb-4 p-2"
+          style={{
+            backgroundColor: "white",
+            borderRadius: "10px",
+            width: "55rem",
+          }}
+        >
+          <Form.Label style={{ fontWeight: "bold", fontSize: "20px" }}>
+            Contact Details
+          </Form.Label>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formGroupPermanentAddress"
+          >
+            <Form.Label column sm={4}>
+              Permanent Address
             </Form.Label>
-
-            <Form.Group>
-              <Form.Label>Permanent Address</Form.Label>
+            <Col sm={8}>
               <Form.Control
                 as={"textarea"}
                 rows={5}
                 type="address"
                 value={permanentAddress}
               ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Contact Address</Form.Label>
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formGroupPersonalEmail"
+          >
+            <Form.Label column sm={4}>
+              Contact Address
+            </Form.Label>
+            <Col sm={8}>
               <Form.Control
                 as={"textarea"}
                 rows={5}
                 type="address"
                 value={contactAddress}
               ></Form.Control>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPhone">
-              <Form.Label>Mobile Number</Form.Label>
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="horizontalFormMobileNumber"
+          >
+            <Form.Label column sm={4}>
+              Mobile Number
+            </Form.Label>
+            <Col sm={8}>
               <Form.Control
-                type="phone"
+                type="number"
                 value={mobileNumber}
-                readOnly={editMode}
+                readOnly={hrEditMode}
                 onChange={(event) =>
                   handleOnChange("mobileNumber", event.target.value)
                 }
               />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPhone">
-              <Form.Label>Alternative Mobile Number</Form.Label>
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="horizontalFormNumber"
+          >
+            <Form.Label column sm={4}>
+              Alternative Mobile Number
+            </Form.Label>
+            <Col sm={8}>
               <Form.Control
-                type="phone"
+                type="number"
                 value={alternativeMobileNumber}
-                readOnly={editMode}
+                readOnly={hrEditMode}
                 onChange={(event) =>
                   handleOnChange("alternativeMobileNumber", event.target.value)
                 }
               />
-            </Form.Group>
-          </Form>
-        </Col>
-        <Col style={{ border: "groove" }}>
-          <Form>
-            <Form.Label
-              className=" d-flex justify-content-center"
-              style={{ fontSize: "20px" }}
-            >
-              Employee Details
+            </Col>
+          </Form.Group>
+        </Form>
+        <Form
+          as={Row}
+          className="mb-4 p-2"
+          style={{
+            backgroundColor: "white",
+            borderRadius: "10px",
+            width: "55rem",
+          }}
+        >
+          <Form.Label style={{ fontWeight: "bold", fontSize: "20px" }}>
+            Employee Details
+          </Form.Label>
+          <Form.Group as={Row} className="mb-3" controlId="formGroupJoinDate">
+            <Form.Label column sm={4}>
+              Joining Date
             </Form.Label>
-            <Form.Group className="mb-3" controlId="formGroupJoinDate">
-              <Form.Label>Joining Date</Form.Label>
+            <Col sm={8}>
               <Form.Control
                 type="date"
                 value={joiningDate}
                 readOnly={hrEditMode}
+                onChange={(event) =>
+                  handleOnChange("joiningDate", event.target.value)
+                }
               />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupName">
-              <Form.Label>Reporting Manager</Form.Label>
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formGroupName">
+            <Form.Label column sm={4}>
+              Reporting Manager
+            </Form.Label>
+            <Col sm={8}>
               <Form.Control
-                type="name"
+                type="text"
                 value={reportingManager}
                 readOnly={hrEditMode}
                 onChange={(event) =>
                   handleOnChange("reportingManager", event.target.value)
                 }
               />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupDesignation">
-              <Form.Label>Designation</Form.Label>
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formGroupDesignation"
+          >
+            <Form.Label column sm={4}>
+              Designation
+            </Form.Label>
+            <Col sm={8}>
               <Form.Select
-                type="name"
+                type="text"
                 value={designation}
                 disabled={hrEditMode}
                 onChange={(event) =>
@@ -249,9 +335,13 @@ export const Profile = (props) => {
                   return <option>{role}</option>;
                 })}
               </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupEmail">
-              <Form.Label>Email</Form.Label>
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formGroupEmail">
+            <Form.Label column sm={4}>
+              Email
+            </Form.Label>
+            <Col sm={8}>
               <Form.Control
                 type="email"
                 value={emailId}
@@ -260,10 +350,10 @@ export const Profile = (props) => {
                   handleOnChange("emailId", event.target.value)
                 }
               />
-            </Form.Group>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+            </Col>
+          </Form.Group>
+        </Form>
+      </Container>
+    </div>
   );
 };

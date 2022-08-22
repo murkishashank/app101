@@ -6,7 +6,9 @@ import { RegistrationForm } from "../pages/RegistrationForm";
 import { LoginForm } from "../pages/LoginForm/LoginForm";
 import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
-import { Task } from "../components/Task";
+import { Holidays } from "../pages/Holiday/Holidays";
+import { GenerateHolidays } from "../pages/Holiday/GenerateHolidays";
+import { Task } from "../pages/task/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
@@ -14,6 +16,11 @@ import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
 import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 import { Feedback } from "../pages/feedback";
+import { Schedule } from "../pages/Schedule/Schedule";
+import { Payslip } from "../pages/payslip";
+import { SelfAppraisalForm } from "../pages/SelfAppraisalForm";
+import { ManageSalaries } from "../pages/payslip/ManageSalaries";
+import { Graph } from "../pages/graph";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -59,7 +66,12 @@ function App() {
         <Route path="/profile" element={<Profile userData={userData} />} />
         <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/feedback" element={<Feedback />} />
-
+        <Route path="/payslip" element={<Payslip></Payslip>} />
+        <Route path="/schedule" element={<Schedule />} />
+        <Route
+          path="/self-appraisal-form"
+          element={<SelfAppraisalForm />}
+        ></Route>
         {/* Admin Routes */}
 
         <Route
@@ -78,6 +90,7 @@ function App() {
         {/* <Route path="/editProfile" element={<EditProfile userData={userData} />} /> */}
         <Route path="/work-status" element={<WorkStatus />} />
         <Route path="/admin/task" element={<Task />} />
+        <Route path="/holidays" element={<Holidays userData={userData} />} />
 
         {/* HR Routes */}
         <Route
@@ -86,10 +99,13 @@ function App() {
             <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
           }
         />
+        <Route path="/manage-salaries" element={<ManageSalaries />} />
         <Route
           path="/edit-emp-details"
           element={<Profile editEmp={empDetailsEdit} />}
         />
+        <Route path="/hr/leaves-data" element={<HumanResource />} />
+        <Route path="/graph" element={<Graph />} />
       </Routes>
     </LoginUserDetailsProvider>
   );

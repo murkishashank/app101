@@ -7,16 +7,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectEmpRecords } from "./slice/selector";
 import { NavBar } from "../../components/NavBar";
 import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import { getPayload } from "./validateSave";
 import { Form } from "react-bootstrap";
 import { postUser } from "../../api/postUser";
+import { Button } from "@mui/material";
 
 export const ManageEmpDetails = (props) => {
   const { actions } = useManageEmpSlice();
   const dispatch = useDispatch();
   const employeeRecords = useSelector(selectEmpRecords);
   const navigate = useNavigate();
+
   useEffect(() => {
     getAllUsers().then((data) => {
       dispatch(actions.loadAllEmployeeRecords(data));
@@ -37,7 +39,7 @@ export const ManageEmpDetails = (props) => {
       renderCell: (params) => <ActionButton row={params.row} />,
     },
     {
-      field: "saveAtion",
+      field: "saveAction",
       headerName: "Save",
       renderCell: (params) => <SaveAction row={params.row} />,
     },
@@ -112,9 +114,14 @@ export const ManageEmpDetails = (props) => {
     }
   };
 
+  const handleNavigation = () => {
+    navigate("/manage-salaries");
+  };
+
   return (
     <div>
       <NavBar />
+      <Button onClick={handleNavigation}>Manage Salaries</Button>
       <div style={{ height: 500, width: "inherit", marginTop: "10px" }}>
         <DataGrid
           rows={employeeRecords}

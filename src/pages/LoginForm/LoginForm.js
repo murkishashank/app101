@@ -64,7 +64,7 @@ export const LoginForm = (props) => {
     if (isUserValid) {
       getUser(userName).then((data) => {
         if (props.loginUserDetails) {
-          dispatch(actions.setToInitialState())
+          dispatch(actions.setToInitialState());
           props.loginUserDetails(data);
         }
         navigate("/home");

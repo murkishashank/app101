@@ -1,0 +1,28 @@
+export const monthsForDays = {
+  January: { noOfDays: 31, monthNumber: 1 },
+  February: { noOfDays: 28, monthNumber: 2 },
+  March: { noOfDays: 31, monthNumber: 3 },
+  April: { noOfDays: 30, monthNumber: 4 },
+  May: { noOfDays: 31, monthNumber: 5 },
+  June: { noOfDays: 30, monthNumber: 6 },
+  July: { noOfDays: 31, monthNumber: 7 },
+  August: { noOfDays: 31, monthNumber: 8 },
+  September: { noOfDays: 30, monthNumber: 9 },
+  October: { noOfDays: 31, monthNumber: 10 },
+  November: { noOfDays: 30, monthNumber: 11 },
+  December: { noOfDays: 31, monthNumber: 12 },
+};
+export const monthsNumber = {
+  0: "January",
+  1: "February",
+  2: "March",
+  3: "April",
+  4: "May",
+  5: "June",
+  6: "July",
+  7: "August",
+  8: "September",
+  9: "October",
+  10: "November",
+  11: "December",
+};
