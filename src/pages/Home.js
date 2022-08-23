@@ -6,7 +6,7 @@ import { DataTable } from "../components/DataTable";
 import { leavesColDefs } from "./leavesColDefs";
 import { getLeavesById } from "../api/getLeavesById";
 import { saveProcessedLeave } from "../api/saveProcessedLeave";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Container } from "@mui/material";
 
 export const Home = (props) => {
   const userId = localStorage.getItem("userID");
@@ -124,7 +124,7 @@ export const Home = (props) => {
   };
 
   return (
-    <>
+    <Container fixed disableGutters component="main" sx={{ pt: 4, pb: 4 }}>
       {leaveDataLoading ? (
         <CircularProgress />
       ) : (
@@ -148,9 +148,9 @@ export const Home = (props) => {
             rowData={leaveData}
             colData={leavesColDefs}
             onClickEdit={handleCellEditBtn}
-          ></DataTable>
+          />
         </div>
       )}
-    </>
+    </Container>
   );
 };

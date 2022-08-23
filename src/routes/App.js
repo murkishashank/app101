@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // import "../css/App.css";
@@ -19,6 +19,7 @@ import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 import { Feedback } from "../pages/feedback";
 import { Payslip } from "../pages/payslip";
 import { NavBar } from "../components/NavBar";
+import { Box } from "@mui/material";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -43,10 +44,21 @@ function App() {
 
   function WithAppBar(props) {
     return (
-      <div>
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: "100vh",
+          overflow: "auto",
+        }}
+      >
         <NavBar />
-        <div>{props.children}</div>
-      </div>
+        {props.children}
+      </Box>
     );
   }
 
