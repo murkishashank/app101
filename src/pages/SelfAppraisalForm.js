@@ -17,7 +17,7 @@ export const SelfAppraisalForm = () => {
     user.then((data) => {
       setUserData(data);
     });
-  });
+  }, []);
 
   const { mobileNumber, emailId, reportingManager, joiningDate, designation } =
     userData;
