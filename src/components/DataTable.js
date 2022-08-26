@@ -1,3 +1,4 @@
+import { Button, Paper, Toolbar, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 export const DataTable = (props) => {
@@ -15,9 +16,23 @@ export const DataTable = (props) => {
     props.onCellEdit(event);
   };
 
+  const TableToolbar = () => {
+    return (
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          My Leaves
+        </Typography>
+        <Button variant="contained">Apply</Button>
+      </Toolbar>
+    );
+  };
+
   return (
-    <>
+    <Paper elevation={3}>
       <DataGrid
+        components={{
+          Toolbar: TableToolbar,
+        }}
         autoHeight={true}
         pagination={true}
         rows={props.rowData}
@@ -28,6 +43,6 @@ export const DataTable = (props) => {
         onCellClick={handleCellClick}
         getRowId={(row) => row[id]}
       />
-    </>
+    </Paper>
   );
 };

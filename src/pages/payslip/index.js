@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { NavBar } from "../../components/NavBar";
 import Pdf from "react-to-pdf";
 import { payslipMockData } from "./mockdata";
 import {
@@ -154,7 +153,6 @@ export const Payslip = () => {
   };
   return (
     <div>
-      <NavBar />
       <center>
         <div style={style}>
           <div>

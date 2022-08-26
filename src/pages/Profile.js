@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { postUser } from "../api/postUser";
 import { getUser } from "../api/getUserByUserName";
-import { NavBar } from "../components/NavBar";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -37,15 +36,15 @@ export const Profile = (props) => {
     }
   }, [props]);
 
-  useEffect(() => {
-    if (!financialDetails.length)
-      getFinancialDetails(userData.id).then((data) => {
-        setFinancialDetails(data[data.length - 1]);
-        if (data[data.length - 1].accountNumber === null) {
-          setFinancialDetailsEditStatus(false);
-        }
-      });
-  }, [userData]);
+  // useEffect(() => {
+  //   if (!financialDetails.length)
+  //     getFinancialDetails(userData.id).then((data) => {
+  //       setFinancialDetails(data[data.length - 1]);
+  //       if (data[data.length - 1].accountNumber === null) {
+  //         setFinancialDetailsEditStatus(false);
+  //       }
+  //     });
+  // }, [userData]);
 
   const {
     userName,
@@ -63,8 +62,8 @@ export const Profile = (props) => {
     designation,
   } = userData;
 
-  const { accountNumber, bankIFSC, bankBranchName, panNumber } =
-    financialDetails;
+  // const { accountNumber, bankIFSC, bankBranchName, panNumber } =
+  //   financialDetails;
 
   const saveUser = () => {
     const saveUserInfo = postUser(userData);
@@ -81,23 +80,22 @@ export const Profile = (props) => {
     setUserData(userDataClone);
   };
 
-  const handleFinancialDetailsOnChange = (key, value) => {
-    const financialDetailsClone = { ...financialDetails, [key]: value };
-    setFinancialDetails(financialDetailsClone);
-  };
+  // const handleFinancialDetailsOnChange = (key, value) => {
+  //   const financialDetailsClone = { ...financialDetails, [key]: value };
+  //   setFinancialDetails(financialDetailsClone);
+  // };
 
-  const handleFinancialDetailsSave = () => {
-    saveFinancialRecord(financialDetails).then((response) => {
-      response.id
-        ? alert("Financial Details are updated successfully.")
-        : alert("Error while updating the financial details");
-    });
-    setFinancialDetailsEditStatus(true);
-  };
+  // const handleFinancialDetailsSave = () => {
+  //   saveFinancialRecord(financialDetails).then((response) => {
+  //     response.id
+  //       ? alert("Financial Details are updated successfully.")
+  //       : alert("Error while updating the financial details");
+  //   });
+  //   setFinancialDetailsEditStatus(true);
+  // };
 
   return (
     <div style={{ backgroundColor: "#eee" }}>
-      <NavBar></NavBar>
       <Container className="py-3">
         <Form
           as={Row}
@@ -388,7 +386,7 @@ export const Profile = (props) => {
           </Form.Group>
         </Form>
         -------------------------------------------------------------------------------------------------------------------------------------------
-        <Form
+        {/* <Form
           as={Row}
           className="mb-4 p-2"
           style={{
@@ -498,7 +496,7 @@ export const Profile = (props) => {
               </Col>
             </Form.Group>
           )}
-        </Form>
+        </Form> */}
       </Container>
     </div>
   );

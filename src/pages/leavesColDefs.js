@@ -1,4 +1,5 @@
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
 export const leavesColDefs = [
   {
@@ -9,7 +10,7 @@ export const leavesColDefs = [
     },
   },
   { field: "fromDate", headerName: "From Date" },
-  { field: "toDate", headerName: "To Date" },
+  { field: "toDate", headerName: "toDate" },
   { field: "appliedDate", headerName: "Applied Date" },
   { field: "approvedDate", headerName: "Approved Date" },
   { field: "reason", headerName: "Reason" },
@@ -28,7 +29,11 @@ export const leavesColDefs = [
     field: "actions",
     headerName: "Actions",
     renderCell: (params) => {
-      return <Button>Edit</Button>;
+      return (
+        <IconButton color="primary" aria-label="edit">
+          <EditIcon />
+        </IconButton>
+      );
     },
   },
 ];

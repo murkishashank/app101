@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { NavBar } from "../components/NavBar";
 import "../css/CommonStyling.css";
 import Button from "react-bootstrap/Button";
 import { LeaveForm } from "../components/LeaveForm";
@@ -7,11 +6,11 @@ import { DataTable } from "../components/DataTable";
 import { leavesColDefs } from "./leavesColDefs";
 import { getLeavesById } from "../api/getLeavesById";
 import { saveProcessedLeave } from "../api/saveProcessedLeave";
-import { convertDateToDbFormat, getDateFormat } from "../utils/getDateFormat";
+import { CircularProgress, Container } from "@mui/material";
 
 export const Home = (props) => {
   const userId = localStorage.getItem("userID");
-  const initialState = {
+  const dataObj = {
     userId: userId,
     reason: "",
     fromDate: "",
@@ -25,8 +24,8 @@ export const Home = (props) => {
   const [leaveData, setLeaveData] = useState([]);
   const [leaveDataLoading, setLeaveDataLoading] = useState(true);
   const [modalShow, setModalShow] = useState(false);
-  const [formData, setFormData] = useState(initialState);
-  const [errorObject, setErrorObject] = useState(initialState);
+  const [formData, setFormData] = useState(dataObj);
+  const [errorObject, setErrorObject] = useState(dataObj);
 
   useEffect(() => {
     setLeaveDataLoading(true);
@@ -42,6 +41,14 @@ export const Home = (props) => {
     const formDataClone = { ...formData };
     formDataClone[event.target.name] = event.target.value;
     setFormData(formDataClone);
+  };
+
+  const convertDateToDbFormat = (date) => {
+    return date.split("/").reverse().join("-");
+  };
+
+  const getDateFormat = (date) => {
+    return new Date(date).toLocaleDateString("fr-FR");
   };
 
   const validateField = (payload) => {
@@ -100,7 +107,7 @@ export const Home = (props) => {
             leaveDataClone.push(response);
             setLeaveData(leaveDataClone);
             setModalShow(false);
-            setFormData(initialState);
+            setFormData(dataObj);
           } else {
             alert("Error while applying the data.");
           }
@@ -117,20 +124,19 @@ export const Home = (props) => {
   };
 
   return (
-    <>
+    <Container fixed disableGutters component="main" sx={{ pt: 4, pb: 4 }}>
       {leaveDataLoading ? (
-        <h1>Loading...</h1>
+        <CircularProgress />
       ) : (
         <div>
-          <NavBar />
           <Button variant="secondary" onClick={() => setModalShow(true)}>
             Apply for leave
           </Button>
           <LeaveForm
             show={modalShow}
             onHide={() => {
-              setFormData(initialState);
-              setErrorObject(initialState);
+              setFormData(dataObj);
+              setErrorObject(dataObj);
               setModalShow(false);
             }}
             onChange={handleOnChange}
@@ -143,9 +149,9 @@ export const Home = (props) => {
             colData={leavesColDefs}
             onClickEdit={handleCellEditBtn}
             rowId={"id"}
-          ></DataTable>
+          />
         </div>
       )}
-    </>
+    </Container>
   );
 };
