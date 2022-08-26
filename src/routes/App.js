@@ -118,14 +118,14 @@ function App() {
           path="/payslip"
           element={
             <WithAppBar>
-              <Payslip></Payslip>
+              <Payslip />
             </WithAppBar>
           }
         />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/self-appraisal-form" element={<SelfAppraisalForm />} />
-        {/* Admin Routes */}
 
+        {/* Admin Routes */}
         <Route
           path="/admin/leave-management"
           element={
@@ -134,14 +134,7 @@ function App() {
             </WithAppBar>
           }
         />
-        <Route
-          path="/admin/task"
-          element={
-            <WithAppBar>
-              <Task></Task>
-            </WithAppBar>
-          }
-        />
+
         <Route
           path="/admin/previous-applications"
           element={
@@ -163,6 +156,30 @@ function App() {
           element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
         />
         <Route
+          path="/work-status"
+          element={
+            <WithAppBar>
+              <WorkStatus />
+            </WithAppBar>
+          }
+        />
+        <Route
+          path="/admin/task"
+          element={
+            <WithAppBar>
+              <Task />
+            </WithAppBar>
+          }
+        />
+        <Route
+          path="/holidays"
+          element={
+            <WithAppBar>
+              <Holidays userData={userData} />
+            </WithAppBar>
+          }
+        />
+        <Route
           path="/addHolidays"
           element={
             <WithAppBar>
@@ -170,6 +187,7 @@ function App() {
             </WithAppBar>
           }
         />
+
         {/* HR Routes */}
         <Route
           path="/emp-details"

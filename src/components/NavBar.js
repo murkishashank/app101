@@ -105,14 +105,6 @@ export const NavBar = () => {
                 <span>
                   <MenuItem
                     component={RouterLink}
-                    to="/holidays"
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, display: "block" }}
-                  >
-                    Holidays
-                  </MenuItem>
-                  <MenuItem
-                    component={RouterLink}
                     to="/work-status"
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, display: "block" }}
@@ -161,11 +153,43 @@ export const NavBar = () => {
               )}
               <MenuItem
                 component={RouterLink}
+                to="/holidays"
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, display: "block" }}
+              >
+                Holidays
+              </MenuItem>
+              <MenuItem
+                component={RouterLink}
                 to="/feedback"
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, display: "block" }}
               >
                 Feedback
+              </MenuItem>
+              <MenuItem
+                component={RouterLink}
+                to="/payslip"
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, display: "block" }}
+              >
+                Payslip
+              </MenuItem>
+              <MenuItem
+                component={RouterLink}
+                to="/schedule"
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, display: "block" }}
+              >
+                Schedule
+              </MenuItem>
+              <MenuItem
+                component={RouterLink}
+                to="/self-appraisal-form"
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, display: "block" }}
+              >
+                Self-Appraisal
               </MenuItem>
             </Menu>
           </Box>
@@ -188,22 +212,14 @@ export const NavBar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {designation === "null" ? (
               <>
-                <Button
+                {/* <Button
                   component={RouterLink}
                   to="/home"
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, display: "block" }}
                 >
                   Home
-                </Button>
-                <Button
-                  component={RouterLink}
-                  to="/empDetails"
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, display: "block" }}
-                >
-                  Holidays
-                </Button>
+                </Button> */}
                 <Button
                   component={RouterLink}
                   to="/work-status"
@@ -234,6 +250,14 @@ export const NavBar = () => {
               </>
             ) : (
               <>
+                {/* <Button
+                  component={RouterLink}
+                  to="/home"
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, display: "block" }}
+                >
+                  Home
+                </Button> */}
                 <Button
                   component={RouterLink}
                   to="/hr/leaves-data"
@@ -252,6 +276,22 @@ export const NavBar = () => {
                 </Button>
               </>
             )}
+            <Button
+              component={RouterLink}
+              to="/holidays"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, display: "block" }}
+            >
+              Holidays
+            </Button>
+            <Button
+              component={RouterLink}
+              to="/feedback"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, display: "block" }}
+            >
+              Feedback
+            </Button>
             <Button
               component={RouterLink}
               to="/payslip"
@@ -275,14 +315,6 @@ export const NavBar = () => {
               sx={{ my: 2, display: "block" }}
             >
               Self-Appraisal
-            </Button>
-            <Button
-              component={RouterLink}
-              to="/feedback"
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, display: "block" }}
-            >
-              Feedback
             </Button>
           </Box>
 
