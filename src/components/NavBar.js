@@ -190,7 +190,15 @@ export const NavBar = () => {
               <>
                 <Button
                   component={RouterLink}
-                  to="/holidays"
+                  to="/home"
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, display: "block" }}
+                >
+                  Home
+                </Button>
+                <Button
+                  component={RouterLink}
+                  to="/empDetails"
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, display: "block" }}
                 >
