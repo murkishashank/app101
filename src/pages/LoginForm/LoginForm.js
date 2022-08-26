@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 
 // import Form from "react-bootstrap/Form";
 // import Button from "react-bootstrap/Button";
 // import Image from "react-bootstrap/Image";
 
+import { useSelector, useDispatch } from "react-redux";
 import {
   Grid,
   Paper,
@@ -21,8 +21,9 @@ import {
 import logo from "../../assets/images/tecnics.png";
 import { getUser } from "../../api/getUserByUserName";
 import { validateLoginDetails } from "../../api/validateLoginDetails";
-import { useLoginFormSlice } from "./Slice/action";
-import { selectErrorsMessage, selectUserLoginDetails } from "./Slice/selector";
+import { useLoginFormSlice } from "./slice/action";
+import { selectErrorsMessage, selectUserLoginDetails } from "./slice/selector";
+import Image from "react-bootstrap/Image";
 
 export const LoginForm = (props) => {
   const navigate = useNavigate();
@@ -260,114 +261,5 @@ export const LoginForm = (props) => {
         </Box>
       </Grid>
     </Grid>
-    // <div>
-    //   <div
-    //     style={{
-    //       width: "46%",
-    //       height: "50%",
-    //       marginTop: 213,
-    //     }}
-    //   >
-    //     <Form.Group>
-    //       <center>
-    //         <Form.Label>
-    //           <Image src={"../Tecnics.png"} height="90px"></Image>
-    //           <h3> New Here?</h3>
-    //           <Form.Label>
-    //             <h5> Sign up and discover new opportunities</h5>
-    //           </Form.Label>
-    //           <Form.Group
-    //             style={{ marginTop: "10px", width: "60" }}
-    //             className="d-grid"
-    //           >
-    //             <Button
-    //               className="btn btn-secondary"
-    //               onClick={() => {
-    //                 navigate("/registrationform/new");
-    //               }}
-    //             >
-    //               Sign Up
-    //             </Button>
-    //           </Form.Group>
-    //         </Form.Label>
-    //       </center>
-    //     </Form.Group>
-    //   </div>
-    //   <div
-    //     style={{
-    //       width: "50%",
-    //       height: "50",
-    //       marginLeft: "auto",
-    //     }}
-    //   >
-    //     <div
-    //       style={{
-    //         height: "auto",
-    //         width: 450,
-    //         backgroundColor: "#F5F2F2",
-    //         borderRadius: "25px",
-    //         borderStyle: "groove",
-    //         marginLeft: "15px",
-    //         marginTop: "-300px",
-    //         padding: "20px",
-    //       }}
-    //     >
-    //       <center>
-    //         <Form.Label>
-    //           <Image src={"../Tecnics.png"} height="75"></Image>
-    //           <h3>Login Form</h3>
-    //         </Form.Label>
-    //       </center>
-    //       <Form.Group className="mb-3">
-    //         <Form.Label>
-    //           <h6>User Name: </h6>
-    //         </Form.Label>
-    //         <Form.Control
-    //           type="text"
-    //           className="form-control"
-    //           placeholder="User Name "
-    //           id="userName"
-    //           name="userName"
-    // onChange={(event) => {
-    //   // dispatch({ key: "userName", value: event.target.value });
-    //   handleOnChange("userName", event.target.value);
-    // }}
-    //         />
-    //       </Form.Group>
-    //       <p className="errorMessage">{errorMessage.userName}</p>
-    //       <Form.Group className="mb-3">
-    //         <Form.Label htmlFor="lastName">
-    //           <h6>Password:</h6>
-    //         </Form.Label>
-    //         <Form.Control
-    //           type="password"
-    //           className="form-control"
-    //           placeholder=" Password"
-    //           id="password"
-    //           name="password"
-    // onChange={(event) => {
-    //   // dispatch({ key: "password", value: event.target.value });
-    //   handleOnChange("password", event.target.value);
-    // }}
-    //         />
-    //       </Form.Group>
-    //       <p className="errorMessage">{errorMessage.password}</p>
-    //       <Form.Group>
-    //         <Form.Group style={{ marginTop: "10px" }} className="d-grid">
-    //           <Button
-    //             className="btn btn-secondary"
-    // onClick={() => {
-    //   handleLogin(userLoginDetails);
-    //   // fetchUserName(loginDetails.userName);
-    // }}
-    //           >
-    //             Login
-    //           </Button>
-    //         </Form.Group>
-    // <p className="errorMessage">{errorMessage.loginError}</p>
-    //       </Form.Group>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };

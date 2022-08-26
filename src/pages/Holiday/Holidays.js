@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../css/CommonStyling.css";
+// import { NavBar } from "../../components/NavBar";
+
 import "../../css/App.css";
 import Button from "@mui/material/Button";
 import { getAllHolidays } from "../../api/getAllHolidays";

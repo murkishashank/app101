@@ -6,7 +6,7 @@ export const leavesColDefs = [
     field: "userName",
     headerName: "User Name",
     valueGetter: (params) => {
-      return `${params.row.userName.userName}`;
+      return `${params.row.user.userName}`;
     },
   },
   { field: "fromDate", headerName: "From Date" },

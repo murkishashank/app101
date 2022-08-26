@@ -254,6 +254,22 @@ export const NavBar = () => {
             </Button>
             <Button
               component={RouterLink}
+              to="/schedule"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, display: "block" }}
+            >
+              Schedule
+            </Button>
+            <Button
+              component={RouterLink}
+              to="/self-appraisal-form"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, display: "block" }}
+            >
+              Self-Appraisal
+            </Button>
+            <Button
+              component={RouterLink}
               to="/feedback"
               onClick={handleCloseNavMenu}
               sx={{ my: 2, display: "block" }}

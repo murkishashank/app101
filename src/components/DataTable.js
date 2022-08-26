@@ -1,15 +1,19 @@
-import { Paper } from "@material-ui/core";
-import { Button, Toolbar, Typography } from "@mui/material";
+import { Button, Paper, Toolbar, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 export const DataTable = (props) => {
-  const handleCellEdit = (params) => {
+  let id = props.rowId;
+  const handleCellClick = (params) => {
     const value = params.colDef.field;
     if (value === "actions") {
       props.onClickEdit(params);
     } else {
       return;
     }
+  };
+
+  const handleCellEdit = (event) => {
+    props.onCellEdit(event);
   };
 
   const TableToolbar = () => {
@@ -35,7 +39,9 @@ export const DataTable = (props) => {
         columns={props.colData}
         pageSize={5}
         rowsPerPageOptions={[5]}
-        onCellClick={handleCellEdit}
+        onCellEditCommit={handleCellEdit}
+        onCellClick={handleCellClick}
+        getRowId={(row) => row[id]}
       />
     </Paper>
   );

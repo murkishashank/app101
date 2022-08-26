@@ -1,21 +1,24 @@
 import React, { useEffect } from "react";
 import Pdf from "react-to-pdf";
 import { payslipMockData } from "./mockdata";
-import { Button } from "@mui/material";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
+import {
+  Button,
+  Select,
+  MenuItem,
+  Typography,
+  TableContainer,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Box
+} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { monthsForDays } from "../../utils/months";
 import {
+  selectCurrentSelectedPayslip,
   selectedMonth,
   selectEmployeeDetails,
   selectEmployeeLeavesDetails,
@@ -34,7 +37,7 @@ export const style = {
   backgroundColor: "whitesmoke",
 };
 
-export const months = ["--Select month--", "May", "June", "July"];
+export const months = ["--Select month--", "June", "July", "August"];
 export const centerStyle = {
   display: "flex",
   justifyContent: "center",
@@ -46,6 +49,7 @@ export const Payslip = () => {
   const userId = localStorage.getItem("userID");
   const financialDetails = useSelector(selectFinancialDetails);
   const employeeDetails = useSelector(selectEmployeeDetails);
+  const selectedMonthPayslip = useSelector(selectCurrentSelectedPayslip);
   const leavesData = useSelector(selectEmployeeLeavesDetails);
   const {
     accountNumber,
@@ -61,7 +65,7 @@ export const Payslip = () => {
     otherAllowances,
     professionTax,
     providentFund,
-  } = financialDetails;
+  } = selectedMonthPayslip;
 
   const { id, firstName, lastName, joiningDate, emailId, designation } =
     employeeDetails;
@@ -91,7 +95,7 @@ export const Payslip = () => {
       dispatch(actions.loadEmployeeDetails(data));
     });
     getFinancialDetails(userId).then((data) => {
-      dispatch(actions.loadFinancialDetails(data[0]));
+      dispatch(actions.loadFinancialDetails(data));
     });
     getLeavesById(userId).then((data) => {
       dispatch(actions.loadEmployeeLeavesRecords(data));
@@ -104,23 +108,27 @@ export const Payslip = () => {
   //     .filter((row) => row.approvedFlag === "Approve")
   //     .filter((record) => {
   //       const { fromDate, toDate } = record;
-  //       const fromDateDay = fromDate.getDate();
-  //       const toDateDay = toDate.getDate();
+  //       const fromDateDay = fromDate.slice(8, 10);
+  //       const toDateDay = toDate.slice(8, 10);
+  //       const date = new Date();
+
+  //       console.log("name", date, date.getMonth() + 1);
   //       if (
-  //         fromDate.getMonth() === monthsForTotalDays[month].monthNumber ||
-  //         toDate.getMonth() === monthsForTotalDays[month].monthNumber
+  //         fromDate.slice(5, 7) === monthsForTotalDays[month].monthNumber ||
+  //         toDate.slice(5, 7) === monthsForTotalDays[month].monthNumber
   //       ) {
-  //         if (fromDate === toDate) {
-  //           noOfLeaves = noOfLeaves++;
-  //         } else if (toDateDay > fromDateDay) {
-  //           noOfLeaves = noOfLeaves + (toDateDay - fromDateDay);
-  //         } else {
-  //           if (toDateDay < fromDateDay) {
-  //             noOfLeaves = noOfLeaves + toDate;
-  //           } else {
-  //             noOfLeaves = noOfLeaves + (31 - toDateDay);
-  //           }
-  //         }
+  //         console.log("name", fromDateDay, toDateDay);
+  //         // if (fromDate === toDate) {
+  //         //   noOfLeaves = noOfLeaves++;
+  //         // } else if (toDateDay > fromDateDay) {
+  //         //   noOfLeaves = noOfLeaves + (toDateDay - fromDateDay);
+  //         // } else {
+  //         //   if (toDateDay < fromDateDay) {
+  //         //     noOfLeaves = noOfLeaves + toDate;
+  //         //   } else {
+  //         //     noOfLeaves = noOfLeaves + (31 - toDateDay);
+  //         //   }
+  //         // }
   //       }
   //     });
   //   // Assuming here 3 is the count of over all leaves.
@@ -131,6 +139,17 @@ export const Payslip = () => {
 
   const handleOnChange = (event) => {
     dispatch(actions.updateMonth(event.target.value));
+    const currentSelectedMonth = event.target.value + "-2022";
+
+    const payslip = financialDetails.filter(
+      (record) => record.salCreditedMonth === currentSelectedMonth
+    );
+    console.log("name", payslip);
+    if (Object.keys(payslip).length) {
+      dispatch(actions.updateSelectedMonthPayslip(payslip[0]));
+    } else {
+      dispatch(actions.updateSelectedMonthPayslip({}));
+    }
   };
   return (
     <div>
@@ -152,9 +171,9 @@ export const Payslip = () => {
               </Select>
             </FormControl>
           </div>
-          <div style={{ marginLeft: "257px", marginTop: "-39px" }}>
+          {/* <div style={{ marginLeft: "257px", marginTop: "-39px" }}>
             <Button variant="outlined">Go</Button>
-          </div>
+          </div> */}
           <div
             style={{
               width: "790px",

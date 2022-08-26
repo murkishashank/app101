@@ -9,7 +9,7 @@ import { Home } from "../pages/Home";
 import { Profile } from "../pages/Profile";
 import { Holidays } from "../pages/Holiday/Holidays";
 import { GenerateHolidays } from "../pages/Holiday/GenerateHolidays";
-import { Task } from "../components/Task";
+import { Task } from "../pages/task/Task";
 import { Admin } from "../pages/LeaveManagement/Admin";
 import { LoginUserDetailsProvider } from "../UserContext/LoginUserDetailContext";
 import { PreviousApplications } from "../pages/LeaveManagement/PreviousApplications";
@@ -17,9 +17,13 @@ import { WorkStatus } from "../pages/WorkStatus/WorkStatus";
 import { HumanResource } from "../pages/HumanResource/HumanResource";
 import { ManageEmpDetails } from "../pages/ManageEmpDetails/ManageEmpDetails";
 import { Feedback } from "../pages/feedback";
+import { Schedule } from "../pages/Schedule/Schedule";
 import { Payslip } from "../pages/payslip";
 import { NavBar } from "../components/NavBar";
 import { Box } from "@mui/material";
+import { SelfAppraisalForm } from "../pages/SelfAppraisalForm";
+import { ManageSalaries } from "../pages/payslip/ManageSalaries";
+import { Graph } from "../pages/graph";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -75,8 +79,7 @@ function App() {
           path="/registrationform/:userId"
           element={<RegistrationForm />}
         />
-      </Routes>
-      <Routes>
+
         {/* User Routes */}
         <Route
           index
@@ -119,7 +122,8 @@ function App() {
             </WithAppBar>
           }
         />
-
+        <Route path="/schedule" element={<Schedule />} />
+        <Route path="/self-appraisal-form" element={<SelfAppraisalForm />} />
         {/* Admin Routes */}
 
         <Route
@@ -127,6 +131,14 @@ function App() {
           element={
             <WithAppBar>
               <Admin processedPeople={handlePrevoiusAppl} />
+            </WithAppBar>
+          }
+        />
+        <Route
+          path="/admin/task"
+          element={
+            <WithAppBar>
+              <Task></Task>
             </WithAppBar>
           }
         />
@@ -148,35 +160,7 @@ function App() {
         />
         <Route
           path="/admin"
-          element={
-            <WithAppBar>
-              <Admin prevoiusAppl={handlePrevoiusAppl} />
-            </WithAppBar>
-          }
-        />
-        <Route
-          path="/work-status"
-          element={
-            <WithAppBar>
-              <WorkStatus />
-            </WithAppBar>
-          }
-        />
-        <Route
-          path="/admin/task"
-          element={
-            <WithAppBar>
-              <Task />
-            </WithAppBar>
-          }
-        />
-        <Route
-          path="/holidays"
-          element={
-            <WithAppBar>
-              <Holidays userData={userData} />
-            </WithAppBar>
-          }
+          element={<Admin prevoiusAppl={handlePrevoiusAppl} />}
         />
         <Route
           path="/addHolidays"
@@ -191,11 +175,11 @@ function App() {
           path="/emp-details"
           element={
             <WithAppBar>
-              {" "}
               <ManageEmpDetails setEditEmpDetails={handleEmpEditDetails} />
             </WithAppBar>
           }
         />
+        <Route path="/manage-salaries" element={<ManageSalaries />} />
         <Route
           path="/edit-emp-details"
           element={
@@ -204,6 +188,8 @@ function App() {
             </WithAppBar>
           }
         />
+        <Route path="/hr/leaves-data" element={<HumanResource />} />
+        <Route path="/graph" element={<Graph />} />
       </Routes>
     </LoginUserDetailsProvider>
   );

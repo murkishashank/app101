@@ -148,6 +148,7 @@ export const Home = (props) => {
             rowData={leaveData}
             colData={leavesColDefs}
             onClickEdit={handleCellEditBtn}
+            rowId={"id"}
           />
         </div>
       )}
