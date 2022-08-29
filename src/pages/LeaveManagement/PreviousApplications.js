@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { NavBar } from "../../components/NavBar.js";
 import { commonColumns } from "./CommonColumns.js";
 export const PreviousApplications = (props) => {
   const [processedPeople, setProcessedPeople] = useState([]);
@@ -20,22 +19,21 @@ export const PreviousApplications = (props) => {
 
   return (
     <>
-    {dataLoading ? (
+      {dataLoading ? (
         <h1>Loading...</h1>
       ) : (
         <>
-        <NavBar></NavBar>
-      <div style={{ width: "100%", height: "400px" }}>
-        <div style={{ height: "100%", display: "flex" }}>
-          <DataGrid
-            rows={processedPeople}
-            columns={finalColumns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-          />
-        </div>
-      </div>
-      </>
+          <div style={{ width: "100%", height: "400px" }}>
+            <div style={{ height: "100%", display: "flex" }}>
+              <DataGrid
+                rows={processedPeople}
+                columns={finalColumns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+              />
+            </div>
+          </div>
+        </>
       )}
     </>
   );

@@ -23,6 +23,7 @@ import { salColDefs } from "./columnDefs";
 import { NavBar } from "../../../components/NavBar";
 import { getSavePayload } from "../validateSave";
 import { saveFinancialRecords } from "../../../api/payslip/saveFinancialDetails";
+import { OuBoxTable } from "../../../components/OuBoxTable";
 // import { useManageSalariesSliceSaga } from "./slice/action";
 // import { selectRecentPayslipRecords } from "./slice/selector";
 
@@ -45,7 +46,10 @@ export const ManageSalaries = () => {
       type === "current" ? toDayDate.getMonth() : toDayDate.getMonth() - 1;
     return `${monthsInNumber[month]}-${toDayDate.getFullYear()}`;
   };
-
+  const buttonGroupStyle = {
+    height: "56px",
+    width: "240px",
+  };
   useEffect(() => {
     getLastMonthPayRecords(getSalCreditedMonth("last")).then((data) => {
       dispatch(actions.loadRecentPayslipRecords(data));
@@ -156,14 +160,14 @@ export const ManageSalaries = () => {
       <Grid item xs={2}>
         <Box
           sx={{
-            mx: 2,
-            display: "flex",
-            flexDirection: "row",
+            display: "grid",
+            gridTemplateColumns: "repeat(5, 1fr)",
             // alignItems: "center",
           }}
         >
-          <Box>
+          <OuBoxTable>
             <ButtonGroup
+              sx={buttonGroupStyle}
               // variant="contained"
               aria-label="outlined primary button group"
             >
@@ -197,7 +201,10 @@ export const ManageSalaries = () => {
                 +
               </Button>
             </ButtonGroup>
+          </OuBoxTable>
+          <OuBoxTable>
             <ButtonGroup
+              sx={buttonGroupStyle}
               // variant="contained"
               aria-label="outlined primary button group"
             >
@@ -231,7 +238,10 @@ export const ManageSalaries = () => {
                 +
               </Button>
             </ButtonGroup>
+          </OuBoxTable>
+          <OuBoxTable>
             <ButtonGroup
+              sx={buttonGroupStyle}
               // variant="contained"
               aria-label="outlined primary button group"
             >
@@ -264,7 +274,10 @@ export const ManageSalaries = () => {
                 +
               </Button>
             </ButtonGroup>
+          </OuBoxTable>
+          <OuBoxTable>
             <ButtonGroup
+              sx={buttonGroupStyle}
               // variant="contained"
               aria-label="outlined primary button group"
             >
@@ -297,8 +310,10 @@ export const ManageSalaries = () => {
                 +
               </Button>
             </ButtonGroup>
-
+          </OuBoxTable>
+          <OuBoxTable>
             <ButtonGroup
+              sx={buttonGroupStyle}
               // variant="contained"
               aria-label="outlined primary button group"
             >
@@ -331,7 +346,10 @@ export const ManageSalaries = () => {
                 +
               </Button>
             </ButtonGroup>
+          </OuBoxTable>
+          <OuBoxTable>
             <ButtonGroup
+              sx={buttonGroupStyle}
               // variant="contained"
               aria-label="outlined primary button group"
             >
@@ -364,7 +382,10 @@ export const ManageSalaries = () => {
                 +
               </Button>
             </ButtonGroup>
+          </OuBoxTable>
+          <OuBoxTable>
             <ButtonGroup
+              sx={buttonGroupStyle}
               // variant="contained"
               aria-label="outlined primary button group"
             >
@@ -397,7 +418,10 @@ export const ManageSalaries = () => {
                 +
               </Button>
             </ButtonGroup>
+          </OuBoxTable>
+          <OuBoxTable>
             <ButtonGroup
+              sx={buttonGroupStyle}
               // variant="contained"
               aria-label="outlined primary button group"
             >
@@ -430,7 +454,10 @@ export const ManageSalaries = () => {
                 +
               </Button>
             </ButtonGroup>
+          </OuBoxTable>
+          <OuBoxTable>
             <ButtonGroup
+              sx={buttonGroupStyle}
               // variant="contained"
               aria-label="outlined primary button group"
             >
@@ -463,7 +490,7 @@ export const ManageSalaries = () => {
                 +
               </Button>
             </ButtonGroup>
-          </Box>
+          </OuBoxTable>
         </Box>
       </Grid>
     );

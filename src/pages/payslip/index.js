@@ -1,20 +1,21 @@
 import React, { useEffect } from "react";
-import { NavBar } from "../../components/NavBar";
 import Pdf from "react-to-pdf";
 import { payslipMockData } from "./mockdata";
-import { Button } from "@mui/material";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
+import {
+  Button,
+  Select,
+  MenuItem,
+  Typography,
+  TableContainer,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Box
+} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { monthsForDays } from "../../utils/months";
 import {
   selectCurrentSelectedPayslip,
@@ -152,7 +153,6 @@ export const Payslip = () => {
   };
   return (
     <div>
-      <NavBar />
       <center>
         <div style={style}>
           <div>

@@ -7,3 +7,8 @@ export const selectUserLoginDetails = createSelector(
   [selectSlice],
   (state) => state.userLoginDetails
 );
+
+export const selectErrorsMessage = createSelector(
+  [selectSlice],
+  (state) => state.errors
+);

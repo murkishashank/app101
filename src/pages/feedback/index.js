@@ -4,7 +4,6 @@ import { Button, Card, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getFeedbackRecords } from "../../api/getAllFeedbackRecords";
 import { saveFeedbackComment } from "../../api/postFeedbackComment";
-import { NavBar } from "../../components/NavBar";
 import { useFeedbackSlice } from "./slice/actions";
 import { selectEmpFeedback, selectFeedbackRecords } from "./slice/selector";
 
@@ -88,7 +87,6 @@ export const Feedback = () => {
 
   return (
     <div>
-      <NavBar />
       <div
         style={{
           padding: "30px",

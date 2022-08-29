@@ -9,7 +9,6 @@ import { FormLabel } from "@mui/material";
 import { useWorkStatusSlice } from "./slice/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { selectSavingStatus, selectUserRecords } from "./slice/selectors";
-import { NavBar } from "../../components/NavBar";
 
 export const WorkStatus = () => {
   const rowData = useSelector(selectUserRecords);
@@ -46,7 +45,6 @@ export const WorkStatus = () => {
 
   return (
     <div>
-      <NavBar />
       <div style={{ height: 500, width: "inherit" }}>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button variant="secondary" onClick={handleSave}>

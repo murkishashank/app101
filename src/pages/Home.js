@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { NavBar } from "../components/NavBar";
 import "../css/CommonStyling.css";
 import Button from "react-bootstrap/Button";
 import { LeaveForm } from "../components/LeaveForm";
@@ -7,6 +6,7 @@ import { DataTable } from "../components/DataTable";
 import { leavesColDefs } from "./leavesColDefs";
 import { getLeavesById } from "../api/getLeavesById";
 import { saveProcessedLeave } from "../api/saveProcessedLeave";
+import { CircularProgress, Container } from "@mui/material";
 
 export const Home = (props) => {
   const userId = localStorage.getItem("userID");
@@ -124,12 +124,11 @@ export const Home = (props) => {
   };
 
   return (
-    <>
+    <Container fixed disableGutters component="main" sx={{ pt: 4, pb: 4 }}>
       {leaveDataLoading ? (
-        <h1>Loading...</h1>
+        <CircularProgress />
       ) : (
         <div>
-          <NavBar />
           <Button variant="secondary" onClick={() => setModalShow(true)}>
             Apply for leave
           </Button>
@@ -149,9 +148,10 @@ export const Home = (props) => {
             rowData={leaveData}
             colData={leavesColDefs}
             onClickEdit={handleCellEditBtn}
-          ></DataTable>
+            rowId={"id"}
+          />
         </div>
       )}
-    </>
+    </Container>
   );
 };
