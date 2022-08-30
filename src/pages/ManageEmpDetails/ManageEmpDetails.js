@@ -114,14 +114,15 @@ export const ManageEmpDetails = (props) => {
     }
   };
 
-  const handleNavigation = () => {
-    navigate("/manage-salaries");
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
   return (
     <div>
       <NavBar />
-      <Button onClick={handleNavigation}>Manage Salaries</Button>
+      <Button onClick={() => {handleNavigation("/manage-salaries")}}>Manage Salaries</Button>
+      <Button onClick={() => {handleNavigation("/manage-new-employees")}}>Manage New Employees</Button>
       <div style={{ height: 500, width: "inherit", marginTop: "10px" }}>
         <DataGrid
           rows={employeeRecords}
