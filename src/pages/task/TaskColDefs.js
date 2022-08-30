@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { Button } from "@mui/material";
 
 export const taskStatusOptions = [
   "Assigned",
@@ -59,12 +60,14 @@ export const taskColDefs = [
     headerClassName: "super-app-theme--header",
     editable: true,
   },
-
   {
     field: "assignedBy",
     headerName: "Assigned By",
     headerClassName: "super-app-theme--header",
     required: true,
+    valueGetter: (params) => {
+      return `${params.row.assignedByUser.userName}`;
+    },
   },
   {
     field: "taskCompletedDate",
@@ -75,5 +78,14 @@ export const taskColDefs = [
     field: "remarks",
     headerName: "Remarks",
     headerClassName: "super-app-theme--header",
+    editable: true,
+  },
+  {
+    field: "actions",
+    headerName: "Actions",
+    headerClassName: "super-app-theme--header",
+    renderCell: (params) => {
+      return <Button variant="secondary">Edit</Button>;
+    },
   },
 ];

@@ -3,22 +3,40 @@ import { TextField, Container, Typography, Button } from "@mui/material";
 import Pdf from "react-to-pdf";
 import { NavBar } from "../components/NavBar";
 import { getUser } from "../api/getUserByUserName";
+import { postSelfAppraisal } from "../api/postSelfAppraisal";
 
 export const SelfAppraisalForm = () => {
   const [userData, setUserData] = useState({});
   const userName = localStorage.getItem("userName");
+  const userId = localStorage.getItem("userID");
+  const [initialState, setData] = useState({ userId: userId });
   const ref = React.createRef();
+
   useEffect(() => {
     const user = getUser(userName);
     user.then((data) => {
       setUserData(data);
     });
-  });
+  }, []);
+
   const { mobileNumber, emailId, reportingManager, joiningDate, designation } =
     userData;
 
-  const handleOnChange = (value) => {
-    console.log(value);
+  const handleOnChange = (e) => {
+    let result =
+      typeof e.target.value === "string" ? e.target.value.split("\n") : "";
+    const user = { ...initialState, [e.target.name]: result };
+    setData(user);
+  };
+
+  const handleOnSubmit = () => {
+    const saveData = postSelfAppraisal(initialState);
+    saveData.then((response) => {
+      if (response) {
+        console.log(response);
+        alert("saved successful");
+      }
+    });
   };
 
   return (
@@ -101,6 +119,16 @@ export const SelfAppraisalForm = () => {
           <TextField
             margin="normal"
             id="outlined-number"
+            label="Email"
+            defaultValue="xyz@tecnics.com"
+            value={emailId}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            margin="normal"
+            id="outlined-number"
             label="Mobile Number"
             defaultValue="7765432467"
             value={mobileNumber}
@@ -136,9 +164,10 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
+            name="accomplishment"
             rows={5}
             fullWidth
-            onChange={(event) => handleOnChange(event.target.value)}
+            onChange={handleOnChange}
           />
           <Typography variant="subtitle2" gutterBottom component="h3">
             2. Projects Worked on, Client Presentations, Sales Proposals
@@ -150,9 +179,10 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
+            name="project"
             rows={5}
             fullWidth
-            onChange={(event) => handleOnChange(event.target.value)}
+            onChange={handleOnChange}
           />
           <Typography variant="subtitle2" gutterBottom component="h3">
             3. Trainings/Workshops conducted/attended, Awards/certificates
@@ -164,9 +194,10 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
+            name="goal"
             rows={5}
             fullWidth
-            onChange={(event) => handleOnChange(event.target.value)}
+            onChange={handleOnChange}
           />
           <Typography variant="subtitle2" gutterBottom component="h3">
             4. Issues faced & Suggestions for improvement (Max 5 items only)
@@ -178,8 +209,9 @@ export const SelfAppraisalForm = () => {
             variant="filled"
             multiline
             rows={5}
+            name="workshop"
             fullWidth
-            onChange={(event) => handleOnChange(event.target.value)}
+            onChange={handleOnChange}
           />
           <Typography variant="subtitle2" gutterBottom component="h3">
             5. What goals (specific measurable results) do you expect to
@@ -191,14 +223,16 @@ export const SelfAppraisalForm = () => {
             placeholder="Placeholder"
             variant="filled"
             multiline
+            name="issue"
             rows={5}
             fullWidth
-            onChange={(event) => handleOnChange(event.target.value)}
+            onChange={handleOnChange}
           />
         </div>
         <Button
           variant="contained"
           style={{ marginBottom: "10px", marginTop: "10px" }}
+          onClick={handleOnSubmit}
         >
           Submit
         </Button>

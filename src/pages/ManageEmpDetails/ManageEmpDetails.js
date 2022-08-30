@@ -120,7 +120,6 @@ export const ManageEmpDetails = (props) => {
 
   return (
     <div>
-      <NavBar />
       <Button onClick={() => {handleNavigation("/manage-salaries")}}>Manage Salaries</Button>
       <Button onClick={() => {handleNavigation("/manage-new-employees")}}>Manage New Employees</Button>
       <div style={{ height: 500, width: "inherit", marginTop: "10px" }}>
@@ -128,7 +127,7 @@ export const ManageEmpDetails = (props) => {
           rows={employeeRecords}
           columns={empColDefsWithActionCol}
           onCellEditCommit={handleCellValueChange}
-        ></DataGrid>
+        />
       </div>
     </div>
   );

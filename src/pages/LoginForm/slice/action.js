@@ -4,6 +4,11 @@ import { encrypt } from "../../../utils/Encryption";
 
 export const initialState = {
   userLoginDetails: { userName: "", password: "" },
+  errors: {
+    userName: { error: Boolean, errorMessage: "" },
+    password: { error: Boolean, errorMessage: "" },
+    invalidUser: { error: Boolean, errorMessage: "" },
+  },
 };
 
 export const loginFormSlice = createSlice({
@@ -12,7 +17,7 @@ export const loginFormSlice = createSlice({
   reducers: {
     updateUserLoginDetails(state, action) {
       const { key, value } = action.payload;
-      if(key === "password") {
+      if (key === "password") {
         state.userLoginDetails[key] = encrypt(value);
       } else {
         state.userLoginDetails[key] = value;
@@ -20,7 +25,11 @@ export const loginFormSlice = createSlice({
     },
     setToInitialState(state) {
       state.userLoginDetails = initialState.userLoginDetails;
-    }
+    },
+    updateErrors(state, action) {
+      const { key, errorObject } = action.payload;
+      state.errors[key] = errorObject;
+    },
   },
 });
 
