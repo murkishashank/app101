@@ -5,6 +5,7 @@ import { empColDefs } from "./coldefs";
 import { useManageEmpSlice } from "./slice/action";
 import { useSelector, useDispatch } from "react-redux";
 import { selectEmpRecords } from "./slice/selector";
+import { NavBar } from "../../components/NavBar";
 import { useNavigate } from "react-router-dom";
 // import Button from "react-bootstrap/Button";
 import { getPayload } from "./validateSave";
@@ -113,13 +114,14 @@ export const ManageEmpDetails = (props) => {
     }
   };
 
-  const handleNavigation = () => {
-    navigate("/manage-salaries");
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
   return (
     <div>
-      <Button onClick={handleNavigation}>Manage Salaries</Button>
+      <Button onClick={() => {handleNavigation("/manage-salaries")}}>Manage Salaries</Button>
+      <Button onClick={() => {handleNavigation("/manage-new-employees")}}>Manage New Employees</Button>
       <div style={{ height: 500, width: "inherit", marginTop: "10px" }}>
         <DataGrid
           rows={employeeRecords}

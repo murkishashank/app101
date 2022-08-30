@@ -24,6 +24,7 @@ import { Box } from "@mui/material";
 import { SelfAppraisalForm } from "../pages/SelfAppraisalForm";
 import { ManageSalaries } from "../pages/payslip/ManageSalaries";
 import { Graph } from "../pages/graph";
+import { NewEmployees } from "../pages/NewEmployees/ManageNewEmployees";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -208,6 +209,7 @@ function App() {
         />
         <Route path="/hr/leaves-data" element={<HumanResource />} />
         <Route path="/graph" element={<Graph />} />
+        <Route path="/manage-new-employees" element={<NewEmployees />} />
       </Routes>
     </LoginUserDetailsProvider>
   );

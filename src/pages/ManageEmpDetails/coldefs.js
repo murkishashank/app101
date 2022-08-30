@@ -1,5 +1,5 @@
 export const employeeRoles = [
-  "Human Resource",
+  "HumanResource",
   "Manager",
   "Associate",
   "Intern",
