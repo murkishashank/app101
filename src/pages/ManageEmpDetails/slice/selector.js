@@ -7,3 +7,8 @@ export const selectEmpRecords = createSelector(
   [selectSlice],
   (state) => state.empDetailsRecords
 );
+
+export const selectNewEmployeeCount = createSelector(
+  [selectSlice],
+  (state) => state.newEmployeeCount
+);

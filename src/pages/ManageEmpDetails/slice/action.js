@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   empDetailsRecords: [],
   loadingStatus: false,
+  newEmployeeCount: 0,
 };
 
 const findIndex = (id, records) => {
@@ -18,6 +19,10 @@ export const manageEmpSlice = createSlice({
   reducers: {
     loadAllEmployeeRecords(state, action) {
       state.empDetailsRecords = action.payload;
+    },
+
+    updateNewEmployeeCount(state, action) {
+      state.newEmployeeCount = action.payload;
     },
 
     updateEmployeeDetails(state, action) {
