@@ -8,7 +8,11 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useManageNewEmpSlice } from "./slice/action";
 import { useSelector, useDispatch } from "react-redux";
-import { selectFinancialDetails, selectManagers, selectNewEmpRecords } from "./slice/selector";
+import {
+  selectFinancialDetails,
+  selectManagers,
+  selectNewEmpRecords,
+} from "./slice/selector";
 import { postUser } from "../../api/postUser";
 import { SalariesByDesignation } from "./SalariesByDesignation";
 import { useEffectOnce } from "../../CustomHooks/useEffectOnce";
@@ -16,8 +20,6 @@ import { getFinancialDetails } from "../../api/payslip/getFinanciaDetails";
 import { getAllFinancialDetails } from "../../api/payslip/getAllFinancialDetails";
 import { saveFinancialDetail } from "../../api/payslip/saveFinancialDetail";
 import { saveFinancialRecords } from "../../api/payslip/saveFinancialDetails";
-
-
 
 export const NewEmployees = () => {
   const newEmpSelector = useSelector(selectNewEmpRecords);
@@ -39,7 +41,7 @@ export const NewEmployees = () => {
       headerName: "User Name",
     },
     {
-      field: "email",
+      field: "emailId",
       editable: true,
       headerName: "Email",
       width: "180",
@@ -77,25 +79,25 @@ export const NewEmployees = () => {
       field: "basic",
       headerName: "Basic Pay",
       editable: true,
-      valueGetter: (params) => salaryCalc(params)
+      valueGetter: (params) => salaryCalc(params),
     },
     {
       field: "conveyance",
       headerName: "Conveyance",
       editable: true,
-      valueGetter: (params) => salaryCalc(params)
+      valueGetter: (params) => salaryCalc(params),
     },
     {
       field: "houseRentAllowance",
       headerName: "House Rent Allowance",
       editable: true,
-      valueGetter: (params) => salaryCalc(params)
+      valueGetter: (params) => salaryCalc(params),
     },
     {
       field: "medicalAllowance",
       headerName: "Medical Allowance",
       editable: true,
-      valueGetter: (params) => salaryCalc(params)
+      valueGetter: (params) => salaryCalc(params),
     },
     {
       field: "otherAllowances",
@@ -107,14 +109,14 @@ export const NewEmployees = () => {
       field: "profPursuitsAllow",
       headerName: "Prof Pursuits Allowance",
       editable: true,
-      valueGetter: (params) => salaryCalc(params)
-    }, 
+      valueGetter: (params) => salaryCalc(params),
+    },
     {
       field: "providentFund",
       headerName: "Provident Fund",
       editable: true,
-      valueGetter: (params) => salaryCalc(params)
-    },  
+      valueGetter: (params) => salaryCalc(params),
+    },
     {
       field: "",
       headerName: "Actions",
@@ -123,15 +125,21 @@ export const NewEmployees = () => {
   ];
 
   const salaryCalc = (params) => {
-    if(params.row.designation !== null){
+    if (params.row.designation !== null) {
       const designation = params.row.designation;
       const field = params.field;
-      dispatch(actions.updateFinancialDetails({id: params.id, field: field, value: SalariesByDesignation[designation][field]}));
+      dispatch(
+        actions.updateFinancialDetails({
+          id: params.id,
+          field: field,
+          value: SalariesByDesignation[designation][field],
+        })
+      );
       return SalariesByDesignation[designation][field];
     }
-  }
+  };
 
-  const getUsers = () =>{
+  const getUsers = () => {
     const newEmployees = [];
     const managersList = [];
     getAllUsers().then((data) => {
@@ -151,26 +159,13 @@ export const NewEmployees = () => {
       );
     });
     setDataLoading(false);
-  }
-
-  const financialDetails = () => {
-    const financialDetails = [];
-    getAllFinancialDetails().then((data) => {
-      data.forEach((financialDetail) => {
-        financialDetails.push(financialDetail);
-      });
-      dispatch(actions.loadAllFinancialDetails({financialDetails: financialDetails}));
-    })
   };
-
 
   useEffectOnce(() => {
     getUsers();
-    financialDetails();
   });
 
   const SaveAction = (params) => {
-
     const handleOnSaveClick = () => {
       handleSave(params.row);
     };
@@ -200,24 +195,33 @@ export const NewEmployees = () => {
   };
 
   const handleSave = (row) => {
-   const values = Object.values(row);
-   if(values === "" || values === null){
-    alert("Enter all required values.")
-   }
-   else{
-    saveFinancialRecords(allFinancialDetails).then((result) => {
-      if(allFinancialDetails.userId === result.userId){
-        alert("financial data saved successfully.");
-      }
-    })
-    postUser(row).then((result) => {
-      console.log(allFinancialDetails);
-      if(result.userName === row.userName){
-        alert("Data saved successfully.");
-        getUsers();
-      }
-    });
-   }
+    console.log("name", row);
+    let financialDetailStatus;
+    const financialRecord = allFinancialDetails.filter(
+      (record) => record.userId === row.id
+    );
+    const values = Object.values(row);
+    if (values === "" || values === null) {
+      alert("Enter all required values.");
+    } else {
+      saveFinancialRecords(financialRecord).then((result) => {
+        if (financialRecord.userId === result.userId) {
+          financialDetailStatus = true;
+        } else {
+          financialDetailStatus = false;
+        }
+      });
+      postUser(row).then((result) => {
+        if (result.userName === row.userName) {
+          financialDetailStatus
+            ? alert("Details saved successfully")
+            : alert("Error while saving the financial details");
+          getUsers();
+        } else {
+          alert("Error while saving the details");
+        }
+      });
+    }
   };
 
   const handleCellValueChange = (event) => {

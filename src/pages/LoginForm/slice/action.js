@@ -5,9 +5,9 @@ import { encrypt } from "../../../utils/Encryption";
 export const initialState = {
   userLoginDetails: { userName: "", password: "" },
   errors: {
-    userName: { error: Boolean, errorMessage: "" },
-    password: { error: Boolean, errorMessage: "" },
-    invalidUser: { error: Boolean, errorMessage: "" },
+    userName: { error: false, errorMessage: "" },
+    password: { error: false, errorMessage: "" },
+    invalidUser: { error: false, errorMessage: "" },
   },
 };
 

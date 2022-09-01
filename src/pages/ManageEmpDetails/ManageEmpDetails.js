@@ -4,7 +4,7 @@ import { getAllUsers } from "../../api/getAllUsers";
 import { empColDefs } from "./coldefs";
 import { useManageEmpSlice } from "./slice/action";
 import { useSelector, useDispatch } from "react-redux";
-import { selectEmpRecords } from "./slice/selector";
+import { selectEmpRecords, selectNewEmployeeCount } from "./slice/selector";
 import { NavBar } from "../../components/NavBar";
 import { useNavigate } from "react-router-dom";
 // import Button from "react-bootstrap/Button";
@@ -12,16 +12,23 @@ import { getPayload } from "./validateSave";
 import { Form } from "react-bootstrap";
 import { postUser } from "../../api/postUser";
 import { Button } from "@mui/material";
+import Badge from "@mui/material/Badge";
+import { getNewEmployeeCount } from "../../api/getNewEmployeeCount";
 
 export const ManageEmpDetails = (props) => {
   const { actions } = useManageEmpSlice();
   const dispatch = useDispatch();
   const employeeRecords = useSelector(selectEmpRecords);
   const navigate = useNavigate();
+  const newEmployeeCount = useSelector(selectNewEmployeeCount);
 
   useEffect(() => {
     getAllUsers().then((data) => {
       dispatch(actions.loadAllEmployeeRecords(data));
+    });
+
+    getNewEmployeeCount().then((data) => {
+      dispatch(actions.updateNewEmployeeCount(data));
     });
   }, []);
 
@@ -119,9 +126,25 @@ export const ManageEmpDetails = (props) => {
   };
 
   return (
-    <div>
-      <Button onClick={() => {handleNavigation("/manage-salaries")}}>Manage Salaries</Button>
-      <Button onClick={() => {handleNavigation("/manage-new-employees")}}>Manage New Employees</Button>
+    <div style={{ padding: "16px" }}>
+      <Button
+        onClick={() => {
+          handleNavigation("/manage-salaries");
+        }}
+      >
+        Manage Salaries
+      </Button>
+
+      <Button
+        onClick={() => {
+          handleNavigation("/manage-new-employees");
+        }}
+      >
+        <Badge badgeContent={newEmployeeCount} color="secondary">
+          Manage New Employees
+        </Badge>
+      </Button>
+
       <div style={{ height: 500, width: "inherit", marginTop: "10px" }}>
         <DataGrid
           rows={employeeRecords}

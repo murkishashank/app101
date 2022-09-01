@@ -101,7 +101,7 @@ export const NavBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {designation === "null" ? (
+              {designation === "Intern" || designation === "Associate" ? (
                 <span>
                   <MenuItem
                     component={RouterLink}
