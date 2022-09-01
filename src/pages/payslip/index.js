@@ -12,7 +12,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Box
+  Box,
 } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";

@@ -186,7 +186,8 @@ export const ManageSalaries = () => {
               </Button>
               <TextField
                 label="Basic"
-                value={salaryUpdateState[props.groupName].basic}
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                defaultValue={salaryUpdateState[props.groupName].basic}
               ></TextField>
 
               <Button
@@ -224,7 +225,9 @@ export const ManageSalaries = () => {
               </Button>{" "}
               <TextField
                 label="House Rent Allowance"
-                value={salaryUpdateState[props.groupName].houseRentAllowance}
+                defaultValue={
+                  salaryUpdateState[props.groupName].houseRentAllowance
+                }
               ></TextField>
               <Button
                 onClick={() => {
@@ -260,7 +263,7 @@ export const ManageSalaries = () => {
               </Button>
               <TextField
                 label="Conveyance"
-                value={salaryUpdateState[props.groupName].conveyance}
+                defaultValue={salaryUpdateState[props.groupName].conveyance}
               ></TextField>
               <Button
                 onClick={() => {
@@ -296,7 +299,9 @@ export const ManageSalaries = () => {
               </Button>
               <TextField
                 label="Medical Allowance"
-                value={salaryUpdateState[props.groupName].medicalAllowance}
+                defaultValue={
+                  salaryUpdateState[props.groupName].medicalAllowance
+                }
               ></TextField>
               <Button
                 onClick={() => {
@@ -332,7 +337,9 @@ export const ManageSalaries = () => {
               </Button>
               <TextField
                 label="Prof. Pursuits Allowances"
-                value={salaryUpdateState[props.groupName].profPursuitsAllow}
+                defaultValue={
+                  salaryUpdateState[props.groupName].profPursuitsAllow
+                }
               ></TextField>
               <Button
                 onClick={() => {
@@ -368,7 +375,7 @@ export const ManageSalaries = () => {
               </Button>
               <TextField
                 label="Arears"
-                value={salaryUpdateState[props.groupName].arears}
+                defaultValue={salaryUpdateState[props.groupName].arears}
               ></TextField>
               <Button
                 onClick={() => {
@@ -404,7 +411,9 @@ export const ManageSalaries = () => {
               </Button>
               <TextField
                 label="Other Allowances"
-                value={salaryUpdateState[props.groupName].otherAllowances}
+                defaultValue={
+                  salaryUpdateState[props.groupName].otherAllowances
+                }
               ></TextField>
               <Button
                 onClick={() => {
@@ -440,7 +449,7 @@ export const ManageSalaries = () => {
               </Button>
               <TextField
                 label="Profession Tax"
-                value={salaryUpdateState[props.groupName].professionTax}
+                defaultValue={salaryUpdateState[props.groupName].professionTax}
               ></TextField>
               <Button
                 onClick={() => {
@@ -476,7 +485,7 @@ export const ManageSalaries = () => {
               </Button>
               <TextField
                 label="Provident Fund"
-                value={salaryUpdateState[props.groupName].providentFund}
+                defaultValue={salaryUpdateState[props.groupName].providentFund}
               ></TextField>
               <Button
                 onClick={() => {
