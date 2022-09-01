@@ -77,7 +77,8 @@ export const ManageSalaries = () => {
       (record) => record.designation === "Human Resource"
     );
     const internRecords = payRecordsWihDesignation.filter(
-      (record) => record.designation === null
+      (record) =>
+        record.designation === "Intern" || record.designation === "Associate"
     );
     dispatch(
       actions.updatePayRecords({

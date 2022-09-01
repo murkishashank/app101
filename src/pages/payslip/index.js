@@ -144,7 +144,6 @@ export const Payslip = () => {
     const payslip = financialDetails.filter(
       (record) => record.salCreditedMonth === currentSelectedMonth
     );
-    console.log("name", payslip);
     if (Object.keys(payslip).length) {
       dispatch(actions.updateSelectedMonthPayslip(payslip[0]));
     } else {
