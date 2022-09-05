@@ -158,7 +158,6 @@ export const Task = () => {
         <h1>Loading</h1>
       ) : (
         <div>
-          <NavBar></NavBar>
           <div style={{ height: 500, width: "inherit" }}>
             <div>
               <Button variant="secondary" onClick={newRecord}>

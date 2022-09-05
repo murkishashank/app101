@@ -4,8 +4,8 @@ import { useEffectOnce } from "../../CustomHooks/useEffectOnce";
 import { getAllLeaves } from "../../api/getAllLeaves";
 import { DataGrid } from "@mui/x-data-grid";
 import { commonColumns } from "./CommonColumns.js";
-import Button from "react-bootstrap/Button";
 import { saveProcessedLeave } from "../../api/saveProcessedLeave";
+import { Container, Box, Button } from "@mui/material";
 export const Admin = (props) => {
   const navigate = useNavigate();
   const [appliedPeople, setAppliedPeople] = useState([]);
@@ -97,29 +97,31 @@ export const Admin = (props) => {
       {dataLoading ? (
         <h1>Loading...</h1>
       ) : (
-        <div style={{ width: "100%", height: "400px" }}>
-          <Button
-            variant="secondary"
-            onClick={handlePreviousBttn}
-            style={{
-              borderRadius: "10px",
-              marginLeft: "1200px",
-              marginTop: "10px",
-            }}
-          >
-            Previous applications
-          </Button>
-          <div style={{ height: "100%", display: "flex", marginTop: "10px" }}>
-            <DataGrid
-              autoHeight={true}
-              rows={appliedPeople}
-              columns={finalColumns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              onCellEditCommit={handleCellEdit}
-            />
+        <Container>
+          <div style={{ width: "100%", height: "400px", padding: "15px" }}>
+            <Box component="span"
+            m={1}
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="flex-end">
+              <Button
+                onClick={handlePreviousBttn}
+              >
+                Previous applications
+              </Button>
+            </Box>
+            <div style={{ display: "flex", marginTop: "10px" }}>
+              <DataGrid
+                autoHeight={true}
+                rows={appliedPeople}
+                columns={finalColumns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                onCellEditCommit={handleCellEdit}
+              />
+            </div>
           </div>
-        </div>
+        </Container>
       )}
     </>
   );

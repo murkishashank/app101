@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../css/CommonStyling.css";
-import Button from "react-bootstrap/Button";
 import { LeaveForm } from "../components/LeaveForm";
 import { DataTable } from "../components/DataTable";
 import { leavesColDefs } from "./leavesColDefs";
 import { getLeavesById } from "../api/getLeavesById";
 import { saveProcessedLeave } from "../api/saveProcessedLeave";
-import { CircularProgress, Container } from "@mui/material";
+import { CircularProgress, Container, Button, Box } from "@mui/material";
 
 export const Home = (props) => {
   const userId = localStorage.getItem("userID");
@@ -129,9 +128,15 @@ export const Home = (props) => {
         <CircularProgress />
       ) : (
         <div>
-          <Button variant="secondary" onClick={() => setModalShow(true)}>
-            Apply for leave
-          </Button>
+          <Box
+            component="span"
+            m={1}
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="flex-end"
+          >
+            <Button onClick={() => setModalShow(true)}>Apply for leave</Button>
+          </Box>
           <LeaveForm
             show={modalShow}
             onHide={() => {

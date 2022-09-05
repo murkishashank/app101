@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
-  employeeCommentRecord: { userId: "", comment: "", commentedDate: Date },
+  employeeCommentRecord: { userId: "", comment: "", commentedDate: "" },
   feedbackRecords: [],
 };
 

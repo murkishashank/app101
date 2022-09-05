@@ -200,7 +200,7 @@ export const LoginForm = (props) => {
                 required
                 fullWidth
                 id="username"
-                label="Username"
+                label="User Name"
                 name="username"
                 autoComplete="username"
                 autoFocus
