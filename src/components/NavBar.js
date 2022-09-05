@@ -101,7 +101,9 @@ export const NavBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {designation === "Intern" || designation === "Associate" ? (
+              {designation === "Intern" ||
+              designation === "Associate" ||
+              designation === "null" ? (
                 <span>
                   <MenuItem
                     component={RouterLink}
@@ -210,16 +212,8 @@ export const NavBar = () => {
             <img alt="tecnics-logo" height={50} src={logo} />
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {designation === "null" ? (
+            {designation === "Intern" || designation === "null" ? (
               <>
-                {/* <Button
-                  component={RouterLink}
-                  to="/home"
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, display: "block" }}
-                >
-                  Home
-                </Button> */}
                 <Button
                   component={RouterLink}
                   to="/work-status"
@@ -250,14 +244,6 @@ export const NavBar = () => {
               </>
             ) : (
               <>
-                {/* <Button
-                  component={RouterLink}
-                  to="/home"
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, display: "block" }}
-                >
-                  Home
-                </Button> */}
                 <Button
                   component={RouterLink}
                   to="/hr/leaves-data"

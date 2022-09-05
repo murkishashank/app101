@@ -36,11 +36,12 @@ export const ScheduleFor = (props) => {
           variant="filled"
         />
         <TextField
-          required      
+          required
           type="date"
           name="start"
           defaultValue=""
           label="start date"
+          InputLabelProps={{ shrink: true, required: true }}
           variant="filled"
           onChange= {handleOnChange}
 
@@ -50,6 +51,7 @@ export const ScheduleFor = (props) => {
           label="end Date"
           variant="filled"
           name="end"
+          InputLabelProps={{ shrink: true, required: true }}
           onChange= {handleOnChange}
         />
       </div>

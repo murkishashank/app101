@@ -5,6 +5,7 @@ import manageEmpReducer from "../pages/ManageEmpDetails/slice/action";
 import feedbackReducer from "../pages/feedback/slice/actions";
 import payslipReducer from "../pages/payslip/slice/actions";
 import manageNewEmpReducer from "../pages/NewEmployees/slice/action"
+import signUpReducer from "../pages/SignUp/slice/actions";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     empFeedback: feedbackReducer,
     payslip: payslipReducer,
     manageNewEmp: manageNewEmpReducer,
+    signUp: signUpReducer,
   },
 });
