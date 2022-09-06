@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { NavBar } from "../../components/NavBar";
 import { DataGrid } from "@mui/x-data-grid/DataGrid";
 import { getAllUsers } from "../../api/getAllUsers";
@@ -20,6 +20,7 @@ import { getFinancialDetails } from "../../api/payslip/getFinanciaDetails";
 import { getAllFinancialDetails } from "../../api/payslip/getAllFinancialDetails";
 import { saveFinancialDetail } from "../../api/payslip/saveFinancialDetail";
 import { saveFinancialRecords } from "../../api/payslip/saveFinancialDetails";
+import { Button } from "@mui/material";
 
 export const NewEmployees = () => {
   const newEmpSelector = useSelector(selectNewEmpRecords);
@@ -169,11 +170,7 @@ export const NewEmployees = () => {
     const handleOnSaveClick = () => {
       handleSave(params.row);
     };
-    return (
-      <button variant="secondary" onClick={handleOnSaveClick}>
-        Save
-      </button>
-    );
+    return <Button onClick={handleOnSaveClick}>Save</Button>;
   };
 
   const Calender = (properties) => {
@@ -239,7 +236,7 @@ export const NewEmployees = () => {
     const { id, value } = properties.params;
     return (
       <>
-        <Popup trigger={<button>View</button>} position="left">
+        <Popup trigger={<Button>View</Button>} position="left">
           <img
             ref={imageRef}
             id={id}
@@ -248,7 +245,7 @@ export const NewEmployees = () => {
             width="400px"
           ></img>
           <a href={value} download>
-            <button>Download</button>
+            <Button>Download</Button>
           </a>
         </Popup>
       </>

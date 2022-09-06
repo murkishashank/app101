@@ -5,14 +5,11 @@ import { empColDefs } from "./coldefs";
 import { useManageEmpSlice } from "./slice/action";
 import { useSelector, useDispatch } from "react-redux";
 import { selectEmpRecords, selectNewEmployeeCount } from "./slice/selector";
-import { NavBar } from "../../components/NavBar";
 import { useNavigate } from "react-router-dom";
-// import Button from "react-bootstrap/Button";
 import { getPayload } from "./validateSave";
 import { Form } from "react-bootstrap";
 import { postUser } from "../../api/postUser";
-import { Button } from "@mui/material";
-import Badge from "@mui/material/Badge";
+import { Badge, Button, } from "@mui/material";
 import { getNewEmployeeCount } from "../../api/getNewEmployeeCount";
 
 export const ManageEmpDetails = (props) => {
@@ -77,22 +74,14 @@ export const ManageEmpDetails = (props) => {
         navigate("/edit-emp-details");
       }
     };
-    return (
-      <Button variant="secondary" onClick={handleOnClick}>
-        Edit
-      </Button>
-    );
+    return <Button onClick={handleOnClick}>Edit</Button>;
   };
 
   const SaveAction = (params) => {
     const handleOnSaveClick = () => {
       handleSave(params.row);
     };
-    return (
-      <Button variant="secondary" onClick={handleOnSaveClick}>
-        Save
-      </Button>
-    );
+    return <Button onClick={handleOnSaveClick}>Save</Button>;
   };
 
   const empColDefsWithActionCol = empColDefs.concat(actionColumn);
